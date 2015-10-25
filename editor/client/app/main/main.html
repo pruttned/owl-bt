@@ -1,0 +1,31 @@
+<!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="projects">
+        <div ng-repeat="project in projects" class="project">
+          <a ng-href="/bla?prj={{project.path | encodeURIComponent}}">{{project.path}}</a>
+          <button ng-click="removeProject(project)">Remove</button>
+        </div>
+      </div>
+      <input type="text" placeholder="Enter project path" ng-model="newProjectPath">
+      <button ng-click="addProject(newProjectPath)">Add</button>
+
+
+
+
+      <div>
+        <button ng-click="callSrv()">load</button>
+        name: {{myTest.name}}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- <footer class="footer">
+  <div class="container">
+  </div>
+</footer> -->
