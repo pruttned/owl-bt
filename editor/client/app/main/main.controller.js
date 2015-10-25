@@ -28,5 +28,8 @@ angular.module('editorApp')
         path: path
       });
     };
+    $scope.removeProject = function(project) {
+      ProjectStore.removeProject(project);
+    };
 
   });
