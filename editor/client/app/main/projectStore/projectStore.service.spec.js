@@ -59,10 +59,20 @@ describe('Service: ProjectStore', function() {
   });
 
   it('Removed project by instance is removed from store', function() {
-    ProjectStore.removeProject(ProjectStore.projects[1]);
+    expect(ProjectStore.removeProject(ProjectStore.projects[1])).toBe(true);
+
 
     expect(ProjectStore.projects.length).toBe(2);
     expect(ProjectStore.projects).toContain({path:'url1'});
+    expect(ProjectStore.projects).toContain({path:'url3'});
+  });
+
+  it('Removing nonexistent project doesn`t change anything', function() {
+    expect(ProjectStore.removeProject('nonexistent_prj')).toBe(false);
+
+    expect(ProjectStore.projects.length).toBe(3);
+    expect(ProjectStore.projects).toContain({path:'url1'});
+    expect(ProjectStore.projects).toContain({path:'url2'});
     expect(ProjectStore.projects).toContain({path:'url3'});
   });
 });

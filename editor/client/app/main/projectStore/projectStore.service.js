@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   /**
-   * Collection of projects connected to a project store
+   * Stores project references in the local storage
    */
   .service('ProjectStore', function() {
 
@@ -19,7 +19,7 @@ angular.module('editorApp')
     /**
      * Adds a new project
      * @param  {Object} project - project object
-     * @param  {string} project.path - full path to project`s root directory, that contains
+     * @param  {String} project.path - full path to project`s root directory, that contains
      *                       	the owlbt.json file
      */
     this.addProject = function(project) {
@@ -40,7 +40,7 @@ angular.module('editorApp')
     /**
      * Removes a specific project
      * @param  {Object or string} project - project object or string containing project path
-     * @return {bool} Whether was specified project found and removed
+     * @return {Bool} Whether was specified project found and removed
      */
     this.removeProject = function(project) {
       if (!project) {
@@ -61,5 +61,7 @@ angular.module('editorApp')
 
       //TODO: replace with service that ignores fields injected by angular
       localStorage.setItem(projectsStoreKey, JSON.stringify(this.projects));
+
+      return prjIndex >= 0;
     };
   });
