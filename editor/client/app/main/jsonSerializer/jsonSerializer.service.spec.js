@@ -53,7 +53,7 @@ describe('Service: JsonSerializer', function() {
 
   it('A deserialized JSON (object) should be equivalent to the original JSON.', function() {
     var testJson = '{"one": "one value", "two": "two value"}';
-    var expectedOject = {one: "one value", two: "two value"};
+    var expectedObject = {one: "one value", two: "two value"};
 
     var resultingObject = JsonSerializer.deserialize(testJson);
     expect(expectedObject).toEqual(resultingObject);
