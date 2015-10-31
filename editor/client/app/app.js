@@ -12,4 +12,6 @@ angular.module('editorApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
-  });
+  })
+  .constant('_', window._) //http://stackoverflow.com/a/23984685
+  ;

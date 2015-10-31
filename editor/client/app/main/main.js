@@ -8,6 +8,4 @@ angular.module('editorApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
-  })
-  .constant('_', window._) //http://stackoverflow.com/a/23984685
-  ;
+  });
