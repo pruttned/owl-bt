@@ -17,7 +17,7 @@ describe('Service: JsonSerializer', function() {
       two: 'two value',
       three: 'three value',
       four: 'four value'
-    }
+    };
 
     expectCorrectSerialization(testObject, testObject);
   });
@@ -28,12 +28,12 @@ describe('Service: JsonSerializer', function() {
       $two: 'two value',
       three: 'three value',
       $$four: 'four value',
-    }
+    };
 
     let expectedOject = {
       one: 'one value',
       three: 'three value',
-    }
+    };
 
     expectCorrectSerialization(testObject, expectedOject);
   });
@@ -44,16 +44,16 @@ describe('Service: JsonSerializer', function() {
       $two: 'two value',
       $three: 'three value',
       $four: 'four value',
-    }
+    };
 
-    let expectedOject = {}
+    let expectedOject = {};
 
     expectCorrectSerialization(testObject, expectedOject);
   });
 
   it('A deserialized JSON (object) should be equivalent to the original JSON.', function() {
     let testJson = '{"one": "one value", "two": "two value"}';
-    let expectedObject = {one: "one value", two: "two value"};
+    let expectedObject = {one: 'one value', two: 'two value'};
 
     let resultingObject = JsonSerializer.deserialize(testJson);
     expect(expectedObject).toEqual(resultingObject);
