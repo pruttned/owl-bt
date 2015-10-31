@@ -7,7 +7,7 @@ describe('Service: ProjectStore', function() {
 
   // local storage mock  - http://stackoverflow.com/a/14381941
   beforeEach(function() {
-    var store = {
+    let store = {
       'ProjectStore.projects': JSON.stringify([{
         path: 'url1'
       }, {
@@ -28,7 +28,7 @@ describe('Service: ProjectStore', function() {
   });
 
   // instantiate service
-  var ProjectStore;
+  let ProjectStore;
   beforeEach(inject(function(_ProjectStore_) {
     ProjectStore = _ProjectStore_;
   }));

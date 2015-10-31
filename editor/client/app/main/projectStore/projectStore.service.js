@@ -6,11 +6,10 @@ angular.module('editorApp')
    */
   .service('ProjectStore', function(_, JsonSerializer) {
 
-
-    var projectsStoreKey = 'ProjectStore.projects';
+    const projectsStoreKey = 'ProjectStore.projects';
 
     //init items
-    var prjStorageValue = localStorage.getItem(projectsStoreKey);
+    let prjStorageValue = localStorage.getItem(projectsStoreKey);
     if (prjStorageValue) {
       this.projects = JsonSerializer.deserialize(prjStorageValue);
     } else {
@@ -48,7 +47,7 @@ angular.module('editorApp')
         throw new Error('project is required');
       }
 
-      var prjIndex;
+      let prjIndex;
       if (_.isString(project)) {
         prjIndex = _.findIndex(this.projects, function(prj) {
           return prj.path === project;

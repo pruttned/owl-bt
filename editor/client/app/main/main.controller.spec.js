@@ -5,7 +5,7 @@ describe('Controller: MainCtrl', function () {
   // load the controller's module
   beforeEach(module('editorApp'));
 
-  var MainCtrl,
+  let MainCtrl,
       scope,
       $httpBackend;
 

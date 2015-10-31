@@ -11,7 +11,7 @@ angular.module('editorApp')
     $scope.myTest = {};
 
     $scope.callSrv = function() {
-      var MyTestResource = $resource('/api/myTest/:id');
+      let MyTestResource = $resource('/api/myTest/:id');
 
       $scope.myTest = MyTestResource.get({
         id: 22
