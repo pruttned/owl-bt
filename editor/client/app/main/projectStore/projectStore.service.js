@@ -4,14 +4,15 @@ angular.module('editorApp')
   /**
    * Stores project references in the local storage
    */
-  .service('ProjectStore', function() {
+  .service('ProjectStore', function(_, JsonSerializer) {
+
 
     var projectsStoreKey = 'ProjectStore.projects';
 
     //init items
     var prjStorageValue = localStorage.getItem(projectsStoreKey);
     if (prjStorageValue) {
-      this.projects = JSON.parse(prjStorageValue);
+      this.projects = JsonSerializer.deserialize(prjStorageValue);
     } else {
       this.projects = [];
     }
@@ -34,7 +35,7 @@ angular.module('editorApp')
       this.projects.push(project);
 
       //TODO: replace with service that ignores fields injected by angular
-      localStorage.setItem(projectsStoreKey, JSON.stringify(this.projects));
+      localStorage.setItem(projectsStoreKey, JsonSerializer.serialize(this.projects));
     };
 
     /**
@@ -59,8 +60,7 @@ angular.module('editorApp')
         this.projects.splice(prjIndex, 1);
       }
 
-      //TODO: replace with service that ignores fields injected by angular
-      localStorage.setItem(projectsStoreKey, JSON.stringify(this.projects));
+      localStorage.setItem(projectsStoreKey, JsonSerializer.serialize(this.projects));
 
       return prjIndex >= 0;
     };
