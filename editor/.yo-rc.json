@@ -9,7 +9,7 @@
     "registerSocketsFile": "server/config/socketio.js",
     "socketsNeedle": "// Insert sockets below",
     "filters": {
-      "babel": false,
+      "babel": true,
       "js": true,
       "html": true,
       "sass": true,
@@ -29,6 +29,7 @@
       "uirouter"
     ],
     "extensions": [
+      "babel",
       "js",
       "html",
       "scss"

@@ -70,7 +70,9 @@
     "karma": "~0.12.9",
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "supertest": "~0.11.0",
-    "should": "~3.3.1"
+    "should": "~3.3.1",
+	"karma-babel-preprocessor": "^5.2.1",
+    "grunt-babel": "~5.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
