@@ -5,7 +5,8 @@ angular.module('editorApp')
    * JSON serializer.
    * Ignores specific properties when serializing.
    */
-  .service('JsonSerializer', function() {
+  .service('JsonSerializer', function(_) {
+
     /**
      * Serializes an object into a JSON string.
      * All properties whose names start with '$' are not included in the resulting JSON.
@@ -26,8 +27,9 @@ angular.module('editorApp')
     };
 
     function replacer(key, value) {
-      if (typeof key !== 'undefined' && //initially the replacer gets called with an empty key --MDN
+      if (_.isString(key) && //initially the replacer gets called with an empty key --MDN ; for array, each item has index key
         key.substr(0, 1) === '$') { //internal or temporary properties
+
         return undefined; //won`t be included in the resulting JSON
       }
       return value;
