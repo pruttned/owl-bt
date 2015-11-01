@@ -46,7 +46,7 @@ angular.module('editorApp')
     this.removeProject = function(project) {
       let prjIndex;
       if (_.isString(project)) {
-        prjIndex = this.projects.findIndex(this.projects, function(prj) {
+        prjIndex = this.projects.findIndex(function(prj) {
           return prj.path === project;
         });
       } else {
