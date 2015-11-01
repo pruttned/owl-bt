@@ -30,10 +30,11 @@ angular.module('editorApp')
         throw new Error('project.path is required');
       }
 
-      //TODO: check name
+      if(this.projects.findIndex(p => p.path === project.path) > -1){
+        throw new Error('duplicate project path');
+      }
       this.projects.push(project);
 
-      //TODO: replace with service that ignores fields injected by angular
       localStorage.setItem(projectsStoreKey, JsonSerializer.serialize(this.projects));
     };
 
@@ -43,13 +44,9 @@ angular.module('editorApp')
      * @return {Bool} Whether was specified project found and removed
      */
     this.removeProject = function(project) {
-      if (!project) {
-        throw new Error('project is required');
-      }
-
       let prjIndex;
       if (_.isString(project)) {
-        prjIndex = _.findIndex(this.projects, function(prj) {
+        prjIndex = this.projects.findIndex(this.projects, function(prj) {
           return prj.path === project;
         });
       } else {

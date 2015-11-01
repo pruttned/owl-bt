@@ -75,4 +75,13 @@ describe('Service: ProjectStore', function() {
     expect(ProjectStore.projects).toContain({path:'url2'});
     expect(ProjectStore.projects).toContain({path:'url3'});
   });
+
+  it('Adding duplicate object fails', function() {
+    expect(ProjectStore.addProject({path:'url2'})).toThrow(new Error('duplicate project pathXX'));
+
+    expect(ProjectStore.projects.length).toBe(3);
+    expect(ProjectStore.projects).toContain({path:'url1'});
+    expect(ProjectStore.projects).toContain({path:'url2'});
+    expect(ProjectStore.projects).toContain({path:'url3'});
+  });
 });
