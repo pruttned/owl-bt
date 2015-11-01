@@ -6,7 +6,7 @@
 
       <div class="projects">
         <div ng-repeat="project in projects" class="project">
-          <a ng-href="/bla?prj={{project.path | encodeURIComponent}}">{{project.path}}</a>
+          <a ng-href="/project?path={{project.path | encodeURIComponent}}">{{project.path}}</a>
           <button ng-click="removeProject(project)">Remove</button>
         </div>
       </div>
