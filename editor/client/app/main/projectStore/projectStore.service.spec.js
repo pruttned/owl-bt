@@ -16,13 +16,13 @@ describe('Service: ProjectStore', function() {
         path: 'url3'
       }])
     };
-    spyOn(localStorage, 'getItem').andCallFake(function(key) {
+    spyOn(localStorage, 'getItem').and.callFake(function(key) {
       return store[key];
     });
-    spyOn(localStorage, 'setItem').andCallFake(function(key, value) {
+    spyOn(localStorage, 'setItem').and.callFake(function(key, value) {
       store[key] = value + '';
     });
-    spyOn(localStorage, 'clear').andCallFake(function() {
+    spyOn(localStorage, 'clear').and.callFake(function() {
       store = {};
     });
   });
@@ -77,7 +77,7 @@ describe('Service: ProjectStore', function() {
   });
 
   it('Adding duplicate object fails', function() {
-    expect(ProjectStore.addProject({path:'url2'})).toThrow(new Error('duplicate project pathXX'));
+    expect(function(){ProjectStore.addProject({path:'url2'});}).toThrowError('duplicate project path');
 
     expect(ProjectStore.projects.length).toBe(3);
     expect(ProjectStore.projects).toContain({path:'url1'});
