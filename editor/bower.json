@@ -2,19 +2,19 @@
   "name": "editor",
   "version": "0.0.0",
   "dependencies": {
-    "angular": ">=1.2.*",
-    "angular-bootstrap": "~0.11.0",
-    "angular-cookies": ">=1.2.*",
-    "angular-resource": ">=1.2.*",
-    "angular-sanitize": ">=1.2.*",
-    "angular-ui-router": "~0.2.15",
-    "bootstrap": "~3.1.1",
-    "bootstrap-sass-official": "~3.1.1",
     "es5-shim": "~3.0.1",
     "font-awesome": ">=4.1.0",
     "json3": "~3.3.1",
     "lodash": "~2.4.1",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "angular-cookies": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-sanitize": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap": "~3.3.5",
+    "bootstrap-sass": "~3.3.5"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
