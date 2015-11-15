@@ -39,6 +39,7 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.use('/babel-polyfill', express.static(path.join(config.root, 'node_modules/babel-polyfill/dist')));
+    app.use('/common', express.static(path.join(config.root, 'common')));
     app.set('appPath', path.join(config.root, 'client'));
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
