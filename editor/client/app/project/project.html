@@ -1,20 +1,24 @@
 <!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
 
+<!--TODO: warnings ($scope.warnings) -->
+
 <div class="container">
+  <div class="row">
+      <!--TODO: breadcrumb -->
+      {{::dirPath}}
+  </div>
+
   <div class="row">
     <div class="col-lg-12">
 
-      <div class="projectItems">
-        <div ng-repeat="projectItem in projectItems" class="projectItem">
-          <a ng-href="{{projectItem.url}}">
-              <span>{{projectItem.isFolder ? '[' : ''}}</span>
-              <span>{{projectItem.name}}</span>              
-              <span>{{projectItem.isFolder ? ']' : ''}}</span>
-              <span style="color:lightgray">{{projectItem.displayUrl}}</span>
+      <ul>
+        <li ng-repeat="projectItem in ::projectItems">
+          <a href="{{::projectItem.url}}">
+            <span class="fa {{::projectItem.iconClass}}" />
+            <span>{{::projectItem.name}}</span>
           </a>
-          <!-- <button ng-click="removeProject(project)">Remove</button> -->
-        </div>
-      </div>
+        </li>
+      </ul>
 
     </div>
   </div>
