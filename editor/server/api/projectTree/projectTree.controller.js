@@ -11,8 +11,24 @@
 
 let fs = require('fs');
 let path = require('path');
-let issue = require('../../../common/issue');
-let projectItem = require('../../../common/projectItem');
+let ProjectItemType = require('../../../common/projectItemType').ProjectItemType;
+
+/**
+ * Directory or file with supported extension (tree etc.).
+ */
+class ProjectItem {
+  /**
+   * ctor
+   * @param  {String} name - short file name without extension
+   * @param  {String} path - full absolute path
+   * @param  {ProjectItemType} type - type of this project item (directory, tree etc.)
+   */
+  constructor(name, path, type) {
+    this.name = name;
+    this.path = path;
+    this.type = type;
+  }
+}
 
 /**
  * File project item types by their file extensions.
@@ -20,7 +36,7 @@ let projectItem = require('../../../common/projectItem');
  * @type {Object}
  */
 const fileProjectItemTypesByExtension = {
-  '.owltree': projectItem.ProjectItemType.TREE
+  '.owltree': ProjectItemType.TREE
 };
 
 /**
@@ -33,50 +49,56 @@ const fileProjectItemTypesByExtension = {
  * @param  {Object} res - response; see 'return' tags
  * @return {JSON} result
  * @return {ProjectItem[]} result.projectItems - files and directories under the specified directory
- * @return {Issue[]} result.issues - issues
+ * @return {String[]} result.warnings - warnings (e.g. info about ignored items)
  */
 exports.index = function(req, res) {
-  let resContent = {
-    projectItems: [],
-    issues: []
-  };
-
   let directoryPath = req.query.dirPath;
   if(directoryPath) {
+    try {
+      fs.accessSync(directoryPath); //whether the path exists
+    } catch (ex) {
+      res.sendStatus(404);
+      return;
+    }
+
     let subItemNames;
     try {
       subItemNames = fs.readdirSync(directoryPath);
     } catch (ex) {
-      resContent.issues.push(new issue.Issue(issue.IssueSeverity.ERROR, `Failed to get sub items of directory "${directoryPath}".`, ex));
+      res.status(500).send(`Failed to get sub items of directory "${directoryPath}". Exception:\n${ex}`);
+      return;
     }
 
-    if(subItemNames) {
-      subItemNames.forEach(name => {
-        let fullPath = path.join(directoryPath, name);
-        let stat;
-        try {
-          stat = fs.lstatSync(fullPath);
-        } catch (ex) {
-          resContent.issues.push(new issue.Issue(issue.IssueSeverity.WARNING, `Failed to get stats of sub item "${name}" and it is therefore ignored.`, ex));
-        }
+    let resContent = {
+      projectItems: [],
+      warnings: []
+    };
 
-        if(stat && !stat.isSymbolicLink()) { //symbolic links are ignored
-          if (stat.isDirectory()) {
-            resContent.projectItems.push(new projectItem.ProjectItem(name, fullPath, projectItem.ProjectItemType.DIRECTORY));
-          } else if (stat.isFile()) {
-            let type = getFileProjectItemType(name);
-            if(type) { //has an supported extension
-              resContent.projectItems.push(new projectItem.ProjectItem(name, fullPath, type));
-            }
+    subItemNames.forEach(name => {
+      let fullPath = path.join(directoryPath, name);
+      let stat;
+      try {
+        stat = fs.lstatSync(fullPath);
+      } catch (ex) {
+        resContent.warnings.push(`Failed to get stats of sub item "${name}" and it is therefore ignored. Exception:\n${ex}`);
+        return;
+      }
+
+      if(!stat.isSymbolicLink()) { //symbolic links are ignored
+        if (stat.isDirectory()) {
+          resContent.projectItems.push(new ProjectItem(name, fullPath, ProjectItemType.DIRECTORY));
+        } else if (stat.isFile()) {
+          let type = getFileProjectItemType(name);
+          if(type) { //has an supported extension; files with other extensions are ignored
+            resContent.projectItems.push(new ProjectItem(name, fullPath, type));
           }
         }
-      });
-    }
+      }
+    });
+    res.json(resContent);
   } else {
-    resContent.issues.push(new issue.Issue(issue.IssueSeverity.ERROR, 'dirPath query string must be specified.'));
+    res.status(400).send('"dirPath" must be provided in the query string.');
   }
-
-  res.json(resContent);
 };
 
 function getFileProjectItemType(name) {
