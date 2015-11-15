@@ -1,0 +1,4 @@
+- This folder contains js files common for client and server.
+- This folder is not unit tested! This is because client and server are both tested differently.
+- TODO: set jshint up for this folder (Gruntfile.js); the problem is that client and server have both different jshint processes
+- TODO: modify .jshintrc so it supports both client and server coding styles (merge client and server .jshintrc files?)
