@@ -22,6 +22,7 @@ module.exports = function(config) {
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'node_modules/babel-polyfill/dist/polyfill.js',
+      'node_modules/string_score/string_score.js',
       'client/app/app.js',
       'client/app/**/*.js',
       'client/components/**/*.js',
@@ -31,6 +32,7 @@ module.exports = function(config) {
 
     preprocessors: {
       '**/*.html': 'html2js',
+      'client/components/**/*.js': 'babel',
       'client/app/**/*.js': 'babel',
     },
 
@@ -56,7 +58,6 @@ module.exports = function(config) {
       }
     },
 
-	
     // list of files / patterns to exclude
     exclude: [],
 
