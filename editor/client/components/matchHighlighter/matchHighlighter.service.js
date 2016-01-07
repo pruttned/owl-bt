@@ -25,8 +25,8 @@ angular.module('editorApp')
        * @param  {String} text - input string text whose content should be highlighted
        * @param  {String} filter - fuzzy filter
        * @return {part array} - matching and non matching parts (substrings) of the provided input string
-       * @return {part}.text - text of the part
-       * @return {part}.isMatch - whether the part represents a success match
+       * @return {String} part.text - text of the part
+       * @return {bool} part.isMatch - whether the part represents a success match
        */
       getParts(text, filter) {
         filter = filter.toLowerCase();
