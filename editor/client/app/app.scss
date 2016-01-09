@@ -8,6 +8,13 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+$dlg-background-color : #2C3E50;
+$ctrl-color : #cccccc;
+$ctrl-border-color : #2C3E50;
+$ctrl-background-color : #243342;
+$ctrl-hover-color : #3D566F;
+$ctrl-highlight-background-color : #C65C5C;
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -15,10 +22,40 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
+input{
+  padding: 4px;
+}
+
+.modal-content
+{
+  border-radius: 0;
+  background: $dlg-background-color;
+}
+
+ul.selectable{
+  padding: 0;
+  li{
+    cursor: pointer;
+    list-style: none;
+    padding: 10px;
+    background: $ctrl-background-color;
+    color: $ctrl-color;
+    border-top: solid 1px $ctrl-border-color;
+    &.selected{
+      background: $ctrl-highlight-background-color;
+    }
+    &:hover{
+      background: $ctrl-hover-color;
+    }
+  }
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'main/main.scss';
 @import 'project/project.scss';
 @import 'tree/tree.scss';
+@import 'listSelectDialog/fuzzyList/fuzzyList.scss';
+@import 'listSelectDialog/listSelectDialog.scss';
 @import 'modal/modal.scss';
 // endinjector

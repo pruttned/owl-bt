@@ -1,0 +1,20 @@
+.fuzzy-list{
+  input{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  ul{
+    max-height: 300px;
+    overflow: auto;
+    li{
+      .icon{
+        margin-right: 5px;
+      }
+    }
+  }
+  em{
+    color: white;
+    font-style: normal;
+    font-weight: bold;
+  }
+}
