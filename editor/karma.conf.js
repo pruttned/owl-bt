@@ -31,7 +31,7 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      '**/*.html': 'html2js',
+      '**/*.html': 'ng-html2js',
       'client/components/**/*.js': 'babel',
       'client/app/**/*.js': 'babel',
     },
@@ -68,10 +68,10 @@ module.exports = function(config) {
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
 
+    //captureConsole: true,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
-
 
     // Start these browsers, currently available:
     // - Chrome
