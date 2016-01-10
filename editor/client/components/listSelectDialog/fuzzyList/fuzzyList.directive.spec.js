@@ -2,23 +2,65 @@
 
 //TODO
 
-describe('Directive: fuzzyList', function () {
+describe('Directive: fuzzyList', function() {
 
 
   // load the directive's module and view
   beforeEach(module('editorApp'));
-  beforeEach(module('app/fuzzyList/fuzzyList.html'));
+  beforeEach(module('components/listSelectDialog/fuzzyList/fuzzyList.html'));
 
   var element, scope;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function($rootScope) {
     scope = $rootScope.$new();
+    scope.items = [{
+      text: 'item1',
+      icon: 'cog'
+    }, {
+      text: 'item2'
+    }];
+    scope.onAccept = function(item) {
+      scope.accpetedItem = item;
+    };
   }));
 
-  it('TODO', inject(function ($compile) {
-    element = angular.element('<fuzzy-list></fuzzy-list>');
+  it('directive must render input box and list of items with texts and icons from input items', inject(function($compile) {
+    element = angular.element('<fuzzy-list items="items"></fuzzy-list>');
     element = $compile(element)(scope);
     scope.$apply();
-    expect(element.text()).toBe('this is the fuzzyList directive');
+
+    expect(element.find('input').length).toBe(1);
+    let liElms = element.find('li');
+    expect(liElms.length).toBe(2);
+    expect(liElms.eq(0).text()).toBe('item1');
+    expect(liElms.eq(0).find('span.fa-cog').length).toBe(1);
+    expect(liElms.eq(1).text()).toBe('item2');
   }));
+
+  it('clicking on a item in list must execute provided onAccept function', inject(function($compile) {
+    element = angular.element('<fuzzy-list items="items" on-accept="onAccept(item)"></fuzzy-list>');
+    element = $compile(element)(scope);
+    scope.$apply();
+
+    let liElms = element.find('li');
+    liElms.eq(0).triggerHandler('click');
+    expect(scope.accpetedItem.text).toBe('item1');
+  }));
+
+  it('typing to input filters items', function(done) {
+    inject(function($compile) {
+        element = angular.element('<fuzzy-list items="items" on-accept="onAccept(item)"></fuzzy-list>');
+        element = $compile(element)(scope);
+        scope.$apply();
+
+        element.find('input').val('i2').triggerHandler('input');
+
+        setTimeout(function(){ //debounce
+          let liElms = element.find('li');
+          expect(liElms.length).toBe(1);
+          expect(liElms.text()).toBe('item2');
+          done();
+        }, 300);
+    });
+  });
 });
