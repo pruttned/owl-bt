@@ -16,6 +16,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(client) app/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp,client}) app/app.css -->
@@ -58,16 +59,18 @@
   <!-- build:js({client,node_modules}) app/vendor.js -->
   <!-- bower:js -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
   <!-- endbower -->
   <script src="babel-polyfill/polyfill.js"></script>
+  <script src="string_score/string_score.js"></script>
   <!-- endbuild -->
 
   <!-- build:js(.tmp) app/app.js -->
@@ -81,7 +84,14 @@
   <script src="app/project/project.controller.js"></script>
   <script src="app/project/project.js"></script>
   <script src="app/project/projectTree/projectTree.service.js"></script>
+  <script src="app/tree/tree.controller.js"></script>
+  <script src="app/tree/tree.js"></script>
   <script src="components/encodeURIComponent/encodeURIComponent.filter.js"></script>
+  <script src="components/fuzzyFilter/fuzzyFilter.service.js"></script>
+  <script src="components/listSelectDialog/fuzzyList/fuzzyList.directive.js"></script>
+  <script src="components/listSelectDialog/listSelectDialog.controller.js"></script>
+  <script src="components/listSelectDialog/listSelectDialog.service.js"></script>
+  <script src="components/matchHighlighter/matchHighlighter.service.js"></script>
   <script src="components/modal/modal.service.js"></script>
   <script src="components/navbar/navbar.controller.js"></script>
   <!-- endinjector -->
