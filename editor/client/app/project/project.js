@@ -4,7 +4,7 @@ angular.module('editorApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('project', {
-        url: '/project?path',
+        url: '/project?dirPath',
         templateUrl: 'app/project/project.html',
         controller: 'ProjectCtrl'
       });
