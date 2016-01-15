@@ -3,216 +3,216 @@
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, hotkeys, ListSelectDialog) {
 
-    $scope.items = [{
-      text: 'Microsoft.CSharp',
+  $scope.items = [{
+      name: 'Microsoft.CSharp',
       icon: 'cog'
     }, {
-      text: 'Microsoft.JScript',
+      name: 'Microsoft.JScript',
       icon: 'arrow-right'
     }, {
-      text: 'Microsoft.VisualBasic'
+      name: 'Microsoft.VisualBasic'
     }, {
-      text: 'Microsoft.Vsa'
+      name: 'Microsoft.Vsa'
     }, {
-      text: 'Microsoft.Win32'
+      name: 'Microsoft.Win32'
     }, {
-      text: 'System'
+      name: 'System'
     }, {
-      text: 'System.CodeDom'
+      name: 'System.CodeDom'
     }, {
-      text: 'System.CodeDom.Compiler'
+      name: 'System.CodeDom.Compiler'
     }, {
-      text: 'System.Collections'
+      name: 'System.Collections'
     }, {
-      text: 'System.Collections.Specialized'
+      name: 'System.Collections.Specialized'
     }, {
-      text: 'System.ComponentModel'
+      name: 'System.ComponentModel'
     }, {
-      text: 'System.ComponentModel.Design'
+      name: 'System.ComponentModel.Design'
     }, {
-      text: 'System.ComponentModel.Design.Serialization'
+      name: 'System.ComponentModel.Design.Serialization'
     }, {
-      text: 'System.Configuration'
+      name: 'System.Configuration'
     }, {
-      text: 'System.Configuration.Assemblies'
+      name: 'System.Configuration.Assemblies'
     }, {
-      text: 'System.Configuration.Install'
+      name: 'System.Configuration.Install'
     }, {
-      text: 'System.Data'
+      name: 'System.Data'
     }, {
-      text: 'System.Data.Common'
+      name: 'System.Data.Common'
     }, {
-      text: 'System.Data.Odbc'
+      name: 'System.Data.Odbc'
     }, {
-      text: 'System.Data.OleDb'
+      name: 'System.Data.OleDb'
     }, {
-      text: 'System.Data.OracleClient'
+      name: 'System.Data.OracleClient'
     }, {
-      text: 'System.Data.SqlClient'
+      name: 'System.Data.SqlClient'
     }, {
-      text: 'System.Data.SqlServerCe'
+      name: 'System.Data.SqlServerCe'
     }, {
-      text: 'System.Data.SqlTypes'
+      name: 'System.Data.SqlTypes'
     }, {
-      text: 'System.Diagnostics'
+      name: 'System.Diagnostics'
     }, {
-      text: 'System.Diagnostics.SymbolStore'
+      name: 'System.Diagnostics.SymbolStore'
     }, {
-      text: 'System.DirectoryServices'
+      name: 'System.DirectoryServices'
     }, {
-      text: 'System.Drawing'
+      name: 'System.Drawing'
     }, {
-      text: 'System.Drawing.Design'
+      name: 'System.Drawing.Design'
     }, {
-      text: 'System.Drawing.Drawing2D'
+      name: 'System.Drawing.Drawing2D'
     }, {
-      text: 'System.Drawing.Imaging'
+      name: 'System.Drawing.Imaging'
     }, {
-      text: 'System.Drawing.Printing'
+      name: 'System.Drawing.Printing'
     }, {
-      text: 'System.Drawing.Text'
+      name: 'System.Drawing.Text'
     }, {
-      text: 'System.EnterpriseServices'
+      name: 'System.EnterpriseServices'
     }, {
-      text: 'System.EnterpriseServices.CompensatingResourceManager'
+      name: 'System.EnterpriseServices.CompensatingResourceManager'
     }, {
-      text: 'System.EnterpriseServices.Internal'
+      name: 'System.EnterpriseServices.Internal'
     }, {
-      text: 'System.Globalization'
+      name: 'System.Globalization'
     }, {
-      text: 'System.IO'
+      name: 'System.IO'
     }, {
-      text: 'System.IO.IsolatedStorage'
+      name: 'System.IO.IsolatedStorage'
     }, {
-      text: 'System.Management'
+      name: 'System.Management'
     }, {
-      text: 'System.Management.Instrumentation'
+      name: 'System.Management.Instrumentation'
     }, {
-      text: 'System.Messaging'
+      name: 'System.Messaging'
     }, {
-      text: 'System.Net'
+      name: 'System.Net'
     }, {
-      text: 'System.Net.Sockets'
+      name: 'System.Net.Sockets'
     }, {
-      text: 'System.Reflection'
+      name: 'System.Reflection'
     }, {
-      text: 'System.Reflection.Emit'
+      name: 'System.Reflection.Emit'
     }, {
-      text: 'System.Resources'
+      name: 'System.Resources'
     }, {
-      text: 'System.Runtime.CompilerServices'
+      name: 'System.Runtime.CompilerServices'
     }, {
-      text: 'System.Runtime.InteropServices'
+      name: 'System.Runtime.InteropServices'
     }, {
-      text: 'System.Runtime.InteropServices.CustomMarshalers'
+      name: 'System.Runtime.InteropServices.CustomMarshalers'
     }, {
-      text: 'System.Runtime.InteropServices.Expando'
+      name: 'System.Runtime.InteropServices.Expando'
     }, {
-      text: 'System.Runtime.Remoting'
+      name: 'System.Runtime.Remoting'
     }, {
-      text: 'System.Runtime.Remoting.Activation'
+      name: 'System.Runtime.Remoting.Activation'
     }, {
-      text: 'System.Runtime.Remoting.Channels'
+      name: 'System.Runtime.Remoting.Channels'
     }, {
-      text: 'System.Runtime.Remoting.Channels.Http'
+      name: 'System.Runtime.Remoting.Channels.Http'
     }, {
-      text: 'System.Runtime.Remoting.Channels.Tcp'
+      name: 'System.Runtime.Remoting.Channels.Tcp'
     }, {
-      text: 'System.Runtime.Remoting.Contexts'
+      name: 'System.Runtime.Remoting.Connames'
     }, {
-      text: 'System.Runtime.Remoting.Lifetime'
+      name: 'System.Runtime.Remoting.Lifetime'
     }, {
-      text: 'System.Runtime.Remoting.Messaging'
+      name: 'System.Runtime.Remoting.Messaging'
     }, {
-      text: 'System.Runtime.Remoting.Metadata'
+      name: 'System.Runtime.Remoting.Metadata'
     }, {
-      text: 'System.Runtime.Remoting.Metadata.W3cXsd2001'
+      name: 'System.Runtime.Remoting.Metadata.W3cXsd2001'
     }, {
-      text: 'System.Runtime.Remoting.MetadataServices'
+      name: 'System.Runtime.Remoting.MetadataServices'
     }, {
-      text: 'System.Runtime.Remoting.Proxies'
+      name: 'System.Runtime.Remoting.Proxies'
     }, {
-      text: 'System.Runtime.Remoting.Services'
+      name: 'System.Runtime.Remoting.Services'
     }, {
-      text: 'System.Runtime.Serialization'
+      name: 'System.Runtime.Serialization'
     }, {
-      text: 'System.Runtime.Serialization.Formatters'
+      name: 'System.Runtime.Serialization.Formatters'
     }, {
-      text: 'System.Runtime.Serialization.Formatters.Binary'
+      name: 'System.Runtime.Serialization.Formatters.Binary'
     }, {
-      text: 'System.Runtime.Serialization.Formatters.Soap'
+      name: 'System.Runtime.Serialization.Formatters.Soap'
     }, {
-      text: 'System.Security'
+      name: 'System.Security'
     }, {
-      text: 'System.Security.Cryptography'
+      name: 'System.Security.Cryptography'
     }, {
-      text: 'System.Security.Cryptography.X509Certificates'
+      name: 'System.Security.Cryptography.X509Certificates'
     }, {
-      text: 'System.Security.Cryptography.Xml'
+      name: 'System.Security.Cryptography.Xml'
     }, {
-      text: 'System.Security.Permissions'
+      name: 'System.Security.Permissions'
     }, {
-      text: 'System.Security.Policy'
+      name: 'System.Security.Policy'
     }, {
-      text: 'System.Security.Principal'
+      name: 'System.Security.Principal'
     }, {
-      text: 'System.ServiceProcess'
+      name: 'System.ServiceProcess'
     }, {
-      text: 'System.Text'
+      name: 'System.Text'
     }, {
-      text: 'System.Text.RegularExpressions'
+      name: 'System.Text.RegularExpressions'
     }, {
-      text: 'System.Threading'
+      name: 'System.Threading'
     }, {
-      text: 'System.Timers'
+      name: 'System.Timers'
     }, {
-      text: 'System.Web'
+      name: 'System.Web'
     }, {
-      text: 'System.Web.Caching'
+      name: 'System.Web.Caching'
     }, {
-      text: 'System.Web.Configuration'
+      name: 'System.Web.Configuration'
     }, {
-      text: 'System.Web.Hosting'
+      name: 'System.Web.Hosting'
     }, {
-      text: 'System.Web.Mail'
+      name: 'System.Web.Mail'
     }, {
-      text: 'System.Web.Security'
+      name: 'System.Web.Security'
     }, {
-      text: 'System.Web.Services'
+      name: 'System.Web.Services'
     }, {
-      text: 'System.Web.Services.Configuration'
+      name: 'System.Web.Services.Configuration'
     }, {
-      text: 'System.Web.Services.Description'
+      name: 'System.Web.Services.Description'
     }, {
-      text: 'System.Web.Services.Discovery'
+      name: 'System.Web.Services.Discovery'
     }, {
-      text: 'System.Web.Services.Protocols'
+      name: 'System.Web.Services.Protocols'
     }, {
-      text: 'System.Web.SessionState'
+      name: 'System.Web.SessionState'
     }, {
-      text: 'System.Web.UI'
+      name: 'System.Web.UI'
     }, {
-      text: 'System.Web.UI.Design'
+      name: 'System.Web.UI.Design'
     }, {
-      text: 'System.Web.UI.Design.WebControls'
+      name: 'System.Web.UI.Design.WebControls'
     }, {
-      text: 'System.Web.UI.HtmlControls'
+      name: 'System.Web.UI.HtmlControls'
     }, {
-      text: 'System.Web.UI.WebControls'
+      name: 'System.Web.UI.WebControls'
     }, {
-      text: 'System.Windows.Forms'
+      name: 'System.Windows.Forms'
     }, {
-      text: 'System.Windows.Forms.Design'
+      name: 'System.Windows.Forms.Design'
     }, {
-      text: 'System.Xml'
+      name: 'System.Xml'
     }, {
-      text: 'System.Xml.Schema'
+      name: 'System.Xml.Schema'
     }, {
-      text: 'System.Xml.Serialization'
+      name: 'System.Xml.Serialization'
     }, {
-      text: 'System.Xml.XPath'
+      name: 'System.Xml.XPath'
     }, {
-      text: 'System.Xml.Xsl'
+      name: 'System.Xml.Xsl'
     }];
 
     $scope.open = function() {

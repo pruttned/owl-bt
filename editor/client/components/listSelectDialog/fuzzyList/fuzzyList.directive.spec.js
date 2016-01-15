@@ -14,10 +14,10 @@ describe('Directive: fuzzyList', function() {
   beforeEach(inject(function($rootScope) {
     scope = $rootScope.$new();
     scope.items = [{
-      text: 'item1',
+      name: 'item1',
       icon: 'cog'
     }, {
-      text: 'item2'
+      name: 'item2'
     }];
     scope.onAccept = function(item) {
       scope.accpetedItem = item;
@@ -44,7 +44,7 @@ describe('Directive: fuzzyList', function() {
 
     let liElms = element.find('li');
     liElms.eq(0).triggerHandler('click');
-    expect(scope.accpetedItem.text).toBe('item1');
+    expect(scope.accpetedItem.name).toBe('item1');
   }));
 
   it('typing to input filters items', function(done) {

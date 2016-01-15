@@ -13,20 +13,20 @@ describe('Service: FuzzyFilter', function() {
 
   let items = [{
     id: 1,
-    text: 'house'
+    name: 'house'
   }, {
     id: 2,
-    text: 'car house'
+    name: 'car house'
   }, {
     id: 3,
-    text: 'car ho'
+    name: 'car ho'
   }];
 
   it('filter should return items containing the specified filter string', function() {
     let res = FuzzyFilter.filter(items, 'house');
     expect(res.length).toBe(2);
     for (var i = 0; i < res.length; i++) {
-      expect(res[i].item.text.indexOf('house')).toBeGreaterThan(-1);
+      expect(res[i].item.name.indexOf('house')).toBeGreaterThan(-1);
     }
   });
 
@@ -45,7 +45,7 @@ describe('Service: FuzzyFilter', function() {
 
   it('perfect match should be first', function() {
     let res = FuzzyFilter.filter(items, 'house');
-    expect(res[0].item.text).toBe('house');
+    expect(res[0].item.name).toBe('house');
   });
 
 });

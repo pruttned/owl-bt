@@ -30,7 +30,7 @@ angular.module('editorApp')
 
         bindItemEvents(liElm, items, index, onAccept);
         addItemIcon(liElm, item);
-        liElm.append(document.createTextNode(item.text));
+        liElm.append(document.createTextNode(item.name));
         ulElm.append(liElm);
       });
     }
@@ -116,7 +116,7 @@ angular.module('editorApp')
             let splittedMatches = matches.map(match => {
               return {
                 item: match.item,
-                matchParts: MatchHighlighter.getParts(match.item.text, filter)
+                matchParts: MatchHighlighter.getParts(match.item.name, filter)
               };
             });
 
