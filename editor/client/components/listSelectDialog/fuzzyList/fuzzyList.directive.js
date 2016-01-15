@@ -8,7 +8,7 @@ angular.module('editorApp')
 
     function addItemIcon(liElm, item) {
       if (item.icon) {
-        let iconElm = angular.element('<span class="fa icon"></span>');
+        let iconElm = angular.element('<span class="fa fa-fw icon"></span>');
         iconElm.addClass('fa-' + item.icon);
         liElm.append(iconElm);
       }
