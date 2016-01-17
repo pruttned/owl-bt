@@ -1,0 +1,81 @@
+.tree {
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+  background-color: $ctrl-background-color;
+  .tree-content {
+    position: relative;
+    transform-origin: 0 0;
+    .node {
+      background-color: $node-background-color;
+      display: inline-block;
+      max-width: 250px;
+      min-width: 100px;
+      position: absolute;
+      z-index: 20;
+      cursor: pointer;
+      /*default position necessary for correct width and height computation*/
+      left: 0;
+      top: 0;
+      &.selected{
+        outline: solid 5px $node-selected-border-color;
+      }
+      .item {
+        position: relative;
+        .icon {
+          position: absolute;
+          font-size: 1.5em;
+          left: 10px;
+          top: 10px;
+          color: $node-icon-color;
+        }
+        .content {
+          color: $node-color;
+          padding: 2px 4px;
+          overflow: hidden;
+          border-left: 45px solid white;
+          min-height: 35px;
+          word-wrap: break-word;
+          .name {
+            margin: 4px;
+            font-weight: bold;
+          }
+        }
+        &.decorator {
+          .content {
+            color: $node-decorator-color;
+            border-left-color: $node-decorator-icon-background-color;
+          }
+        }
+        &.service {
+          .content {
+            color: $node-service-color;
+            border-left-color: $node-service-icon-background-color;
+          }
+        }
+      }
+      &.composite {
+        .item.node-desc {
+          .content {
+            background: $composite-node-background-color;
+            border-left-color: $composite-node-icon-background-color;
+          }
+        }
+      }
+      &.action {
+        .item.node-desc {
+          .content {
+            background: $action-node-background-color;
+            border-left-color: $action-node-icon-background-color;
+          }
+        }
+      }
+    }
+    .link,
+    .link-start {
+      stroke: $line-color;
+      fill: none;
+      stroke-width: 3px;
+    }
+  }
+}
