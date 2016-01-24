@@ -17,11 +17,19 @@
       /*default position necessary for correct width and height computation*/
       left: 0;
       top: 0;
-      &.selected{
-        outline: solid 5px $node-selected-border-color;
-      }
       .item {
         position: relative;
+        &:hover::after, &.selected::after {
+          position: absolute;
+          display: block;
+          content: '';
+          left:0;
+          right:0;
+          top:0;
+          bottom:0;
+          outline: solid 5px $node-selected-border-color;
+          z-index: 21;
+        }
         .icon {
           position: absolute;
           font-size: 1.5em;

@@ -36,16 +36,44 @@ angular.module('editorApp')
       return viewNode;
     }
 
-    function bindMouseEvents(nodeElmsData, scope) {
-      //http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
-      //    let getNodeActions = scope.getNodeActions();
-      nodeElmsData
-        .on('click', function(viewNode) {
-          console.log('asdasd');
+    function bindMouseEvents(nodeElm, viewNode, scope) {
+      if (viewNode.node.decorators) {
+        nodeElm.selectAll('.item.decorator')
+          .data(viewNode.node.decorators)
+          .on('click', function(item) {
+            scope.$apply(function() {
+              scope.selectedNodeItem = item;
+            });
+          });
+      }
+      if (viewNode.node.services) {
+        nodeElm.selectAll('.item.service')
+          .data(viewNode.node.services)
+          .on('click', function(item) {
+            scope.$apply(function() {
+              scope.selectedNodeItem = item;
+            });
+          });
+      }
+      nodeElm.select('.item.node-desc')
+        .data([viewNode.node])
+        .on('click', function(item) {
           scope.$apply(function() {
-            scope.selectedNode = viewNode.node;
+            scope.selectedNodeItem = item;
           });
         });
+
+      //http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
+      //    let getNodeActions = scope.getNodeActions();
+      //
+      //
+      // nodeElmsData
+      //   .on('click', function(viewNode) {
+      //     console.log('asdasd');
+      //     scope.$apply(function() {
+      //       scope.selectedNode = viewNode.node;
+      //     });
+      //   });
       // .on('contextmenu', d3.contextMenu(function(viewNode) {
       //   let menu = (getNodeActions ? getNodeActions(viewNode) : []) || menu;
       //
@@ -66,10 +94,11 @@ angular.module('editorApp')
       // }))
     }
 
-    function addNodeItemElm(nodeElm, name, icon, desc, cssClass) {
+    function addNodeItemElm(nodeElm, name, icon, desc, cssClass, index) {
       let itemElm = nodeElm.append('div');
       itemElm
         .attr('class', 'item ' + cssClass)
+        .attr('data-index', index)
         .append('span')
         .attr('class', `icon fa fa-${icon}`);
       let itemContentElm = itemElm.append('div')
@@ -90,8 +119,8 @@ angular.module('editorApp')
         .enter()
         .append('div')
         .attr('class', viewNode => (viewNode.node.getType().isComposite ? 'composite' : 'action') + ' node')
-        .attr('data-node-id', viewNode => viewNode.node._id)
-        .attr('data-node-key', viewNode => `${viewNode.node._id}_${viewNode.node._version}`)
+        .attr('data-node-id', viewNode => viewNode.node.getId())
+        .attr('data-node-key', viewNode => `${viewNode.node.getId()}_${viewNode.node._version}`)
         .each(function(viewNode) {
           let nodeElm = d3.select(this);
           let node = viewNode.node;
@@ -99,30 +128,31 @@ angular.module('editorApp')
 
           addNodeItemElm(nodeElm, nodeType.name, nodeType.icon, 'TODO desc', 'node-desc');
 
-          if(node.decorators){
-            node.decorators.forEach(function(decorator){
+          if (node.decorators) {
+            node.decorators.forEach(function(decorator, index) {
               let decoratorType = decorator.getType();
-              addNodeItemElm(nodeElm, decoratorType.name, decoratorType.icon, 'TODO desc', 'decorator');
+              addNodeItemElm(nodeElm, decoratorType.name, decoratorType.icon, 'TODO desc', 'decorator', index);
             });
           }
 
-          if(node.services){
-            node.services.forEach(function(service){
+          if (node.services) {
+            node.services.forEach(function(service, index) {
               let serviceType = service.getType();
-              addNodeItemElm(nodeElm, serviceType.name, serviceType.icon, 'TODO desc', 'service');
+              addNodeItemElm(nodeElm, serviceType.name, serviceType.icon, 'TODO desc', 'service', index);
             });
           }
 
           if (viewNode.node === scope.selectedNode) {
             nodeElm.classed('selected', true);
           }
+
+          bindMouseEvents(nodeElm, viewNode, scope); // toto asi bude zle lebo podla mna ked sa spravi refresh, tak sa to prida do vsetkych
         });
       //remove removed nodes
       nodeElmsData
         .exit()
         .remove();
       //update mouse event bindings
-      bindMouseEvents(nodeElmsData, scope);
     }
 
     function getMaxHeightPerLevel(viewNodes) {
@@ -229,7 +259,7 @@ angular.module('editorApp')
 
       //http://stackoverflow.com/questions/30890212/data-join-with-custom-key-does-not-work-as-expected
       let nodeElmsData = nodeElms.data(viewNodes, function(viewNode) {
-        return Array.isArray(this) ? (`${viewNode.node._id}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
+        return Array.isArray(this) ? (`${viewNode.node.getId()}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
       });
 
       //init tree size must be enough for a node so the node's width won't be smaller due to text wrapping
@@ -297,17 +327,41 @@ angular.module('editorApp')
     }
 
     function getNodeSelector(node) {
-      return `.node[data-node-id="${node._id}"]`;
+      return `.node[data-node-id="${node.getId()}"]`;
     }
 
-    function onSelectionChanged(treeContentElm, selectedNode) {
+    /**
+     * gets the node of a node item
+     * @param  {Node|Service|Decorator} nodeItem
+     * @return {Node} - node
+     */
+    function getItemNode(nodeItem) {
+      if(nodeItem.getNode){
+        return nodeItem.getNode();
+      }
+      return nodeItem;
+    }
+
+    function onSelectionChanged(treeContentElm, selectedNodeItem) {
       //deselect
-      treeContentElm.selectAll('.node.selected').classed('selected', false);
+      treeContentElm.selectAll('.item.selected').classed('selected', false);
       //select
-      if (selectedNode) {
-        treeContentElm
-          .selectAll(getNodeSelector(selectedNode))
-          .classed('selected', true);
+      if (selectedNodeItem) {
+        let node = getItemNode(selectedNodeItem);
+         let nodeElm = treeContentElm.select(getNodeSelector(node));
+        if(node === selectedNodeItem){
+          nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
+        }else{
+          let itemClass = 'decorator';
+          let subItemIndex = node.getIndexOfDecorator(selectedNodeItem);
+          if(subItemIndex === -1){
+            itemClass = 'service';
+            subItemIndex = node.getIndexOfService(selectedNodeItem);
+          }
+          if(subItemIndex > -1){
+            nodeElm.selectAll(`.item.${itemClass}[data-index="${subItemIndex}"]`).classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
+          }
+        }
       }
     }
 
@@ -340,7 +394,11 @@ angular.module('editorApp')
       restrict: 'EA',
       replace: true,
       scope: {
-        tree: '='
+        tree: '=',
+        /**
+         * {Node|Decorator|Service} - selected node item (nodeDesc/decorator/service)
+         */
+        selectedNodeItem: '='
       },
       // controller: function ($scope) {
       //   $scope.tmpUp=function(){
@@ -382,8 +440,8 @@ angular.module('editorApp')
             firstRender = false;
           }
         });
-        scope.$watch('selectedNode', function() {
-          onSelectionChanged(treeContentElm, scope.selectedNode);
+        scope.$watch('selectedNodeItem', function() {
+          onSelectionChanged(treeContentElm, scope.selectedNodeItem);
         });
       }
     };
