@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('editorApp')
-  .controller('TreeCtrl', function($scope, hotkeys, ListSelectDialog, ProjectModel, TreeModel) {
+  .controller('TreeCtrl', function($scope, $interpolate, hotkeys, ListSelectDialog, ProjectModel, TreeModel, EditablePropertyProvider) {
 
-    function buildCommands(){
-      let addNodeCommand = function(){
+    function buildCommands() {
+      let addNodeCommand = function() {
         console.log(this.name);
       };
       let commands = [];
@@ -21,11 +21,18 @@ angular.module('editorApp')
       return commands;
     }
 
+
     //https://github.com/angular/angular.js/wiki/Understanding-Scopes#ng-include
     $scope.model = {
-      commands : buildCommands(),
+      commands: buildCommands(),
       tree: TreeModel
     };
+
+
+    $scope.$watch('model.selectedNodeItem', function() {
+      $scope.model.selectedNodeItemProperties = EditablePropertyProvider.getEditableProperties($scope.model.selectedNodeItem);
+    });
+
 
     $scope.open = function() {
       ListSelectDialog.open($scope.model.commands)

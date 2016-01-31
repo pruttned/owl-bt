@@ -1,5 +1,27 @@
 <div class="col-md-12">
   TREE VIEW
-<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
-<tree-view tree="model.tree"></tree-view>
+  <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+  <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem"></tree-view>
+  <!-- <div>
+    <div>
+      {{model.selectedNodeItem.getType().name}}
+      <input ng-model="model.selectedNodeItem.getType().name" ng-blur="fun(model.selectedNodeItem)"/>
+    </div>
+  </div> -->
+  <section class="node-item-details" ng-if="model.selectedNodeItem">
+    <h1>Details</h1>
+    {{model.selectedNodeItem.type}}
+    <section ng-if="model.selectedNodeItemProperties">
+      <h1>Properties</h1>
+      <property-editor-list properties="model.selectedNodeItemProperties"></property-editor-list>
+    </section>
+
+    <!-- <div ng-repeat="property in model.selectedNodeItemProperties">
+    {{property.name}}{{property.isSet}}
+    https://docs.angularjs.org/api/ng/directive/ngModelOptions
+    <input ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: 'blur' }"/>
+    <button ng-click="property.reset()" ng-if="property.isSet">reset</button>
+  </div> -->
+  </section>
+
 </div>

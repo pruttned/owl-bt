@@ -62,55 +62,31 @@ angular.module('editorApp')
             scope.selectedNodeItem = item;
           });
         });
-
-      //http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
-      //    let getNodeActions = scope.getNodeActions();
-      //
-      //
-      // nodeElmsData
-      //   .on('click', function(viewNode) {
-      //     console.log('asdasd');
-      //     scope.$apply(function() {
-      //       scope.selectedNode = viewNode.node;
-      //     });
-      //   });
-      // .on('contextmenu', d3.contextMenu(function(viewNode) {
-      //   let menu = (getNodeActions ? getNodeActions(viewNode) : []) || menu;
-      //
-      //   //map action function parameters
-      //   menu = menu.map(function(menuAction) {
-      //     return {
-      //       title: menuAction.title,
-      //       action: function(elm, viewNode) {
-      //         scope.$apply(function() {
-      //           menuAction.action(viewNode.node);
-      //         });
-      //       }
-      //     };
-      //   });
-      //
-      //   return menu;
-      //   //TODO: change d3.contextMenu so it won't open for an empty array and won't throw exception for undefined
-      // }))
     }
 
-    function addNodeItemElm(nodeElm, name, icon, desc, cssClass, index) {
+    function addNodeItemElm(scope, nodeItem, nodeElm, typeDesc, cssClass, index) {
       let itemElm = nodeElm.append('div');
       itemElm
         .attr('class', 'item ' + cssClass)
         .attr('data-index', index)
         .append('span')
-        .attr('class', `icon fa fa-${icon}`);
+        .attr('class', `icon fa fa-${typeDesc.icon}`);
       let itemContentElm = itemElm.append('div')
         .attr('class', 'content');
       itemContentElm
         .append('div')
         .attr('class', 'name')
-        .text(name);
-      itemContentElm
-        .append('div')
-        .attr('class', 'desc')
-        .text(desc);
+        .text(typeDesc.name);
+      if (typeDesc.description) {
+        let allProperties = nodeItem.getAllProperties();
+        itemContentElm
+          .append('div')
+          .attr('class', 'desc')
+          .text(typeDesc.description(allProperties));
+      }
+      if (nodeItem === scope.selectedNodeItem) {
+        itemElm.classed('selected', true);
+      }
     }
 
     function refreshNodes(rootViewNode, nodeElmsData, scope) {
@@ -126,19 +102,19 @@ angular.module('editorApp')
           let node = viewNode.node;
           let nodeType = node.getType();
 
-          addNodeItemElm(nodeElm, nodeType.name, nodeType.icon, 'TODO desc', 'node-desc');
+          addNodeItemElm(scope, node, nodeElm, nodeType, 'node-desc');
 
           if (node.decorators) {
             node.decorators.forEach(function(decorator, index) {
               let decoratorType = decorator.getType();
-              addNodeItemElm(nodeElm, decoratorType.name, decoratorType.icon, 'TODO desc', 'decorator', index);
+              addNodeItemElm(scope, decorator, nodeElm, decoratorType, 'decorator', index);
             });
           }
 
           if (node.services) {
             node.services.forEach(function(service, index) {
               let serviceType = service.getType();
-              addNodeItemElm(nodeElm, serviceType.name, serviceType.icon, 'TODO desc', 'service', index);
+              addNodeItemElm(scope, service, nodeElm, serviceType, 'service', index);
             });
           }
 
@@ -330,35 +306,23 @@ angular.module('editorApp')
       return `.node[data-node-id="${node.getId()}"]`;
     }
 
-    /**
-     * gets the node of a node item
-     * @param  {Node|Service|Decorator} nodeItem
-     * @return {Node} - node
-     */
-    function getItemNode(nodeItem) {
-      if(nodeItem.getNode){
-        return nodeItem.getNode();
-      }
-      return nodeItem;
-    }
-
     function onSelectionChanged(treeContentElm, selectedNodeItem) {
       //deselect
       treeContentElm.selectAll('.item.selected').classed('selected', false);
       //select
       if (selectedNodeItem) {
-        let node = getItemNode(selectedNodeItem);
-         let nodeElm = treeContentElm.select(getNodeSelector(node));
-        if(node === selectedNodeItem){
+        let node = selectedNodeItem.getNode();
+        let nodeElm = treeContentElm.select(getNodeSelector(node));
+        if (node === selectedNodeItem) {
           nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
-        }else{
+        } else {
           let itemClass = 'decorator';
           let subItemIndex = node.getIndexOfDecorator(selectedNodeItem);
-          if(subItemIndex === -1){
+          if (subItemIndex === -1) {
             itemClass = 'service';
             subItemIndex = node.getIndexOfService(selectedNodeItem);
           }
-          if(subItemIndex > -1){
+          if (subItemIndex > -1) {
             nodeElm.selectAll(`.item.${itemClass}[data-index="${subItemIndex}"]`).classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
           }
         }

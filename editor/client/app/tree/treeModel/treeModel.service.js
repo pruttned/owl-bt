@@ -8,6 +8,10 @@ angular.module('editorApp')
     class TreeModel {
       constructor(ProjectModel) {
 
+        this.version = 1;
+
+        let treeModel = this;
+
         // let nextNodeItemId = 1; //unique id amongst all node items (nodes/services/decorators)
         // function getNextItemId(){
         //   if(nextNodeItemId===Number.MAX_SAFE_INTEGER){
@@ -17,7 +21,50 @@ angular.module('editorApp')
         // }
         //
 
-        class NodeSubItem {
+        class NodeItem {
+          /**
+           * @param  {Node} owningNode - set only if the NodeItem is subitem of a node (not a node itself)
+           */
+          constructor(owningNode) {
+            if (owningNode) {
+              this._node = owningNode;
+            }
+          }
+
+          /**
+           * Gets all properties merged with default values
+           * @return {object} object with parameter values merged with default values
+           */
+          getAllProperties() {
+            let properties = {};
+            if (this._type.properties) {
+              this._type.properties.forEach(property => {
+                properties[property.name] = property.default;
+              });
+            }
+            if (this.properties) {
+              for (let propertyName in this.properties) {
+                if (this.properties.hasOwnProperty(propertyName)) {
+                  properties[propertyName] = this.properties[propertyName];
+                }
+              }
+            }
+            return properties;
+          }
+
+          /**
+           * Get owning Node of this item (for Node it returns the same object)
+           * @return {Node} owning node
+           */
+          getNode() {
+            if (this._node) {
+              return this._node;
+            }
+            return this;
+          }
+        }
+
+        class NodeSubItem extends NodeItem {
           /**
            * Creates NodeSubItem from the provided data
            * @param  {Object} data - data to copy to NodeSubItem
@@ -25,16 +72,13 @@ angular.module('editorApp')
            * @param  {Object} type - item type descriptor
            */
           constructor(data, node, type) {
+            super(node);
             angular.extend(this, data);
 
-            this._node = node;
             this._type = type;
           }
           getType() {
             return this._type;
-          }
-          getNode() {
-            return this._node;
           }
         }
 
@@ -68,7 +112,7 @@ angular.module('editorApp')
 
         //node class. TODO: extract to separate service?
         let nextNodeId = 1; //unique id amongst all node items (nodes/services/decorators)
-        this.Node = class Node {
+        this.Node = class Node extends NodeItem {
           /**
            * Creates Node tree from the provided plain subtree data
            * @param  {nodeData} node - node data to copy to Node
@@ -78,6 +122,7 @@ angular.module('editorApp')
            * @param  {decoratorData array} node.decorators - (optional) decorators
            */
           constructor(node) {
+            super();
             angular.extend(this, node);
 
             this._version = 1;
@@ -100,30 +145,40 @@ angular.module('editorApp')
           getType() {
             return this._type;
           }
-          findFirstNode(predicate){
-            if(predicate(this)){
+          findFirstNode(predicate) {
+            if (predicate(this)) {
               return this;
             }
-            if(this.childNodes){
+            if (this.childNodes) {
               for (var i = 0; i < this.childNodes.length; i++) {
                 let foundNode = this.findFirstNode(this.childNodes[i]);
-                if(foundNode){
+                if (foundNode) {
                   return foundNode;
                 }
               }
             }
           }
           getIndexOfDecorator(decorator) {
-            if(this.decorators){
+            if (this.decorators) {
               return _.indexOf(this.decorators, decorator);
             }
             return -1;
           }
           getIndexOfService(service) {
-            if(this.services){
+            if (this.services) {
               return _.indexOf(this.services, service);
             }
             return -1;
+          }
+          notifyChange(keepNodeVersion) {
+            if (!keepNodeVersion) {
+              if (this._version === Number.MAX_SAFE_INTEGER) {
+                this._version = 1;
+              } else {
+                this._version++;
+              }
+            }
+            treeModel.notifyChange();
           }
         };
 
@@ -144,7 +199,22 @@ angular.module('editorApp')
             type: 'findPlayer'
           }, {
             type: 'gotoPlayer'
+          }, {
+            type: 'playSound',
+            properties: {
+              soundName: 'myOtherSound.ogg',
+              modifier: 'modif3'
+            }
           }]
         });
       }
+
+      notifyChange() {
+        if (this.version === Number.MAX_SAFE_INTEGER) {
+          this.version = 1;
+        } else {
+          this.version++;
+        }
+      }
+
     });

@@ -6,7 +6,7 @@ angular.module('editorApp')
      * Current project model
      */
     class ProjectModel {
-      constructor() {
+      constructor($interpolate) {
         //TODO: load from srv
         this.nodeTypes = {
           sequence: {
@@ -28,47 +28,88 @@ angular.module('editorApp')
             name: 'gotoPlayer',
             icon: 'step-forward',
             isComposite: false
+          },
+          playSound: {
+            name: 'playSound',
+            icon: 'volume-up',
+            isComposite: false,
+            description: 'Play sound "{{soundName}}" with "{{volume}}" volume',
+            properties: [{
+              name: 'soundName',
+              type: 'string',
+              default: 'mySound.ogg'
+            }, {
+              name: 'volume',
+              type: 'number',
+              min: 10,
+              max: 20,
+              default: 14.5
+            }, {
+              name: 'repeat',
+              type: 'bool',
+              default: true
+            }, {
+              name: 'modifier',
+              type: 'enum',
+              default: 'modif2',
+              values: ['modif1', 'modif2', 'modif3']
+            }]
           }
         };
-
         this.serviceTypes = {
-          checkAmmo : {
-            name : 'checkAmmo',
-            icon : 'check'
+          checkAmmo: {
+            name: 'checkAmmo',
+            icon: 'check'
           }
         };
 
         this.decoratorTypes = {
-          hasAmmo:{
-            name : 'hasAmmo',
-            icon : 'battery-full'
+          hasAmmo: {
+            name: 'hasAmmo',
+            icon: 'battery-full'
           },
-          isAwake :{
-            name : 'isAwake',
-            icon : 'bell'
+          isAwake: {
+            name: 'isAwake',
+            icon: 'bell'
           }
         };
+
+        function compileDescriptions(typeDict) {
+          for (let typeName in typeDict) {
+            if (typeDict.hasOwnProperty(typeName)) {
+              let type = typeDict[typeName];
+              if (type.description) {
+                type.description = $interpolate(type.description);
+              }
+            }
+          }
+        }
+
+        //compile all descriptions
+        compileDescriptions(this.nodeTypes);
+        compileDescriptions(this.serviceTypes);
+        compileDescriptions(this.decoratorTypes);
       }
 
-      getNodeType(name){
+      getNodeType(name) {
         let nodeType = this.nodeTypes[name];
-        if(!nodeType){
+        if (!nodeType) {
           throw new Error(`Unknown nodeType "${name}"`);
         }
         return nodeType;
       }
 
-      getServiceType(name){
+      getServiceType(name) {
         let serviceType = this.serviceTypes[name];
-        if(!serviceType){
+        if (!serviceType) {
           throw new Error(`Unknown serviceType "${name}"`);
         }
         return serviceType;
       }
 
-      getDecoratorType(name){
+      getDecoratorType(name) {
         let decoratorType = this.decoratorTypes[name];
-        if(!decoratorType){
+        if (!decoratorType) {
           throw new Error(`Unknown decoratorType "${name}"`);
         }
         return decoratorType;
