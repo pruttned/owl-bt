@@ -9,12 +9,11 @@
     </div>
   </div> -->
   <section class="node-item-details" ng-if="model.selectedNodeItem">
-    <h1>Details</h1>
-    {{model.selectedNodeItem.type}}
-    <section ng-if="model.selectedNodeItemProperties">
-      <h1>Properties</h1>
+    <h1>Details - {{model.selectedNodeItem.type}}</h1>
+    <fieldset ng-if="model.selectedNodeItemProperties" class="node-item-properties">
+      <legend>Custom properties</legend>
       <property-editor-list properties="model.selectedNodeItemProperties"></property-editor-list>
-    </section>
+    </fieldset>
 
     <!-- <div ng-repeat="property in model.selectedNodeItemProperties">
     {{property.name}}{{property.isSet}}

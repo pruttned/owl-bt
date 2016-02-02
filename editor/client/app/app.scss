@@ -10,6 +10,8 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  */
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
+$ctrl-highlight-color : #C65C5C;
+$ctrl-input-color : #161b20;
 $ctrl-border-color : #2C3E50;
 $ctrl-background-color : #243342;
 $ctrl-hover-color : #3D566F;
@@ -40,8 +42,17 @@ $node-decorator-color: #333333;
     padding: 0.2em 0;
 }
 
-input{
+input, select, button{
   padding: 4px;
+  color: $ctrl-input-color;
+}
+
+.icon-button{
+  cursor: pointer;
+  margin: 0 3px;
+  &:hover{
+    color: $ctrl-highlight-color;
+  }
 }
 
 .modal-content
@@ -73,6 +84,7 @@ ul.selectable{
 @import 'main/main.scss';
 @import 'project/project.scss';
 @import 'tree/tree.scss';
+@import 'tree/treeNodeItemDetails.scss';
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'modal/modal.scss';
