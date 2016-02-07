@@ -8,7 +8,7 @@ angular.module('editorApp')
      * has been changed against default value specified in type descriptor; handles undo/redo functionality
      */
     class PropertyAccessorProvider {
-      constructor() {
+      constructor(UndoRedoManager) {
         this.PropertyAccessor = class PropertyAccessor {
           /**
            * @param  {desc} desc - property descriptor
@@ -28,20 +28,53 @@ angular.module('editorApp')
               return this.nodeItem.properties && this.desc.name in this.nodeItem.properties;
             }
             //TODO: handle min/max/...
-          value(value) {
+          value(value, skipUndoHistory) {
             if (arguments.length) {
+
+              if (!skipUndoHistory) {
+                let _this = this;
+                let oldValue = angular.copy(this.value());
+                let newValue = angular.copy(value);
+                let oldIsSet = this.isSet();
+                UndoRedoManager.add({
+                  undo: function() {
+                    if (oldIsSet) {
+                      _this.value(oldValue, true);
+                    } else {
+                      _this.reset(true);
+                    }
+                  },
+                  redo: function() {
+                    _this.value(newValue, true);
+                  }
+                });
+              }
 
               if (!this.nodeItem.properties) {
                 this.nodeItem.properties = {};
               }
               this.nodeItem.properties[this.desc.name] = value;
               this.nodeItem.getNode().notifyChange();
+
             } else {
               return this.isSet() ? this.nodeItem.properties[this.desc.name] : this.desc.default;
             }
           }
-          reset() {
+          reset(skipUndoHistory) {
             if (this.isSet()) {
+              if (!skipUndoHistory) {
+                let _this = this;
+                let oldValue = angular.copy(this.value());
+                UndoRedoManager.add({
+                  undo: function() {
+                    _this.value(oldValue, true);
+                  },
+                  redo: function() {
+                    _this.reset(true);
+                  }
+                });
+              }
+
               if (this.nodeItem.properties) {
                 delete(this.nodeItem.properties[this.desc.name]);
                 if (_.isEmpty(this.nodeItem.properties)) {
