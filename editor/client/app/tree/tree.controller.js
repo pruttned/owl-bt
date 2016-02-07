@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('editorApp')
-  .controller('TreeCtrl', function($scope, $interpolate, hotkeys, ListSelectDialog, ProjectModel, TreeModel, EditablePropertyProvider) {
+  .controller('TreeCtrl', function($scope, $interpolate, hotkeys, ListSelectDialog,
+    ProjectModel, TreeModel, UndoRedoManager) {
 
     function buildCommands() {
       let addNodeCommand = function() {
@@ -21,18 +22,11 @@ angular.module('editorApp')
       return commands;
     }
 
-
     //https://github.com/angular/angular.js/wiki/Understanding-Scopes#ng-include
     $scope.model = {
       commands: buildCommands(),
       tree: TreeModel
     };
-
-
-    $scope.$watch('model.selectedNodeItem', function() {
-      $scope.model.selectedNodeItemProperties = EditablePropertyProvider.getEditableProperties($scope.model.selectedNodeItem);
-    });
-
 
     $scope.open = function() {
       ListSelectDialog.open($scope.model.commands)
@@ -41,6 +35,12 @@ angular.module('editorApp')
         }, function() {
           console.log('cancel');
         });
+    };
+    $scope.undo = function() {
+      UndoRedoManager.undo();
+    };
+    $scope.redo = function() {
+      UndoRedoManager.redo();
     };
 
     hotkeys.add({

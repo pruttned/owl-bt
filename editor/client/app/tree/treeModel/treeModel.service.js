@@ -6,7 +6,7 @@ angular.module('editorApp')
    */
   .service('TreeModel',
     class TreeModel {
-      constructor(ProjectModel) {
+      constructor(ProjectModel, PropertyAccessorProvider) {
 
         this.version = 1;
 
@@ -24,18 +24,31 @@ angular.module('editorApp')
         class NodeItem {
           /**
            * @param  {Node} owningNode - set only if the NodeItem is subitem of a node (not a node itself)
+           * @param  {Object} type - item type descriptor
            */
-          constructor(owningNode) {
+          constructor(type, owningNode) {
+            this._type = type;
             if (owningNode) {
               this._node = owningNode;
             }
           }
-
+          /**
+           * @return {PropertyAccessor array} property accessors
+           */
+          getPropertyAccessors(){
+            if(!this._propertyAccessors){
+              this._propertyAccessors = PropertyAccessorProvider.getPropertyAccessors(this);
+            }
+            return this._propertyAccessors;
+          }
+          getType() {
+            return this._type;
+          }
           /**
            * Gets all properties merged with default values
            * @return {object} object with parameter values merged with default values
            */
-          getAllProperties() {
+          getAllProperties() { //TODO: remove/replace with getPropertyAccessors (or rename)
             let properties = {};
             if (this._type.properties) {
               this._type.properties.forEach(property => {
@@ -72,13 +85,8 @@ angular.module('editorApp')
            * @param  {Object} type - item type descriptor
            */
           constructor(data, node, type) {
-            super(node);
+            super(type, node);
             angular.extend(this, data);
-
-            this._type = type;
-          }
-          getType() {
-            return this._type;
           }
         }
 
@@ -122,12 +130,11 @@ angular.module('editorApp')
            * @param  {decoratorData array} node.decorators - (optional) decorators
            */
           constructor(node) {
-            super();
+            super(ProjectModel.getNodeType(node.type));
             angular.extend(this, node);
 
             this._version = 1;
             this._id = nextNodeId++;
-            this._type = ProjectModel.getNodeType(node.type);
 
             if (node.decorators) {
               this.decorators = node.decorators.map(decoratorData => new Decorator(decoratorData, this));
@@ -141,9 +148,6 @@ angular.module('editorApp')
           }
           getId() {
             return this._id;
-          }
-          getType() {
-            return this._type;
           }
           findFirstNode(predicate) {
             if (predicate(this)) {

@@ -1,6 +1,8 @@
 <div class="col-md-12">
   TREE VIEW
   <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+  <button type="button" class="btn btn-default" ng-click="undo()">Undo</button>
+  <button type="button" class="btn btn-default" ng-click="redo()">Redo</button>
   <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem"></tree-view>
   <!-- <div>
     <div>
@@ -8,19 +10,15 @@
       <input ng-model="model.selectedNodeItem.getType().name" ng-blur="fun(model.selectedNodeItem)"/>
     </div>
   </div> -->
+<div ng-repeat="accessor in model.selectedNodeItem.getPropertyAccessors()">
+  {{accessor.value()}}
+</div>
   <section class="node-item-details" ng-if="model.selectedNodeItem">
     <h1>Details - {{model.selectedNodeItem.type}}</h1>
-    <fieldset ng-if="model.selectedNodeItemProperties" class="node-item-properties">
+    <fieldset class="node-item-properties">
       <legend>Custom properties</legend>
-      <property-editor-list properties="model.selectedNodeItemProperties"></property-editor-list>
+      <property-editor-list properties="model.selectedNodeItem.getPropertyAccessors()"></property-editor-list>
     </fieldset>
-
-    <!-- <div ng-repeat="property in model.selectedNodeItemProperties">
-    {{property.name}}{{property.isSet}}
-    https://docs.angularjs.org/api/ng/directive/ngModelOptions
-    <input ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: 'blur' }"/>
-    <button ng-click="property.reset()" ng-if="property.isSet">reset</button>
-  </div> -->
   </section>
 
 </div>
