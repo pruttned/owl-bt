@@ -16,7 +16,8 @@
     "bootstrap": "~3.3.5",
     "bootstrap-sass": "~3.3.5",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
-    "d3": "~3.5.12"
+    "d3": "~3.5.12",
+    "undo-manager": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

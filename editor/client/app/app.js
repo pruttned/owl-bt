@@ -16,4 +16,5 @@ angular.module('editorApp', [
   })
   .constant('_', window._) //http://stackoverflow.com/a/23984685
   .constant('d3', window.d3)
+  .constant('undoStackSize', 100)
   ;
