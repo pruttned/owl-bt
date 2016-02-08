@@ -54,7 +54,7 @@ angular.module('editorApp')
                 this.nodeItem.properties = {};
               }
               this.nodeItem.properties[this.desc.name] = value;
-              this.nodeItem.getNode().notifyChange();
+              this.nodeItem.node().notifyChange();
 
             } else {
               return this.isSet() ? this.nodeItem.properties[this.desc.name] : this.desc.default;
@@ -81,7 +81,7 @@ angular.module('editorApp')
                   delete(this.nodeItem.properties);
                 }
               }
-              this.nodeItem.getNode().notifyChange();
+              this.nodeItem.node().notifyChange();
             }
           }
         };
@@ -94,7 +94,7 @@ angular.module('editorApp')
        */
       createPropertyAccessors(nodeItem) {
         if (nodeItem) {
-          let typeDescProperties = nodeItem.getTypeDesc().properties;
+          let typeDescProperties = nodeItem.typeDesc().properties;
           if (typeDescProperties) {
             return typeDescProperties.map(property => new this.PropertyAccessor(property, nodeItem));
           }

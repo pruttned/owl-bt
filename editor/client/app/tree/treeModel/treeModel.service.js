@@ -35,13 +35,13 @@ angular.module('editorApp')
           /**
            * @return {PropertyAccessor array} property accessors
            */
-          getPropertyAccessors(){
+          propertyAccessors(){
             if(!this._propertyAccessors){
               this._propertyAccessors = PropertyAccessorProvider.createPropertyAccessors(this);
             }
             return this._propertyAccessors;
           }
-          getTypeDesc() {
+          typeDesc() {
             return this._typeDesc;
           }
           /**
@@ -69,7 +69,7 @@ angular.module('editorApp')
            * Get owning Node of this item (for Node it returns the same object)
            * @return {Node} owning node
            */
-          getNode() {
+          node() {
             if (this._node) {
               return this._node;
             }
@@ -144,7 +144,7 @@ angular.module('editorApp')
               this.childNodes = node.childNodes.map(childNodeData => new Node(childNodeData));
             }
           }
-          getId() {
+          id() {
             return this._id;
           }
           findFirstNode(predicate) {

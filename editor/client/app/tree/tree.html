@@ -6,18 +6,18 @@
   <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem"></tree-view>
   <!-- <div>
     <div>
-      {{model.selectedNodeItem.getTypeDesc().name}}
-      <input ng-model="model.selectedNodeItem.getTypeDesc().name" ng-blur="fun(model.selectedNodeItem)"/>
+      {{model.selectedNodeItem.typeDesc().name}}
+      <input ng-model="model.selectedNodeItem.typeDesc().name" ng-blur="fun(model.selectedNodeItem)"/>
     </div>
   </div> -->
-<div ng-repeat="accessor in model.selectedNodeItem.getPropertyAccessors()">
+<div ng-repeat="accessor in model.selectedNodeItem.propertyAccessors()">
   {{accessor.value()}}
 </div>
   <section class="node-item-details" ng-if="model.selectedNodeItem">
     <h1>Details - {{model.selectedNodeItem.type}}</h1>
     <fieldset class="node-item-properties">
       <legend>Custom properties</legend>
-      <property-editor-list properties="model.selectedNodeItem.getPropertyAccessors()"></property-editor-list>
+      <property-editor-list properties="model.selectedNodeItem.propertyAccessors()"></property-editor-list>
     </fieldset>
   </section>
 

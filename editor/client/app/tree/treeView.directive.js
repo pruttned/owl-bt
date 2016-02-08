@@ -94,26 +94,26 @@ angular.module('editorApp')
       nodeElmsData
         .enter()
         .append('div')
-        .attr('class', viewNode => (viewNode.node.getTypeDesc().isComposite ? 'composite' : 'action') + ' node')
-        .attr('data-node-id', viewNode => viewNode.node.getId())
-        .attr('data-node-key', viewNode => `${viewNode.node.getId()}_${viewNode.node._version}`)
+        .attr('class', viewNode => (viewNode.node.typeDesc().isComposite ? 'composite' : 'action') + ' node')
+        .attr('data-node-id', viewNode => viewNode.node.id())
+        .attr('data-node-key', viewNode => `${viewNode.node.id()}_${viewNode.node._version}`)
         .each(function(viewNode) {
           let nodeElm = d3.select(this);
           let node = viewNode.node;
-          let nodeType = node.getTypeDesc();
+          let nodeType = node.typeDesc();
 
           addNodeItemElm(scope, node, nodeElm, nodeType, 'node-desc');
 
           if (node.decorators) {
             node.decorators.forEach(function(decorator, index) {
-              let decoratorType = decorator.getTypeDesc();
+              let decoratorType = decorator.typeDesc();
               addNodeItemElm(scope, decorator, nodeElm, decoratorType, 'decorator', index);
             });
           }
 
           if (node.services) {
             node.services.forEach(function(service, index) {
-              let serviceType = service.getTypeDesc();
+              let serviceType = service.typeDesc();
               addNodeItemElm(scope, service, nodeElm, serviceType, 'service', index);
             });
           }
@@ -235,7 +235,7 @@ angular.module('editorApp')
 
       //http://stackoverflow.com/questions/30890212/data-join-with-custom-key-does-not-work-as-expected
       let nodeElmsData = nodeElms.data(viewNodes, function(viewNode) {
-        return Array.isArray(this) ? (`${viewNode.node.getId()}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
+        return Array.isArray(this) ? (`${viewNode.node.id()}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
       });
 
       //init tree size must be enough for a node so the node's width won't be smaller due to text wrapping
@@ -303,7 +303,7 @@ angular.module('editorApp')
     }
 
     function getNodeSelector(node) {
-      return `.node[data-node-id="${node.getId()}"]`;
+      return `.node[data-node-id="${node.id()}"]`;
     }
 
     function onSelectionChanged(treeContentElm, selectedNodeItem) {
@@ -311,7 +311,7 @@ angular.module('editorApp')
       treeContentElm.selectAll('.item.selected').classed('selected', false);
       //select
       if (selectedNodeItem) {
-        let node = selectedNodeItem.getNode();
+        let node = selectedNodeItem.node();
         let nodeElm = treeContentElm.select(getNodeSelector(node));
         if (node === selectedNodeItem) {
           nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
