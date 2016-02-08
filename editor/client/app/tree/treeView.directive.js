@@ -94,26 +94,26 @@ angular.module('editorApp')
       nodeElmsData
         .enter()
         .append('div')
-        .attr('class', viewNode => (viewNode.node.getType().isComposite ? 'composite' : 'action') + ' node')
+        .attr('class', viewNode => (viewNode.node.getTypeDesc().isComposite ? 'composite' : 'action') + ' node')
         .attr('data-node-id', viewNode => viewNode.node.getId())
         .attr('data-node-key', viewNode => `${viewNode.node.getId()}_${viewNode.node._version}`)
         .each(function(viewNode) {
           let nodeElm = d3.select(this);
           let node = viewNode.node;
-          let nodeType = node.getType();
+          let nodeType = node.getTypeDesc();
 
           addNodeItemElm(scope, node, nodeElm, nodeType, 'node-desc');
 
           if (node.decorators) {
             node.decorators.forEach(function(decorator, index) {
-              let decoratorType = decorator.getType();
+              let decoratorType = decorator.getTypeDesc();
               addNodeItemElm(scope, decorator, nodeElm, decoratorType, 'decorator', index);
             });
           }
 
           if (node.services) {
             node.services.forEach(function(service, index) {
-              let serviceType = service.getType();
+              let serviceType = service.getTypeDesc();
               addNodeItemElm(scope, service, nodeElm, serviceType, 'service', index);
             });
           }

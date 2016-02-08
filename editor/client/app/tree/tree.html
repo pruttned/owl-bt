@@ -6,8 +6,8 @@
   <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem"></tree-view>
   <!-- <div>
     <div>
-      {{model.selectedNodeItem.getType().name}}
-      <input ng-model="model.selectedNodeItem.getType().name" ng-blur="fun(model.selectedNodeItem)"/>
+      {{model.selectedNodeItem.getTypeDesc().name}}
+      <input ng-model="model.selectedNodeItem.getTypeDesc().name" ng-blur="fun(model.selectedNodeItem)"/>
     </div>
   </div> -->
 <div ng-repeat="accessor in model.selectedNodeItem.getPropertyAccessors()">

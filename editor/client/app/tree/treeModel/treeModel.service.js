@@ -24,10 +24,10 @@ angular.module('editorApp')
         class NodeItem {
           /**
            * @param  {Node} owningNode - set only if the NodeItem is subitem of a node (not a node itself)
-           * @param  {Object} type - item type descriptor
+           * @param  {Object} typeDesc - item type descriptor
            */
-          constructor(type, owningNode) {
-            this._type = type;
+          constructor(typeDesc, owningNode) {
+            this._typeDesc = typeDesc;
             if (owningNode) {
               this._node = owningNode;
             }
@@ -41,8 +41,8 @@ angular.module('editorApp')
             }
             return this._propertyAccessors;
           }
-          getType() {
-            return this._type;
+          getTypeDesc() {
+            return this._typeDesc;
           }
           /**
            * Gets all properties merged with default values
@@ -50,8 +50,8 @@ angular.module('editorApp')
            */
           getAllProperties() { //TODO: remove/replace with getPropertyAccessors (or rename)
             let properties = {};
-            if (this._type.properties) {
-              this._type.properties.forEach(property => {
+            if (this._typeDesc.properties) {
+              this._typeDesc.properties.forEach(property => {
                 properties[property.name] = property.default;
               });
             }
@@ -82,10 +82,10 @@ angular.module('editorApp')
            * Creates NodeSubItem from the provided data
            * @param  {Object} data - data to copy to NodeSubItem
            * @param  {Node} node - node that contains this sub item
-           * @param  {Object} type - item type descriptor
+           * @param  {Object} typeDesc - item type descriptor
            */
-          constructor(data, node, type) {
-            super(type, node);
+          constructor(data, node, typeDesc) {
+            super(typeDesc, node);
             angular.extend(this, data);
           }
         }
@@ -98,8 +98,7 @@ angular.module('editorApp')
            * @param  {Node} node - node that contains this decorator
            */
           constructor(decorator, node) {
-            let type = ProjectModel.getDecoratorType(decorator.type);
-            super(decorator, node, type);
+            super(decorator, node,  ProjectModel.getDecoratorTypeDesc(decorator.type));
           }
         };
         let Decorator = this.Decorator;
@@ -108,12 +107,11 @@ angular.module('editorApp')
           /**
            * Creates Service from the provided data
            * @param  {serviceData} service - service data to copy to service
-           * @param  {String}  service.type - type of the service
+           * @param  {String}  service.typeDesc - typeDesc of the service
            * @param  {Node} node - node that contains this service
            */
           constructor(service, node) {
-            let type = ProjectModel.getServiceType(service.type);
-            super(service, node, type);
+            super(service, node, ProjectModel.getServiceTypeDesc(service.type));
           }
         };
         let Service = this.Service;
@@ -130,7 +128,7 @@ angular.module('editorApp')
            * @param  {decoratorData array} node.decorators - (optional) decorators
            */
           constructor(node) {
-            super(ProjectModel.getNodeType(node.type));
+            super(ProjectModel.getNodeTypeDesc(node.type));
             angular.extend(this, node);
 
             this._version = 1;

@@ -94,7 +94,7 @@ angular.module('editorApp')
        */
       getPropertyAccessors(nodeItem) {
         if (nodeItem) {
-          let typeDescProperties = nodeItem.getType().properties;
+          let typeDescProperties = nodeItem.getTypeDesc().properties;
           if (typeDescProperties) {
             return typeDescProperties.map(property => new this.PropertyAccessor(property, nodeItem));
           }

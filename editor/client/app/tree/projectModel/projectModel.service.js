@@ -91,7 +91,7 @@ angular.module('editorApp')
         compileDescriptions(this.decoratorTypes);
       }
 
-      getNodeType(name) {
+      getNodeTypeDesc(name) {
         let nodeType = this.nodeTypes[name];
         if (!nodeType) {
           throw new Error(`Unknown nodeType "${name}"`);
@@ -99,7 +99,7 @@ angular.module('editorApp')
         return nodeType;
       }
 
-      getServiceType(name) {
+      getServiceTypeDesc(name) {
         let serviceType = this.serviceTypes[name];
         if (!serviceType) {
           throw new Error(`Unknown serviceType "${name}"`);
@@ -107,7 +107,7 @@ angular.module('editorApp')
         return serviceType;
       }
 
-      getDecoratorType(name) {
+      getDecoratorTypeDesc(name) {
         let decoratorType = this.decoratorTypes[name];
         if (!decoratorType) {
           throw new Error(`Unknown decoratorType "${name}"`);
