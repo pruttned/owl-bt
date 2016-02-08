@@ -92,7 +92,7 @@ angular.module('editorApp')
        * @param  {Node|Decorator|Service} nodeItem - nullable
        * @return {PropertyAccessor attay} - array of property accessors
        */
-      getPropertyAccessors(nodeItem) {
+      createPropertyAccessors(nodeItem) {
         if (nodeItem) {
           let typeDescProperties = nodeItem.getTypeDesc().properties;
           if (typeDescProperties) {

@@ -37,7 +37,7 @@ angular.module('editorApp')
            */
           getPropertyAccessors(){
             if(!this._propertyAccessors){
-              this._propertyAccessors = PropertyAccessorProvider.getPropertyAccessors(this);
+              this._propertyAccessors = PropertyAccessorProvider.createPropertyAccessors(this);
             }
             return this._propertyAccessors;
           }
