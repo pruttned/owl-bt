@@ -4,34 +4,98 @@ angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, hotkeys, ListSelectDialog,
     ProjectModel, TreeModel, UndoRedoManager) {
 
-    function buildCommands() {
-      let addNodeCommand = function() {
-        console.log(this.name);
-      };
-      let commands = [];
-      for (let nodeTypeName in ProjectModel.nodeTypes) {
-        if (ProjectModel.nodeTypes.hasOwnProperty(nodeTypeName)) {
-          let nodeType = ProjectModel.nodeTypes[nodeTypeName];
-          commands.push({
-            name: 'add.node.' + nodeType.name,
-            icon: nodeType.icon,
-            action: addNodeCommand
-          });
-        }
-      }
-      return commands;
-    }
-
     //https://github.com/angular/angular.js/wiki/Understanding-Scopes#ng-include
     $scope.model = {
-      commands: buildCommands(),
-      tree: TreeModel
+      tree: TreeModel,
+      commands: [{
+          name: 'add.node',
+          icon: 'cog',
+          action: function() {}
+        }, {
+          name: 'add.decorator',
+          icon: 'cog',
+          action: function() {}
+        }, {
+          name: 'add.service',
+          icon: 'cog',
+          action: function() {}
+        }, {
+          name: 'move.up',
+          icon: 'cog',
+          action: function() {}
+        }, {
+          name: 'move.down',
+          icon: 'cog',
+          action: function() {}
+        }, {
+          name: 'delete',
+          icon: 'cog',
+          action: function() {}
+        }]
+        // commands : {
+        //   add:{
+        //     forComposite: [],
+        //     forLeaf: []
+        //   }
+        // }
+    };
+
+    // function buildCommands() {
+    //   let forCompositeAddCommands = $scope.model.commands.add.forComposite;
+    //   let forLeafAddCommands = $scope.model.commands.add.forLeaf;
+    //
+    //   for (let nodeTypeName in ProjectModel.nodeTypes) {
+    //     if (ProjectModel.nodeTypes.hasOwnProperty(nodeTypeName)) {
+    //       let nodeType = ProjectModel.nodeTypes[nodeTypeName];
+    //       commands.push({
+    //         name: 'add.node.' + nodeType.name,
+    //         icon: nodeType.icon,
+    //         action: addNodeCommand
+    //       });
+    //     }
+    //   }
+    //   return commands;
+    // }
+
+
+    $scope.getNodeItemActions = function(/*nodeItem*/) {
+      return [
+        {
+          title: 'item1',
+          icon: 'cog',
+          action: function(nodeItem){
+            console.log('item1 ' + nodeItem);
+          }
+        },
+        {
+          title: 'item2',
+          action: function(nodeItem){
+            console.log('item2 ' + nodeItem);
+          }
+        }
+      ];
     };
 
     $scope.open = function() {
       ListSelectDialog.open($scope.model.commands)
         .result.then(function(item) {
-          console.log('selected item = ' + item.name);
+          if (item.name === 'add.node') {
+            ListSelectDialog.open([{
+                name: 'node1',
+                icon: 'cog',
+                action: function() {}
+              }, {
+                name: 'node2',
+                icon: 'cog',
+                action: function() {}
+              }])
+              .result.then(function(item) {
+                console.log('selected item = ' + item.name);
+              }, function() {
+                console.log('cancel');
+              });
+          }
+          //console.log('selected item = ' + item.name);
         }, function() {
           console.log('cancel');
         });

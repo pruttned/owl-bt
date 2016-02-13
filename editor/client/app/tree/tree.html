@@ -3,7 +3,7 @@
   <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
   <button type="button" class="btn btn-default" ng-click="undo()">Undo</button>
   <button type="button" class="btn btn-default" ng-click="redo()">Redo</button>
-  <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem"></tree-view>
+  <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem" get-node-item-actions="getNodeItemActions"></tree-view>
   <!-- <div>
     <div>
       {{model.selectedNodeItem.typeDesc().name}}

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('editorApp')
-  .directive('treeView', function(d3) {
+  .directive('treeView', function(d3, ContextMenu) {
 
     let separationX = 50;
     let separationY = 70;
@@ -36,6 +36,22 @@ angular.module('editorApp')
       return viewNode;
     }
 
+    function showContextMenu(scope, nodeItem) {
+      //http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
+      var actions = scope.getNodeItemActions()(nodeItem);
+      if (actions) {
+        ContextMenu.show(scope, d3.event, actions.map(itemAction => ({
+          title: itemAction.title,
+          icon: itemAction.icon,
+          action: function() {
+            if (itemAction.action) {
+              itemAction.action(nodeItem);
+            }
+          }
+        })));
+      }
+    }
+
     function bindMouseEvents(nodeElm, viewNode, scope) {
       if (viewNode.node.decorators) {
         nodeElm.selectAll('.item.decorator')
@@ -44,7 +60,8 @@ angular.module('editorApp')
             scope.$apply(function() {
               scope.selectedNodeItem = item;
             });
-          });
+          })
+          .on('contextmenu', item => showContextMenu(scope, item));
       }
       if (viewNode.node.services) {
         nodeElm.selectAll('.item.service')
@@ -53,7 +70,9 @@ angular.module('editorApp')
             scope.$apply(function() {
               scope.selectedNodeItem = item;
             });
-          });
+          })
+          .on('contextmenu', item => showContextMenu(scope, item));
+
       }
       nodeElm.select('.item.node-desc')
         .data([viewNode.node])
@@ -61,7 +80,8 @@ angular.module('editorApp')
           scope.$apply(function() {
             scope.selectedNodeItem = item;
           });
-        });
+        })
+        .on('contextmenu', item => showContextMenu(scope, item));
     }
 
     function addNodeItemElm(scope, nodeItem, nodeElm, typeDesc, cssClass, index) {
@@ -362,7 +382,17 @@ angular.module('editorApp')
         /**
          * {Node|Decorator|Service} - selected node item (nodeDesc/decorator/service)
          */
-        selectedNodeItem: '='
+        selectedNodeItem: '=',
+        /**
+         * function that provides context menu actions for a node item
+         * @type {function(nodeItem)}
+         * @return {action array}
+         * @return {String} action.title - title of the item
+         * @return {String} action.icon- (optional) icon of the item (fontawsome icon name without 'fa-')
+         * @return {function(nodeItem)} action.action - click action of the item
+         *
+         */
+        getNodeItemActions: '&'
       },
       // controller: function ($scope) {
       //   $scope.tmpUp=function(){
@@ -378,6 +408,14 @@ angular.module('editorApp')
         let treeElm = d3.select(element[0]);
         let treeContentElm = d3.select(element[0].querySelector('.tree-content'));
         let svgElm = treeContentElm.append('svg');
+
+        //disable context menu on tree
+        treeElm
+          .on('contextmenu', function() {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            ContextMenu.hide();
+          });
 
         let zoomHandler = createZoomHandler(treeContentElm);
 

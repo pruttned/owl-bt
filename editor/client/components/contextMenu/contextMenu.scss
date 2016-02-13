@@ -1,0 +1,25 @@
+.context-menu {
+  position: fixed;
+  z-index: 5000;
+  color: $context-menu-color;
+  background: $context-menu-background-color;
+  padding: 2px;
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      padding: 5px 10px 5px 5px;
+      border: none;
+      &::before{
+        display:inline-block;
+        width: 1.28571em; //fa-fw width
+        content: '';
+      }
+    }
+    li.with-icon{
+      &::before{
+        display:none;
+      }
+    }
+  }
+}

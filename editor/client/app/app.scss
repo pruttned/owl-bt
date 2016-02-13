@@ -8,6 +8,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 /**
  * Settings
  */
+$dlg-light-background-color : #507295;
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
 $ctrl-highlight-color : #C65C5C;
@@ -30,6 +31,10 @@ $node-service-icon-background-color: #5cc690;
 $node-color: white;
 $node-service-color: #333333;
 $node-decorator-color: #333333;
+//context menu
+$context-menu-background-color: $dlg-light-background-color;
+$context-menu-color: $ctrl-color;
+$context-menu-hover-color: $ctrl-hover-color;
 
 /**
  * App-wide Styles
@@ -85,6 +90,7 @@ ul.selectable{
 @import 'project/project.scss';
 @import 'tree/tree.scss';
 @import 'tree/treeNodeItemDetails.scss';
+@import 'contextMenu/contextMenu.scss';
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'modal/modal.scss';
