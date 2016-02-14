@@ -57,7 +57,6 @@ angular.module('editorApp')
     //   return commands;
     // }
 
-
     $scope.getNodeItemActions = function(nodeItem) {
       return nodeItem.getContextMenuActions();
     };
@@ -93,6 +92,17 @@ angular.module('editorApp')
       UndoRedoManager.redo();
     };
 
+    $scope.$watch('model.tree.version', function(){
+      //deselect removed node sub item
+      let selectedNodeItem = $scope.model.selectedNodeItem;
+      if(selectedNodeItem){
+        let node = selectedNodeItem.node();
+        if(!node.containsSubItem(selectedNodeItem)){
+          $scope.model.selectedNodeItem = null;
+        }
+      }
+    });
+
     hotkeys.add({
       combo: 'up',
       description: 'This one goes to 11',
@@ -100,6 +110,7 @@ angular.module('editorApp')
         console.log('root up');
       }
     });
+
 
 
   });

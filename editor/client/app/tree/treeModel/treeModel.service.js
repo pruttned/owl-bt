@@ -359,6 +359,11 @@ angular.module('editorApp')
               this.notifyChange();
             }
           }
+
+          containsSubItem(nodeSubItem) {
+            let container = nodeSubItem.getDestContainerInNode(this);
+            return container.indexOf(nodeSubItem) >= 0;
+          }
         };
 
 
