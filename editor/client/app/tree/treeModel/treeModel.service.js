@@ -27,27 +27,27 @@ angular.module('editorApp')
            * @param  {Object} typeDesc - item type descriptor
            */
           constructor(typeDesc, owningNode) {
-            this._typeDesc = typeDesc;
-            if (owningNode) {
-              this._node = owningNode;
+              this._typeDesc = typeDesc;
+              if (owningNode) {
+                this._node = owningNode;
+              }
             }
-          }
-          /**
-           * @return {PropertyAccessor array} property accessors
-           */
-          propertyAccessors(){
-            if(!this._propertyAccessors){
+            /**
+             * @return {PropertyAccessor array} property accessors
+             */
+          propertyAccessors() {
+            if (!this._propertyAccessors) {
               this._propertyAccessors = PropertyAccessorProvider.createPropertyAccessors(this);
             }
             return this._propertyAccessors;
           }
           typeDesc() {
-            return this._typeDesc;
-          }
-          /**
-           * Gets all properties merged with default values
-           * @return {object} object with parameter values merged with default values
-           */
+              return this._typeDesc;
+            }
+            /**
+             * Gets all properties merged with default values
+             * @return {object} object with parameter values merged with default values
+             */
           getAllProperties() { //TODO: remove/replace with getPropertyAccessors (or rename)
             let properties = {};
             if (this._typeDesc.properties) {
@@ -88,6 +88,50 @@ angular.module('editorApp')
             super(typeDesc, node);
             angular.extend(this, data);
           }
+
+          /**
+           * Get array in node that contains this node item.
+           * Must be implemented in inherited node sub item
+           * @return {nodeItem array}
+           */
+          getContainerInNode() {
+            throw 'Implement getContainerInNode in inherited NodeSubItem';
+          }
+
+          getContextMenuActions() {
+            let container = this.getContainerInNode();
+            let indexInNode = container.indexOf(this);
+            let actions = [];
+            let node = this.node();
+            let nodeSubItem = this;
+            if (indexInNode > 0) {
+              actions.push({
+                title: 'Move Up',
+                icon: 'arrow-up',
+                action: function() {
+                  node.moveSubItemUp(nodeSubItem);
+                }
+              });
+            }
+            if (indexInNode < container.length - 1) {
+              actions.push({
+                title: 'Move Down',
+                icon: 'arrow-down',
+                action: function() {
+                  node.moveSubItemDown(nodeSubItem);
+                }
+              });
+            }
+            actions.push({
+              title: 'Remove',
+              icon: 'remove',
+              action: function() {
+                node.removeSubItem(nodeSubItem);
+              }
+            });
+
+            return actions;
+          }
         }
 
         this.Decorator = class Decorator extends NodeSubItem {
@@ -98,7 +142,15 @@ angular.module('editorApp')
            * @param  {Node} node - node that contains this decorator
            */
           constructor(decorator, node) {
-            super(decorator, node,  ProjectModel.getDecoratorTypeDesc(decorator.type));
+            super(decorator, node, ProjectModel.getDecoratorTypeDesc(decorator.type));
+          }
+
+          /**
+           * Get array in node that contains this node item
+           * @return {nodeItem array}
+           */
+          getContainerInNode() {
+            return this.node().decorators;
           }
         };
         let Decorator = this.Decorator;
@@ -112,6 +164,14 @@ angular.module('editorApp')
            */
           constructor(service, node) {
             super(service, node, ProjectModel.getServiceTypeDesc(service.type));
+          }
+
+          /**
+           * Get array in node that contains this node item
+           * @return {nodeItem array}
+           */
+          getContainerInNode() {
+            return this.node().servces;
           }
         };
         let Service = this.Service;
@@ -182,6 +242,52 @@ angular.module('editorApp')
             }
             treeModel.notifyChange();
           }
+
+          /**
+           * get actions for context menu
+           * @return {action array}
+           * @return {String} action.title - title of the item
+           * @return {String} action.icon- (optional) icon of the item (fontawsome icon name without 'fa-')
+           * @return {function(nodeItem)} action.action - click action of the item
+           */
+          getContextMenuActions() {
+            return [{
+              title: 'add',
+              action: function() {
+
+              }
+            }];
+          }
+
+          //TODO: undo/redo
+          moveSubItemUp(nodeSubItem) {
+            let container = nodeSubItem.getContainerInNode();
+            let itemIndex = container.indexOf(nodeSubItem);
+            if (itemIndex > 0) {
+              container[itemIndex] = container[itemIndex - 1];
+              container[itemIndex - 1] = nodeSubItem;
+              this.notifyChange();
+            }
+          }
+          //TODO: undo/redo
+          moveSubItemDown(nodeSubItem) {
+            let container = nodeSubItem.getContainerInNode();
+            let itemIndex = container.indexOf(nodeSubItem);
+            if (itemIndex < container.length - 1) {
+              container[itemIndex] = container[itemIndex + 1];
+              container[itemIndex + 1] = nodeSubItem;
+              this.notifyChange();
+            }
+          }
+          //TODO: undo/redo
+          removeSubItem(nodeSubItem) {
+            let container = nodeSubItem.getContainerInNode();
+            let itemIndex = container.indexOf(nodeSubItem);
+            if (itemIndex >= 0) {
+              container.splice(itemIndex, 1);
+              this.notifyChange();
+            }
+          }
         };
 
 
@@ -218,5 +324,7 @@ angular.module('editorApp')
           this.version++;
         }
       }
+
+
 
     });

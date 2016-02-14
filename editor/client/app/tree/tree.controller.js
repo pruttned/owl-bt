@@ -58,22 +58,8 @@ angular.module('editorApp')
     // }
 
 
-    $scope.getNodeItemActions = function(/*nodeItem*/) {
-      return [
-        {
-          title: 'item1',
-          icon: 'cog',
-          action: function(nodeItem){
-            console.log('item1 ' + nodeItem);
-          }
-        },
-        {
-          title: 'item2',
-          action: function(nodeItem){
-            console.log('item2 ' + nodeItem);
-          }
-        }
-      ];
+    $scope.getNodeItemActions = function(nodeItem) {
+      return nodeItem.getContextMenuActions();
     };
 
     $scope.open = function() {
