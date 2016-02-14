@@ -6,7 +6,7 @@ angular.module('editorApp')
    */
   .service('TreeModel',
     class TreeModel {
-      constructor(ProjectModel, PropertyAccessorProvider) {
+      constructor(ProjectModel, PropertyAccessorProvider, UndoRedoManager) {
 
         this.version = 1;
 
@@ -95,7 +95,16 @@ angular.module('editorApp')
            * @return {nodeItem array}
            */
           getContainerInNode() {
-            throw 'Implement getContainerInNode in inherited NodeSubItem';
+              return this.getDestContainerInNode(this.node());
+            }
+            /**
+             * Get array in node that should contain this node item.
+             * Must be implemented in inherited node sub item
+             * @param  {Node} node - destination node
+             * @return {nodeItem array}
+             */
+          getDestContainerInNode( /*node*/ ) {
+            throw 'Implement getDestContainerInNode(node) in inherited NodeSubItem';
           }
 
           getContextMenuActions() {
@@ -146,11 +155,12 @@ angular.module('editorApp')
           }
 
           /**
-           * Get array in node that contains this node item
+           * Get array in node that should contain this node item.
+           * @param  {Node} node - destination node
            * @return {nodeItem array}
            */
-          getContainerInNode() {
-            return this.node().decorators;
+          getDestContainerInNode(node) {
+            return node.decorators;
           }
         };
         let Decorator = this.Decorator;
@@ -167,11 +177,12 @@ angular.module('editorApp')
           }
 
           /**
-           * Get array in node that contains this node item
+           * Get array in node that should contain this node item.
+           * @param  {Node} node - destination node
            * @return {nodeItem array}
            */
-          getContainerInNode() {
-            return this.node().servces;
+          getDestContainerInNode(node) {
+            return node.services;
           }
         };
         let Service = this.Service;
@@ -196,9 +207,13 @@ angular.module('editorApp')
 
             if (node.decorators) {
               this.decorators = node.decorators.map(decoratorData => new Decorator(decoratorData, this));
+            } else {
+              this.decorators = [];
             }
             if (node.services) {
               this.services = node.services.map(serviceData => new Service(serviceData, this));
+            } else {
+              this.services = [];
             }
             if (node.childNodes) {
               this.childNodes = node.childNodes.map(childNodeData => new Node(childNodeData));
@@ -259,32 +274,88 @@ angular.module('editorApp')
             }];
           }
 
-          //TODO: undo/redo
-          moveSubItemUp(nodeSubItem) {
+          moveSubItemUp(nodeSubItem, skipUndoHistory) {
             let container = nodeSubItem.getContainerInNode();
             let itemIndex = container.indexOf(nodeSubItem);
             if (itemIndex > 0) {
               container[itemIndex] = container[itemIndex - 1];
               container[itemIndex - 1] = nodeSubItem;
+
+              if (!skipUndoHistory) {
+                let _this = this;
+                UndoRedoManager.add({
+                  undo: function undo() {
+                    _this.moveSubItemDown(nodeSubItem, true);
+                  },
+                  redo: function redo() {
+                    _this.moveSubItemUp(nodeSubItem, true);
+                  }
+                });
+              }
+
               this.notifyChange();
             }
           }
-          //TODO: undo/redo
-          moveSubItemDown(nodeSubItem) {
+          moveSubItemDown(nodeSubItem, skipUndoHistory) {
             let container = nodeSubItem.getContainerInNode();
             let itemIndex = container.indexOf(nodeSubItem);
             if (itemIndex < container.length - 1) {
               container[itemIndex] = container[itemIndex + 1];
               container[itemIndex + 1] = nodeSubItem;
+
+              if (!skipUndoHistory) {
+                let _this = this;
+                UndoRedoManager.add({
+                  undo: function undo() {
+                    _this.moveSubItemUp(nodeSubItem, true);
+                  },
+                  redo: function redo() {
+                    _this.moveSubItemDown(nodeSubItem, true);
+                  }
+                });
+              }
+
               this.notifyChange();
             }
           }
-          //TODO: undo/redo
-          removeSubItem(nodeSubItem) {
+
+          addSubItemAt(nodeSubItem, index, skipUndoHistory) {
+            let container = nodeSubItem.getDestContainerInNode(this);
+            container.splice(index, 0, nodeSubItem);
+
+            if (!skipUndoHistory) {
+              let _this = this;
+              UndoRedoManager.add({
+                undo: function undo() {
+                  _this.removeSubItem(nodeSubItem, true);
+                },
+                redo: function redo() {
+                  _this.addSubItemAt(nodeSubItem, index, true);
+                }
+              });
+            }
+
+            this.notifyChange();
+          }
+
+          removeSubItem(nodeSubItem, skipUndoHistory) {
             let container = nodeSubItem.getContainerInNode();
             let itemIndex = container.indexOf(nodeSubItem);
             if (itemIndex >= 0) {
               container.splice(itemIndex, 1);
+
+              if (!skipUndoHistory) {
+                let _this = this;
+                UndoRedoManager.add({
+                  undo: function undo() {
+                    _this.addSubItemAt(nodeSubItem, itemIndex, true);
+                  },
+                  redo: function redo() {
+                    _this.removeSubItem(nodeSubItem, true);
+                  }
+                });
+              }
+
               this.notifyChange();
             }
           }
@@ -299,6 +370,10 @@ angular.module('editorApp')
             type: 'hasAmmo'
           }, {
             type: 'isAwake'
+          }, {
+            type: 'negate'
+          }, {
+            type: 'forceSuccess'
           }],
           services: [{
             type: 'checkAmmo'

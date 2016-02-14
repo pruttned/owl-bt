@@ -71,6 +71,14 @@ angular.module('editorApp')
           isAwake: {
             name: 'isAwake',
             icon: 'bell'
+          },
+          negate: {
+            name: 'negate',
+            icon: 'exchange'
+          },
+          forceSuccess: {
+            name: 'forceSuccess',
+            icon: 'check-circle'
           }
         };
 
