@@ -122,4 +122,6 @@ angular.module('editorApp')
         }
         return decoratorType;
       }
+
+
     });

@@ -6,7 +6,7 @@ angular.module('editorApp')
    */
   .service('TreeModel',
     class TreeModel {
-      constructor(ProjectModel, PropertyAccessorProvider, UndoRedoManager) {
+      constructor(ProjectModel, PropertyAccessorProvider, UndoRedoManager, ListSelectDialog) {
 
         this.version = 1;
 
@@ -169,7 +169,7 @@ angular.module('editorApp')
           /**
            * Creates Service from the provided data
            * @param  {serviceData} service - service data to copy to service
-           * @param  {String}  service.typeDesc - typeDesc of the service
+           * @param  {String}  service.type - type of the service
            * @param  {Node} node - node that contains this service
            */
           constructor(service, node) {
@@ -186,6 +186,27 @@ angular.module('editorApp')
           }
         };
         let Service = this.Service;
+
+
+        //add commands for node
+        let addServiceCommands = _.values(ProjectModel.serviceTypes);
+        let addDecoratorCommands = _.values(ProjectModel.decoratorTypes);
+        let addNodeCommands = _.values(ProjectModel.nodeTypes);
+        // let addServiceCommands = _.values(ProjectModel.serviceTypes).map(desc => ({
+        //   name: desc.name,
+        //   icon: desc.icon,
+        //   desc: desc
+        // }));
+        // let addDecoratorCommands = _.values(ProjectModel.decoratorTypes).map(desc => ({
+        //   name: desc.name,
+        //   icon: desc.icon,
+        //   desc: desc
+        // }));
+        // let addNodeCommands = _.values(ProjectModel.nodeTypes).map(desc => ({
+        //   name: desc.name,
+        //   icon: desc.icon,
+        //   desc: desc
+        // }));
 
         //node class. TODO: extract to separate service?
         let nextNodeId = 1; //unique id amongst all node items (nodes/services/decorators)
@@ -266,12 +287,42 @@ angular.module('editorApp')
            * @return {function(nodeItem)} action.action - click action of the item
            */
           getContextMenuActions() {
-            return [{
-              title: 'add',
+            let _this = this;
+            let actions = [{
+              title: 'Add Service',
               action: function() {
-
+                ListSelectDialog.open(addServiceCommands)
+                  .result.then(function(addCommandItem) {
+                    _this.addSubItem(new Service({
+                      type: addCommandItem.name
+                    }, _this));
+                  });
+              }
+            }, {
+              title: 'Add Decorator',
+              action: function() {
+                ListSelectDialog.open(addDecoratorCommands)
+                  .result.then(function(addCommandItem) {
+                    _this.addSubItem(new Decorator({
+                      type: addCommandItem.name
+                    }, _this));
+                  });
               }
             }];
+
+            if (this.typeDesc().isComposite) {
+              actions.push({
+                title: 'Add Node',
+                action: function() {
+                  ListSelectDialog.open(addNodeCommands)
+                    .result.then(function(addCommandItem) {
+                      console.log(addCommandItem.desc);
+                    });
+                }
+              });
+            }
+
+            return actions;
           }
 
           moveSubItemUp(nodeSubItem, skipUndoHistory) {
@@ -336,6 +387,11 @@ angular.module('editorApp')
             }
 
             this.notifyChange();
+          }
+
+          addSubItem(nodeSubItem, skipUndoHistory) {
+            let container = nodeSubItem.getDestContainerInNode(this);
+            this.addSubItemAt(nodeSubItem, container.length, skipUndoHistory);
           }
 
           removeSubItem(nodeSubItem, skipUndoHistory) {
