@@ -218,13 +218,15 @@ angular.module('editorApp')
            * @param  {nodeData arrray} node.childNodes - (optional) child nodes
            * @param  {serviceData arrray} node.services - (optional) services
            * @param  {decoratorData array} node.decorators - (optional) decorators
+           * @param  {Node} parentNode - (optional) parent node
            */
-          constructor(node) {
+          constructor(node, parentNode) {
             super(ProjectModel.getNodeTypeDesc(node.type));
             angular.extend(this, node);
 
             this._version = 1;
             this._id = nextNodeId++;
+            this._parentNode = parentNode;
 
             if (node.decorators) {
               this.decorators = node.decorators.map(decoratorData => new Decorator(decoratorData, this));
@@ -236,12 +238,20 @@ angular.module('editorApp')
             } else {
               this.services = [];
             }
-            if (node.childNodes) {
-              this.childNodes = node.childNodes.map(childNodeData => new Node(childNodeData));
+            if (this._typeDesc.isComposite) {
+              if (node.childNodes) {
+                let _this = this;
+                this.childNodes = node.childNodes.map(childNodeData => new Node(childNodeData, _this));
+              } else {
+                this.childNodes = [];
+              }
             }
           }
           id() {
             return this._id;
+          }
+          parentNode() {
+            return this._parentNode;
           }
           findFirstNode(predicate) {
             if (predicate(this)) {
@@ -290,6 +300,7 @@ angular.module('editorApp')
             let _this = this;
             let actions = [{
               title: 'Add Service',
+              icon: 'clock-o',
               action: function() {
                 ListSelectDialog.open(addServiceCommands)
                   .result.then(function(addCommandItem) {
@@ -300,6 +311,7 @@ angular.module('editorApp')
               }
             }, {
               title: 'Add Decorator',
+              icon: 'filter',
               action: function() {
                 ListSelectDialog.open(addDecoratorCommands)
                   .result.then(function(addCommandItem) {
@@ -313,11 +325,23 @@ angular.module('editorApp')
             if (this.typeDesc().isComposite) {
               actions.push({
                 title: 'Add Node',
+                icon: 'sitemap',
                 action: function() {
                   ListSelectDialog.open(addNodeCommands)
                     .result.then(function(addCommandItem) {
-                      console.log(addCommandItem.desc);
+                      _this.addNode(new Node({
+                        type: addCommandItem.name
+                      }, _this));
                     });
+                }
+              });
+            }
+            if (this._parentNode) {
+              actions.push({
+                title: 'Remove',
+                icon: 'remove',
+                action: function() {
+                  _this._parentNode.removeNode(_this);
                 }
               });
             }
@@ -373,6 +397,7 @@ angular.module('editorApp')
           addSubItemAt(nodeSubItem, index, skipUndoHistory) {
             let container = nodeSubItem.getDestContainerInNode(this);
             container.splice(index, 0, nodeSubItem);
+            nodeSubItem._node = this;
 
             if (!skipUndoHistory) {
               let _this = this;
@@ -399,6 +424,7 @@ angular.module('editorApp')
             let itemIndex = container.indexOf(nodeSubItem);
             if (itemIndex >= 0) {
               container.splice(itemIndex, 1);
+              nodeSubItem._node = null;
 
               if (!skipUndoHistory) {
                 let _this = this;
@@ -419,6 +445,61 @@ angular.module('editorApp')
           containsSubItem(nodeSubItem) {
             let container = nodeSubItem.getDestContainerInNode(this);
             return container.indexOf(nodeSubItem) >= 0;
+          }
+
+          addNodeAt(node, index, skipUndoHistory) {
+            if (!this._typeDesc.isComposite) {
+              throw 'Not a composite node';
+            }
+            this.childNodes.splice(index, 0, node);
+            node._parentNode = this;
+
+            if (!skipUndoHistory) {
+              let _this = this;
+              UndoRedoManager.add({
+                undo: function undo() {
+                  _this.removeNode(node, true);
+                },
+                redo: function redo() {
+                  _this.addNodeAt(node, index, true);
+                }
+              });
+            }
+
+            this.notifyChange();
+          }
+
+          addNode(node, skipUndoHistory) {
+            if (!this._typeDesc.isComposite) {
+              throw 'Not a composite node';
+            }
+            this.addNodeAt(node, this.childNodes.length, skipUndoHistory);
+          }
+
+          removeNode(node, skipUndoHistory) {
+            if (!this._typeDesc.isComposite) {
+              throw 'Not a composite node';
+            }
+
+            let index = this.childNodes.indexOf(node);
+            if (index >= 0) {
+              this.childNodes.splice(index, 1);
+              node._parentNode = null;
+
+              if (!skipUndoHistory) {
+                let _this = this;
+                UndoRedoManager.add({
+                  undo: function undo() {
+                    _this.addNodeAt(node, index, true);
+                  },
+                  redo: function redo() {
+                    _this.removeNode(node, true);
+                  }
+                });
+              }
+
+              this.notifyChange();
+            }
           }
         };
 

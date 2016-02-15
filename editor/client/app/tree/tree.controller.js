@@ -93,12 +93,18 @@ angular.module('editorApp')
     };
 
     $scope.$watch('model.tree.version', function(){
-      //deselect removed node sub item
+      //deselect removed node item
       let selectedNodeItem = $scope.model.selectedNodeItem;
       if(selectedNodeItem){
-        let node = selectedNodeItem.node();
-        if(!node.containsSubItem(selectedNodeItem)){
-          $scope.model.selectedNodeItem = null;
+        if('parentNode' in selectedNodeItem){ //is node
+          if(!selectedNodeItem.parentNode){
+            $scope.model.selectedNodeItem = null;
+          }
+        }else{ //is subitem
+          let node = selectedNodeItem.node();
+          if(!node.containsSubItem(selectedNodeItem)){
+            $scope.model.selectedNodeItem = null;
+          }
         }
       }
     });
