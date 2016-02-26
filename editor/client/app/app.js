@@ -4,13 +4,15 @@ angular.module('editorApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.router',
+  'ngRoute',
   'ui.bootstrap',
   'cfp.hotkeys'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+  .config(function ($routeProvider, $locationProvider) {
+    $routeProvider
+      .otherwise({
+        redirectTo: '/'
+      });
 
     $locationProvider.html5Mode(true);
   })

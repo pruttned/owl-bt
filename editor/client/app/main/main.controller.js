@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('editorApp')
-  .controller('MainCtrl', function($scope, $http, $resource, $state, ProjectStore) {
+  .controller('MainCtrl', function($scope, $http, $resource, ProjectStore) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {

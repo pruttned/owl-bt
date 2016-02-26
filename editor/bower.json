@@ -12,7 +12,7 @@
     "angular-cookies": "~1.4.7",
     "angular-resource": "~1.4.7",
     "angular-sanitize": "~1.4.7",
-    "angular-ui-router": "~0.2.15",
+    "angular-route": "1.4.7",
     "bootstrap": "~3.3.5",
     "bootstrap-sass": "~3.3.5",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
