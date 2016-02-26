@@ -15,7 +15,7 @@
     "bootstrap-sass": "~3.3.5",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
     "d3": "~3.5.12",
-    "undo-manager": "*",
+    "undo-manager": "~1.0.5",
     "lodash": "~4.5.1"
   },
   "devDependencies": {
