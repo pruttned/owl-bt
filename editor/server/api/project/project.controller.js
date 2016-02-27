@@ -33,17 +33,22 @@ function findProjectFile(currentAbsolutePath) {
 }
 
 exports.index = function(req, res, next) {
-  let treePath = req.params[0];
-  //TODO: path must be absolute
+  let currentPath = req.query.path;
   //TODO: 404
-  if (treePath) {
-    let treePathDir = path.dirname(treePath);
-    findProjectFile(treePathDir)
-      .then(prjContent => res.json(prjContent))
-      .catch(err => {
-        next(err);
-      });
-  }else{
-    res.status(400).send('Missing tree path');
+  if (!currentPath) {
+    res.status(400).send('Missing path');
+    return;
   }
+  if (path.resolve(currentPath) !== path.normalize(currentPath)) {
+    res.status(400).send('Path must be absolute');
+    return;
+  }
+
+  let pathDir = path.dirname(currentPath);
+  findProjectFile(pathDir)
+    .then(prjContent => res.json(prjContent))
+    .catch(err => {
+      next(err);
+    });
+
 };
