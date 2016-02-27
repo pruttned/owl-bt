@@ -38,7 +38,7 @@ exports.index = function(req, res, next) {
     res.status(400).send('Missing path');
     return;
   }
-  if (path.resolve(currentPath) !== path.normalize(currentPath)) {
+  if (!path.isAbsolute(currentPath)) {
     res.status(400).send('Path must be absolute');
     return;
   }
