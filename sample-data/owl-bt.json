@@ -1,0 +1,61 @@
+ {
+   "nodes": [{
+     "name": "sequence",
+     "icon": "arrow-right",
+     "isComposite": true
+   }, {
+     "name": "selector",
+     "icon": "question",
+     "isComposite": true
+   }, {
+     "name": "findPlayer",
+     "icon": "search",
+     "isComposite": false
+   }, {
+     "name": "gotoPlayer",
+     "icon": "step-forward",
+     "isComposite": false
+   }, {
+     "name": "playSound",
+     "icon": "volume-up",
+     "isComposite": false,
+     "description": "Play sound \"{{soundName}}\" with \"{{volume}}\" volume",
+     "properties": [{
+       "name": "soundName",
+       "type": "string",
+       "default": "mySound.ogg"
+     }, {
+       "name": "volume",
+       "type": "number",
+       "min": 10,
+       "max": 20,
+       "default": 14.5
+     }, {
+       "name": "repeat",
+       "type": "bool",
+       "default": true
+     }, {
+       "name": "modifier",
+       "type": "enum",
+       "default": "modif2",
+       "values": ["modif1", "modif2", "modif3"]
+     }]
+   }],
+   "services": [{
+     "name": "checkAmmo",
+     "icon": "check"
+   }],
+   "decorators": [{
+     "name": "hasAmmo",
+     "icon": "battery-full"
+   }, {
+     "name": "isAwake",
+     "icon": "bell"
+   }, {
+     "name": "negate",
+     "icon": "exchange"
+   }, {
+     "name": "forceSuccess",
+     "icon": "check-circle"
+   }]
+ }
