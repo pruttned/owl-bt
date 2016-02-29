@@ -249,62 +249,64 @@ angular.module('editorApp')
     }
 
     function refreshTree(treeElm, treeContentElm, svgElm, scope) {
-      let rootViewNode = toViewTree(scope.tree.rootNode); //because D3 (and also this method) enhances nodes with its fields and parent field creates circular reference
-      let viewNodes = flattenTree(rootViewNode, viewNodes);
-      let nodeElms = treeContentElm.selectAll('.node');
+      if (scope.tree) {
+        let rootViewNode = toViewTree(scope.tree.rootNode); //because D3 (and also this method) enhances nodes with its fields and parent field creates circular reference
+        let viewNodes = flattenTree(rootViewNode, viewNodes);
+        let nodeElms = treeContentElm.selectAll('.node');
 
-      //http://stackoverflow.com/questions/30890212/data-join-with-custom-key-does-not-work-as-expected
-      let nodeElmsData = nodeElms.data(viewNodes, function(viewNode) {
-        return Array.isArray(this) ? (`${viewNode.node.id()}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
-      });
-
-      //init tree size must be enough for a node so the node's width won't be smaller due to text wrapping
-      //but at a same time it must be big enough to contain current nodes
-      if (parseInt(treeContentElm.style('width')) < minTreeWidth) {
-        treeContentElm.style('width', `${minTreeWidth}px`);
-      }
-      if (parseInt(treeContentElm.style('height')) < minTreeHeight) {
-        treeContentElm.style('height', `${minTreeHeight}px`);
-      }
-
-      //create nodes before tree layout to get real width/height in separation function
-      refreshNodes(rootViewNode, nodeElmsData, scope);
-
-      //update node width and height from content
-      nodeElmsData
-        .each(function(viewNode) { //width and height from content
-          viewNode.width = this.offsetWidth;
-          viewNode.height = this.offsetHeight;
+        //http://stackoverflow.com/questions/30890212/data-join-with-custom-key-does-not-work-as-expected
+        let nodeElmsData = nodeElms.data(viewNodes, function(viewNode) {
+          return Array.isArray(this) ? (`${viewNode.node.id()}_${viewNode.node._version}`) : d3.select(this).attr('data-node-key');
         });
 
-      //Compute layout
-      let treeLayout = d3.layout.tree()
-        .nodeSize([baseWidth, baseHeight])
-        .separation((viewNode1, viewNode2) => ((viewNode1.width + viewNode2.width) + separationX) / baseWidth * 0.5);
-      treeLayout.nodes(rootViewNode);
+        //init tree size must be enough for a node so the node's width won't be smaller due to text wrapping
+        //but at a same time it must be big enough to contain current nodes
+        if (parseInt(treeContentElm.style('width')) < minTreeWidth) {
+          treeContentElm.style('width', `${minTreeWidth}px`);
+        }
+        if (parseInt(treeContentElm.style('height')) < minTreeHeight) {
+          treeContentElm.style('height', `${minTreeHeight}px`);
+        }
 
-      let yPosPerLevel = getYPosPerLevel(viewNodes);
-      let treeBounds = getTreeBounds(viewNodes, yPosPerLevel);
-      let offsetX = -treeBounds.minX;
-      let offsetY = -treeBounds.minY;
+        //create nodes before tree layout to get real width/height in separation function
+        refreshNodes(rootViewNode, nodeElmsData, scope);
 
-      //set node positions
-      nodeElmsData
-        .each(function(viewNode) {
-          viewNode.x += offsetX - viewNode.width * 0.5;
-          viewNode.y = yPosPerLevel[viewNode.depth] + offsetY;
-        })
-        .attr('style', viewNode => `left:${viewNode.x}px;top:${viewNode.y}px;`);
+        //update node width and height from content
+        nodeElmsData
+          .each(function(viewNode) { //width and height from content
+            viewNode.width = this.offsetWidth;
+            viewNode.height = this.offsetHeight;
+          });
 
-      refreshLinks(svgElm, viewNodes, nodeElms, treeLayout);
+        //Compute layout
+        let treeLayout = d3.layout.tree()
+          .nodeSize([baseWidth, baseHeight])
+          .separation((viewNode1, viewNode2) => ((viewNode1.width + viewNode2.width) + separationX) / baseWidth * 0.5);
+        treeLayout.nodes(rootViewNode);
 
-      // update tree dimensions
-      treeContentElm
-        .style('width', `${treeBounds.maxX - treeBounds.minX}px`)
-        .style('height', `${treeBounds.maxY - treeBounds.minY}px`);
-      svgElm
-        .attr('width', treeBounds.maxX - treeBounds.minX)
-        .attr('height', treeBounds.maxY - treeBounds.minY);
+        let yPosPerLevel = getYPosPerLevel(viewNodes);
+        let treeBounds = getTreeBounds(viewNodes, yPosPerLevel);
+        let offsetX = -treeBounds.minX;
+        let offsetY = -treeBounds.minY;
+
+        //set node positions
+        nodeElmsData
+          .each(function(viewNode) {
+            viewNode.x += offsetX - viewNode.width * 0.5;
+            viewNode.y = yPosPerLevel[viewNode.depth] + offsetY;
+          })
+          .attr('style', viewNode => `left:${viewNode.x}px;top:${viewNode.y}px;`);
+
+        refreshLinks(svgElm, viewNodes, nodeElms, treeLayout);
+
+        // update tree dimensions
+        treeContentElm
+          .style('width', `${treeBounds.maxX - treeBounds.minX}px`)
+          .style('height', `${treeBounds.maxY - treeBounds.minY}px`);
+        svgElm
+          .attr('width', treeBounds.maxX - treeBounds.minX)
+          .attr('height', treeBounds.maxY - treeBounds.minY);
+      } //TODO clear tree if null
     }
 
     function createZoomHandler(treeContentElm) {
@@ -435,11 +437,13 @@ angular.module('editorApp')
         let firstRender = true;
         scope.$watch('tree.version', function() {
           refreshTree(treeElm, treeContentElm, svgElm, scope);
-          if (firstRender) {
-            treeElm.call(zoomHandler.zoom);
-            scrollToNode(zoomHandler, treeElmRaw, scope.tree.rootNode);
+          if (scope.tree) {
+            if (firstRender) {
+              treeElm.call(zoomHandler.zoom);
+              scrollToNode(zoomHandler, treeElmRaw, scope.tree.rootNode);
 
-            firstRender = false;
+              firstRender = false;
+            }
           }
         });
         scope.$watch('selectedNodeItem', function() {

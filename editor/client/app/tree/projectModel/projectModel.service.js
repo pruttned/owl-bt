@@ -1,102 +1,25 @@
 'use strict';
 
-angular.module('editorApp')
-  .service('ProjectModel',
+(function() {
+
     /**
-     * Current project model
+     * Project model for the current tree.
+     * It contains all node/sub node types
      */
     class ProjectModel {
-      constructor($interpolate) {
-        //TODO: load from srv
-        this.nodeTypes = {
-          sequence: {
-            name: 'sequence',
-            icon: 'arrow-right',
-            isComposite: true
-          },
-          selector: {
-            name: 'selector',
-            icon: 'question',
-            isComposite: true
-          },
-          findPlayer: {
-            name: 'findPlayer',
-            icon: 'search',
-            isComposite: false
-          },
-          gotoPlayer: {
-            name: 'gotoPlayer',
-            icon: 'step-forward',
-            isComposite: false
-          },
-          playSound: {
-            name: 'playSound',
-            icon: 'volume-up',
-            isComposite: false,
-            description: 'Play sound "{{soundName}}" with "{{volume}}" volume',
-            properties: [{
-              name: 'soundName',
-              type: 'string',
-              default: 'mySound.ogg'
-            }, {
-              name: 'volume',
-              type: 'number',
-              min: 10,
-              max: 20,
-              default: 14.5
-            }, {
-              name: 'repeat',
-              type: 'bool',
-              default: true
-            }, {
-              name: 'modifier',
-              type: 'enum',
-              default: 'modif2',
-              values: ['modif1', 'modif2', 'modif3']
-            }]
-          }
-        };
-        this.serviceTypes = {
-          checkAmmo: {
-            name: 'checkAmmo',
-            icon: 'check'
-          }
-        };
+      constructor( $interpolate, data) {
 
-        this.decoratorTypes = {
-          hasAmmo: {
-            name: 'hasAmmo',
-            icon: 'battery-full'
-          },
-          isAwake: {
-            name: 'isAwake',
-            icon: 'bell'
-          },
-          negate: {
-            name: 'negate',
-            icon: 'exchange'
-          },
-          forceSuccess: {
-            name: 'forceSuccess',
-            icon: 'check-circle'
-          }
-        };
-
-        function compileDescriptions(typeDict) {
-          for (let typeName in typeDict) {
-            if (typeDict.hasOwnProperty(typeName)) {
-              let type = typeDict[typeName];
-              if (type.description) {
-                type.description = $interpolate(type.description);
-              }
-            }
-          }
+        function objByName(obj){
+          return obj.name;
         }
 
-        //compile all descriptions
-        compileDescriptions(this.nodeTypes);
-        compileDescriptions(this.serviceTypes);
-        compileDescriptions(this.decoratorTypes);
+        this.nodeTypes = _.keyBy(data.nodes || [], objByName);
+        this.serviceTypes =  _.keyBy(data.services || [], objByName);
+        this.decoratorTypes =  _.keyBy(data.decorators || [], objByName);
+
+        this.compileDescriptions($interpolate, this.nodeTypes);
+        this.compileDescriptions($interpolate, this.serviceTypes);
+        this.compileDescriptions($interpolate, this.decoratorTypes);
       }
 
       getNodeTypeDesc(name) {
@@ -123,5 +46,50 @@ angular.module('editorApp')
         return decoratorType;
       }
 
+      compileDescriptions($interpolate, typeDict) {
+        for (let typeName in typeDict) {
+          if (typeDict.hasOwnProperty(typeName)) {
+            let type = typeDict[typeName];
+            if (type.description) {
+              type.description = $interpolate(type.description);
+            }
+          }
+        }
+      }
+    }
 
-    });
+    class ProjectModelProvider {
+      constructor($interpolate, $resource, $location, $q) {
+        this.$q = $q;
+        this.$interpolate = $interpolate;
+        this.treePath = $location.search().path;
+        this.projectResource = $resource('api/project?path=:treePath', {
+          treePath: '@treePath'
+        }, {
+          query: {
+            method: 'GET',
+            cache: true //http://blog.aliasapps.com/caching-get-requests-using-angular-resource/
+          }
+        });
+      }
+
+      get() {
+        if(this.model){
+          return this.$q.when(this.model);
+        }
+
+        let provider = this;
+
+        return this.projectResource.get({
+          treePath: this.treePath
+        }).$promise.then(modelData => {
+          provider.model = new ProjectModel(this.$interpolate, modelData);
+          return provider.model;
+        });
+      }
+    }
+
+    angular.module('editorApp')
+      .service('ProjectModel', ProjectModelProvider);
+
+  })();

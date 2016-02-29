@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('editorApp')
-  .controller('TreeCtrl', function($scope, $interpolate, hotkeys, ListSelectDialog,
+  .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
     ProjectModel, TreeModel, UndoRedoManager) {
+
+    $scope.treePath = $location.search().path;
 
     //https://github.com/angular/angular.js/wiki/Understanding-Scopes#ng-include
     $scope.model = {
-      tree: TreeModel,
       commands: [{
           name: 'add.node',
           icon: 'cog',
@@ -39,6 +40,13 @@ angular.module('editorApp')
         //   }
         // }
     };
+
+    ProjectModel.get().then(projectModel => {
+       $scope.model.projectModel = projectModel;
+    });
+    TreeModel.get().then(treeModel => {
+       $scope.model.tree = treeModel;
+    });
 
     // function buildCommands() {
     //   let forCompositeAddCommands = $scope.model.commands.add.forComposite;
@@ -92,17 +100,17 @@ angular.module('editorApp')
       UndoRedoManager.redo();
     };
 
-    $scope.$watch('model.tree.version', function(){
+    $scope.$watch('model.tree.version', function() {
       //deselect removed node item
       let selectedNodeItem = $scope.model.selectedNodeItem;
-      if(selectedNodeItem){
-        if('parentNode' in selectedNodeItem){ //is node
-          if(!selectedNodeItem.parentNode){
+      if (selectedNodeItem) {
+        if ('parentNode' in selectedNodeItem) { //is node
+          if (!selectedNodeItem.parentNode) {
             $scope.model.selectedNodeItem = null;
           }
-        }else{ //is subitem
+        } else { //is subitem
           let node = selectedNodeItem.node();
-          if(!node.containsSubItem(selectedNodeItem)){
+          if (!node.containsSubItem(selectedNodeItem)) {
             $scope.model.selectedNodeItem = null;
           }
         }
