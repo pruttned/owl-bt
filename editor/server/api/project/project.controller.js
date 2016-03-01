@@ -18,8 +18,7 @@ function getParentPath(absolutePath) {
 
 function findProjectFile(currentAbsolutePath) {
   let projectAbsolutePath = path.join(currentAbsolutePath, projectFileName);
-  return fs.readFileAsync(projectAbsolutePath)
-    .then(data => JSON.parse(data))
+  return fs.readFileAsync(projectAbsolutePath, 'utf8')
     .catch(err => {
       if (err.code !== errors.ENOENT.code) {
         throw err;
@@ -49,7 +48,7 @@ exports.index = function(req, res, next) {
       if (!prjContent) {
         res.status(404).send('No project found');
       }else{
-        res.json(prjContent)
+        res.contentType('application/json').send(prjContent)
       }
     })
     .catch(err => {
