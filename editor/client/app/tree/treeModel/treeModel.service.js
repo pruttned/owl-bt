@@ -484,7 +484,7 @@
 
 
   class TreeModel {
-    constructor(projectModel, propertyAccessorProvider, undoRedoManager, listSelectDialog) {
+    constructor(projectModel, propertyAccessorProvider, undoRedoManager, listSelectDialog, treeData) {
 
       this.version = 1;
 
@@ -496,33 +496,7 @@
       };
 
       //TODO: load from srv
-      this.rootNode = new Node(propertyAccessorProvider, projectModel, undoRedoManager, listSelectDialog, this, addCommands, {
-        type: 'sequence',
-        name: 'rootNode', //TODO:ak sa nastavi, tak sa musi zobrazit namiesto typu
-        decorators: [{
-          type: 'hasAmmo'
-        }, {
-          type: 'isAwake'
-        }, {
-          type: 'negate'
-        }, {
-          type: 'forceSuccess'
-        }],
-        services: [{
-          type: 'checkAmmo'
-        }],
-        childNodes: [{
-          type: 'findPlayer'
-        }, {
-          type: 'gotoPlayer'
-        }, {
-          type: 'playSound',
-          properties: {
-            soundName: 'myOtherSound.ogg',
-            modifier: 'modif3'
-          }
-        }]
-      });
+      this.rootNode = new Node(propertyAccessorProvider, projectModel, undoRedoManager, listSelectDialog, this, addCommands, treeData);
     }
 
     notifyChange() {
@@ -535,21 +509,49 @@
   }
 
   class TreeModelProvider {
-    constructor(ProjectModel, PropertyAccessorProvider, UndoRedoManager, ListSelectDialog) {
+    constructor($q, $location, $resource, ProjectModel, PropertyAccessorProvider, UndoRedoManager, ListSelectDialog) {
       this.projectModel = ProjectModel;
       this.propertyAccessorProvider = PropertyAccessorProvider;
       this.undoRedoManager = UndoRedoManager;
       this.listSelectDialog = ListSelectDialog;
+      this.$q = $q;
+      this.treePath = $location.search().path;
+      this.treeResource = $resource('api/tree?path=:treePath', {
+        treePath: '@treePath'
+      }, {
+        query: {
+          method: 'GET'
+        }
+      });
     }
 
     get() {
-      return this.projectModel.get()
-        .then(projectModel => {
-          return new TreeModel(projectModel, this.propertyAccessorProvider, this.undoRedoManager, this.listSelectDialog);
+      if (this.getPromise) {
+        return this.getPromise;
+      }
+
+      let provider = this;
+
+      var projectModelPromise = this.projectModel.get();
+      var treePromise = this.treeResource.get({
+        treePath: this.treePath
+      }).$promise;
+
+      this.getPromise = this.$q.all([projectModelPromise, treePromise])
+        .then(data => {
+
+          if (!provider.model) {
+            let projectModel = data[0];
+            let treeData = data[1];
+            provider.model = new TreeModel(projectModel, this.propertyAccessorProvider, this.undoRedoManager, this.listSelectDialog, treeData);
+          }
+          return provider.model;
         });
+
+      return this.getPromise;
     }
   }
-
+  
   angular.module('editorApp')
     /**
      * Current tree model
