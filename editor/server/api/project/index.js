@@ -5,6 +5,6 @@ let controller = require('./project.controller');
 
 let router = express.Router();
 
-router.get('/*', controller.index);
+router.get('/', controller.index);
 
 module.exports = router;
