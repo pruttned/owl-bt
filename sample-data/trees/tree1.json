@@ -1,0 +1,27 @@
+  {
+    "type": "sequence",
+    "name": "rootNode",
+    "decorators": [{
+      "type": "hasAmmo"
+    }, {
+      "type": "isAwake"
+    }, {
+      "type": "negate"
+    }, {
+      "type": "forceSuccess"
+    }],
+    "services": [{
+      "type": "checkAmmo"
+    }],
+    "childNodes": [{
+      "type": "findPlayer"
+    }, {
+      "type": "gotoPlayer"
+    }, {
+      "type": "playSound",
+      "properties": {
+        "soundName": "myOtherSound.ogg",
+        "modifier": "modif3"
+      }
+    }]
+  }
