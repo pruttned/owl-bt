@@ -10,33 +10,33 @@ var mockFs = require('mock-fs');
 var rootPath = path.resolve('.') //to get os specific absolute apth
 var projectContent = '{"nodes":[{"name":"sequence"}]}';
 
-beforeEach(function() {
-  mockFs({
-    a: {
-      'owl-bt.json': projectContent,
-      'tree.json': 'aaa',
-      b: {
-        c: {
-          'tree.json': 'aaa'
-        }
-      }
-    },
-    noPrjDir: {
-      'tree.json': 'aaa',
-      b: {
-        c: {
-          'tree.json': 'aaa'
-        }
-      }
-    }
-  });
-});
-
-afterEach(function() {
-  mockFs.restore();
-});
-
 describe('GET /api/project', function() {
+
+  beforeEach(function() {
+    mockFs({
+      a: {
+        'owl-bt.json': projectContent,
+        'tree.json': 'aaa',
+        b: {
+          c: {
+            'tree.json': 'aaa'
+          }
+        }
+      },
+      noPrjDir: {
+        'tree.json': 'aaa',
+        b: {
+          c: {
+            'tree.json': 'aaa'
+          }
+        }
+      }
+    });
+  });
+
+  afterEach(function() {
+    mockFs.restore();
+  });
 
   it('should return 400 for missing tree path', function(done) {
     request(app)
