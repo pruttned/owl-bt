@@ -66,8 +66,7 @@
         treePath: '@treePath'
       }, {
         query: {
-          method: 'GET',
-          cache: true //http://blog.aliasapps.com/caching-get-requests-using-angular-resource/
+          method: 'GET'
         }
       });
     }
