@@ -5,7 +5,7 @@
   "dependencies": {
     "babel-polyfill": "^6.0.14",
     "bluebird": "^3.3.1",
-    "body-parser": "~1.5.0",
+    "body-parser": "^1.5.2",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
     "connect-mongo": "^0.8.1",
@@ -75,6 +75,7 @@
     "open": "~0.0.4",
     "phantomjs": "^1.9.18",
     "requirejs": "^2.1.20",
+    "rewire": "^2.5.1",
     "should": "~3.3.1",
     "supertest": "~0.11.0",
     "time-grunt": "~0.3.1"
