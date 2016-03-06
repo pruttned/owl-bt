@@ -27,6 +27,16 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
 
+  app.use('/api/', function(req, res, next) { //media type check
+    if (req.method === 'POST' || req.method === 'PUT' ) {
+      let contentType = req.headers['content-type'];
+      if (!contentType || contentType.indexOf('application/json') !== 0) {
+        return res.send(415);
+      }
+    }
+    next();
+  });
+
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
