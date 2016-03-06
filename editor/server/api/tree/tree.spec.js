@@ -62,7 +62,7 @@ describe('GET /api/tree', function() {
   });
 });
 
-describe('PUT /api/tree', function() {
+describe('POST /api/tree', function() {
 
   beforeEach(function() {
     ctrl.__set__('fs',
@@ -80,28 +80,28 @@ describe('PUT /api/tree', function() {
 
   it('should return 400 for missing tree path', function(done) {
     request(app)
-      .put('/api/tree')
+      .post('/api/tree')
       .send(JSON.parse(newTreeContent))
       .expect(400, 'Missing path', done);
   });
   it('should return 400 for non absolute path', function(done) {
     var treePath = 'a/b/c/tree.json';
     request(app)
-      .put('/api/tree?path=' + encodeURIComponent(treePath))
+      .post('/api/tree?path=' + encodeURIComponent(treePath))
       .send(JSON.parse(newTreeContent))
       .expect(400, 'Path must be absolute', done);
   });
   it('should return 404 if directory path doesn`t exists', function(done) {
     var treePath = path.join(rootPath, 'a/nodir/tree.json');
     request(app)
-      .put('/api/tree?path=' + encodeURIComponent(treePath))
+      .post('/api/tree?path=' + encodeURIComponent(treePath))
       .send(JSON.parse(newTreeContent))
       .expect(404, 'Path not found', done);
   });
   it('should create new file if it doesn`t exists', function(done) {
     var treePath = path.join(rootPath, 'a/b/c/notree.json');
     request(app)
-      .put('/api/tree?path=' + encodeURIComponent(treePath))
+      .post('/api/tree?path=' + encodeURIComponent(treePath))
       .send(JSON.parse(newTreeContent))
       .expect(200, function() {
         let ctrlFs = ctrl.__get__('fs');
@@ -112,7 +112,7 @@ describe('PUT /api/tree', function() {
   it('should modify file if it exists', function(done) {
     var treePath = path.join(rootPath, 'a/b/c/tree.json');
     request(app)
-      .put('/api/tree?path=' + encodeURIComponent(treePath))
+      .post('/api/tree?path=' + encodeURIComponent(treePath))
       .send(JSON.parse(newTreeContent))
       .expect(200, function() {
         let ctrlFs = ctrl.__get__('fs');
