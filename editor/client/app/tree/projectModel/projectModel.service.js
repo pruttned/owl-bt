@@ -64,10 +64,6 @@
       this.treePath = $location.search().path;
       this.projectResource = $resource('api/project?path=:treePath', {
         treePath: '@treePath'
-      }, {
-        query: {
-          method: 'GET'
-        }
       });
     }
 
