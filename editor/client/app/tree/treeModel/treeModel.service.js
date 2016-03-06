@@ -518,10 +518,6 @@
       this.treePath = $location.search().path;
       this.treeResource = $resource('api/tree?path=:treePath', {
         treePath: '@treePath'
-      }, {
-        query: {
-          method: 'GET'
-        }
       });
     }
 
@@ -551,7 +547,7 @@
       return this.getPromise;
     }
   }
-  
+
   angular.module('editorApp')
     /**
      * Current tree model
