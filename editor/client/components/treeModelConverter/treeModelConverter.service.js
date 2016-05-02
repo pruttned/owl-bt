@@ -7,8 +7,8 @@
    */
   class TreeModelConverter {
 
-    constructor() {
-      this.nextId = 1;
+    constructor(IdProvider) {
+      this._idProvider = IdProvider;
     }
 
     convertNodeToRuntime(nodeData) {
@@ -51,13 +51,6 @@
       return data;
     }
 
-    _newId() {
-      if (this.nextId === Number.MAX_SAFE_INTEGER) {
-        throw new Error('max id reached');
-      }
-      return this.nextId++;
-    }
-
     _convertPropertiesToRuntime(propsArray) {
       let propsObj = {};
       if (propsArray) {
@@ -77,7 +70,7 @@
 
     _addNodeMetaInfo(node) {
       node._meta = {
-        id: this._newId(),
+        id: this._idProvider.newId(),
         version: 1
       };
     }
