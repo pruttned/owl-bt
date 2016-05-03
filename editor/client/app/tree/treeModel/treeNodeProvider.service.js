@@ -30,16 +30,6 @@
       return node;
     }
 
-    _convertProperties(propsDto) {
-      let propsObj = {};
-      if (propsDto) {
-        for (let prop of propsDto) {
-          propsObj[prop.name] = prop.value;
-        }
-      }
-      return propsObj;
-    }
-
     _convertSubItem(dto) {
       let item = {};
       angular.extend(item, dto);
