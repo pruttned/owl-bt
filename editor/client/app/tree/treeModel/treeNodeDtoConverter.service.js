@@ -7,6 +7,10 @@
    */
   class TreeNodeDtoConverter {
 
+    constructor(TreeItemPropertyDtoConverter){
+      this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
+    }
+
     convert(node) {
       let dto = {};
       angular.extend(dto, node);
@@ -14,7 +18,7 @@
       delete dto._meta;
 
       if (dto.properties) {
-        dto.properties = this._convertProperties(dto.properties);
+        dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
           delete dto.properties;
         }
@@ -34,27 +38,12 @@
       return dto;
     }
 
-    _convertProperties(propsObj) {
-      let propsArray = [];
-      if (propsObj) {
-        for (let prop in propsObj) {
-          if (propsObj.hasOwnProperty(prop)) {
-            propsArray.push({
-              name: prop,
-              value: propsObj[prop]
-            });
-          }
-        }
-      }
-      return propsArray;
-    }
-
     _convertSubItem(item) {
       let dto = {};
       angular.extend(dto, item);
       this._clearEmptyArrays(dto);
       if (dto.properties) {
-        dto.properties = this._convertProperties(dto.properties);
+        dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
           delete dto.properties;
         }
@@ -77,5 +66,4 @@
 
   angular.module('editorApp')
     .service('TreeNodeDtoConverter', TreeNodeDtoConverter);
-
 })();

@@ -3,8 +3,9 @@
 (function() {
 
   class TreeNodeProvider {
-    constructor(IdProvider) {
+    constructor(IdProvider, TreeItemPropertyDtoConverter) {
         this._idProvider = IdProvider;
+        this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
       }
       /**
        * Creates a node
@@ -21,7 +22,7 @@
         id: this._idProvider.newId(),
         version: 1
       };
-      node.properties = this._convertProperties(node.properties);
+      node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
       node.decorators = node.decorators ? node.decorators.map(d => this._convertSubItem(d)) : [];
       node.services = node.services ? node.services.map(s => this._convertSubItem(s)) : [];
       node.childNodes = node.childNodes ? node.childNodes.map(n => this.create(n)) : [];
@@ -43,7 +44,7 @@
       let item = {};
       angular.extend(item, dto);
       item.type = item.type || 'unknown';
-      item.properties = this._convertProperties(item.properties);
+      item.properties = this._treeItemPropertyDtoConverter.convertFromDto(item.properties);
       return item;
     }
   }
