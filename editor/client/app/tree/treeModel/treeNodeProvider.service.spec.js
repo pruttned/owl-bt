@@ -11,6 +11,11 @@ describe('Service: TreeNodeProvider', function() {
     TreeNodeProvider = _TreeNodeProvider_;
   }));
 
+  let projectModel;
+  beforeEach(function() {
+    projectModel = window.owlBtMocks.createProjectModelMock();
+  });
+
   it('create should clone provided dto and all its subnodes+subitems + convert all property collections and add version/id meta inf', function() {
     let dto = {
       type: 'sequence',
@@ -46,7 +51,7 @@ describe('Service: TreeNodeProvider', function() {
         }]
       }]
     };
-    let node = TreeNodeProvider.create(dto);
+    let node = TreeNodeProvider.create(dto, projectModel);
     expect(node).not.toBe(dto);
     expect(node.decorators[0]).not.toBe(dto.decorators[0]);
     expect(node.services[0]).not.toBe(dto.services[0]);
@@ -55,7 +60,8 @@ describe('Service: TreeNodeProvider', function() {
       type: 'sequence',
       _meta: {
         id: 1,
-        version: 1
+        version: 1,
+        desc: 'sequence'
       },
       properties: {},
       decorators: [{
@@ -63,6 +69,9 @@ describe('Service: TreeNodeProvider', function() {
         properties: {
           prop1: 'value1',
           prop2: 'value2'
+        },
+        _meta: {
+          desc: 'd1'
         }
       }],
       services: [{
@@ -70,13 +79,17 @@ describe('Service: TreeNodeProvider', function() {
         properties: {
           prop1: 'value1',
           prop2: 'value2'
+        },
+        _meta: {
+          desc: 's1'
         }
       }],
       childNodes: [{
         type: 'chn1',
         _meta: {
           id: 2,
-          version: 1
+          version: 1,
+          desc: 'chn1'
         },
         properties: {
           prop1: 'value1',

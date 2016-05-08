@@ -42,6 +42,7 @@
       let dto = {};
       angular.extend(dto, item);
       this._clearEmptyArrays(dto);
+      delete dto._meta;
       if (dto.properties) {
         dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {

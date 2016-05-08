@@ -16,18 +16,19 @@
        * @param  {Object} dto...
        * @return {Object} - Node
        */
-    create(dto) {
+    create(dto, projectModel) {
       let node = {};
       node.type = node.type || 'unknown';
       angular.extend(node, dto);
       node._meta = {
         id: this._idProvider.newId(),
-        version: 1
+        version: 1,
+        desc : projectModel.getNodeTypeDesc(node.type)
       };
       node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
-      node.decorators = node.decorators ? node.decorators.map(d => this._treeDecoratorItemProvider.create(d)) : [];
-      node.services = node.services ? node.services.map(s => this._treeServiceItemProvider.create(s)) : [];
-      node.childNodes = node.childNodes ? node.childNodes.map(n => this.create(n)) : [];
+      node.decorators = node.decorators ? node.decorators.map(d => this._treeDecoratorItemProvider.create(d, projectModel)) : [];
+      node.services = node.services ? node.services.map(s => this._treeServiceItemProvider.create(s, projectModel)) : [];
+      node.childNodes = node.childNodes ? node.childNodes.map(n => this.create(n, projectModel)) : [];
 
       return node;
     }

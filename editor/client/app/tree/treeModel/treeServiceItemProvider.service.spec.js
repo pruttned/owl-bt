@@ -11,7 +11,12 @@ describe('Service: TreeServiceItemProvider', function() {
     TreeServiceItemProvider = _TreeServiceItemProvider_;
   }));
 
-  it('create should clone provided dto + convert all property collections', function() {
+  let projectModel;
+  beforeEach(function() {
+    projectModel = window.owlBtMocks.createProjectModelMock();
+  });
+
+  it('create should clone provided dto + convert all property collections and generate _meta', function() {
     let dto = {
       type: 'd1',
       properties: [{
@@ -19,12 +24,15 @@ describe('Service: TreeServiceItemProvider', function() {
         value: 'value1'
       }]
     };
-    let node = TreeServiceItemProvider.create(dto);
+    let node = TreeServiceItemProvider.create(dto, projectModel);
     expect(node).not.toBe(dto);
     expect(node).toEqual({
       type: 'd1',
       properties: {
         prop1: 'value1'
+      },
+      _meta: {
+        desc: 'd1'
       }
     });
   });

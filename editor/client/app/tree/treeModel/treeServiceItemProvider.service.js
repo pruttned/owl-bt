@@ -8,10 +8,13 @@
         this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
       }
 
-    create(dto) {
+    create(dto, projectModel) {
       let service = {};
       angular.extend(service, dto);
       service.type = service.type || 'unknown';
+      service._meta = {
+        desc : projectModel.getServiceTypeDesc(service.type)
+      };
       service.properties = this._treeItemPropertyDtoConverter.convertFromDto(service.properties);
       return service;
     }
