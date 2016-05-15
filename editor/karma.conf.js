@@ -21,7 +21,6 @@ module.exports = function(config) {
       'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'client/bower_components/lodash/dist/lodash.min.js',
       'client/bower_components/undo-manager/lib/undomanager.js',
-      'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'client/bower_components/angular-hotkeys/build/hotkeys.js',
       'node_modules/babel-polyfill/dist/polyfill.js',
       'node_modules/string_score/string_score.js',
