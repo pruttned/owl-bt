@@ -3,7 +3,9 @@
 (function() {
 
   class TreeNodeProvider {
-    constructor(IdProvider, TreeItemPropertyDtoConverter, TreeDecoratorItemProvider, TreeServiceItemProvider) {
+    constructor($q, ProjectStore, IdProvider, TreeItemPropertyDtoConverter, TreeDecoratorItemProvider, TreeServiceItemProvider) {
+        this._$q = $q;
+        this._projectStore = ProjectStore;
         this._idProvider = IdProvider;
         this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
         this._treeDecoratorItemProvider = TreeDecoratorItemProvider;
@@ -16,21 +18,33 @@
        * @param  {Object} dto...
        * @return {Object} - Node
        */
-    create(dto, projectModel) {
-      let node = {};
-      node.type = node.type || 'unknown';
-      angular.extend(node, dto);
-      node._meta = {
-        id: this._idProvider.newId(),
-        version: 1,
-        desc : projectModel.getNodeTypeDesc(node.type)
-      };
-      node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
-      node.decorators = node.decorators ? node.decorators.map(d => this._treeDecoratorItemProvider.create(d, projectModel)) : [];
-      node.services = node.services ? node.services.map(s => this._treeServiceItemProvider.create(s, projectModel)) : [];
-      node.childNodes = node.childNodes ? node.childNodes.map(n => this.create(n, projectModel)) : [];
+    create(dto) {
+      let _this = this;
+      return this._projectStore.getNodeTypeDesc(dto.type)
+        .then(desc => {
+          let node = {};
+          angular.extend(node, dto);
+          node.type = node.type || 'unknown';
+          node.$meta = {
+            id: this._idProvider.newId(),
+            version: 1,
+            desc: desc
+          };
+          node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
 
-      return node;
+          let decoratorsPromise = dto.decorators ? _this._$q.all(dto.decorators.map(d => _this._treeDecoratorItemProvider.create(d))) : _this._$q.when([]);
+          let servicesPromise = dto.services ? _this._$q.all(dto.services.map(s => _this._treeServiceItemProvider.create(s))) : _this._$q.when([]);
+          let childNodesPromise = dto.childNodes ? _this._$q.all(dto.childNodes.map(n => _this.create(n))) : _this._$q.when([]);
+
+          return _this._$q.all([decoratorsPromise, servicesPromise, childNodesPromise])
+            .then(data => {
+              node.decorators = data[0];
+              node.services = data[1];
+              node.childNodes = data[2];
+              return node;
+
+            });
+        });
     }
   }
 

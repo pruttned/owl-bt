@@ -14,7 +14,7 @@ describe('Service: TreeNodeDtoConverter', function() {
   it('convert should clone node and all its subnodes+subitems; convert all property collections and remove meta inf + remove empty arrays/properties', function() {
     let node = {
       type: 'sequence',
-      _meta: {
+      $meta: {
         id: 1,
         version: 1
       },
@@ -35,7 +35,7 @@ describe('Service: TreeNodeDtoConverter', function() {
       }],
       childNodes: [{
         type: 'chn1',
-        _meta: {
+        $meta: {
           id: 2,
           version: 1
         },

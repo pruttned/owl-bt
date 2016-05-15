@@ -15,7 +15,7 @@
       let dto = {};
       angular.extend(dto, node);
 
-      delete dto._meta;
+      delete dto.$meta;
 
       if (dto.properties) {
         dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
@@ -42,7 +42,7 @@
       let dto = {};
       angular.extend(dto, item);
       this._clearEmptyArrays(dto);
-      delete dto._meta;
+      delete dto.$meta;
       if (dto.properties) {
         dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
