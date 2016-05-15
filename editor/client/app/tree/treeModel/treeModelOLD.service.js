@@ -1,5 +1,7 @@
 'use strict';
 
+// https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#services
+
 //TODO: refactor
 
 (function() {
@@ -274,7 +276,7 @@
      * @return {String} action.icon- (optional) icon of the item (fontawsome icon name without 'fa-')
      * @return {function(nodeItem)} action.action - click action of the item
      */
-    getContextMenuActions() {
+    getContextMenuActions() { //toto by tu fakt nemalo byt. potom nebudes potrebovat mozno ani parent node....i ked...
       let _this = this;
       let actions = [{
         title: 'Add Service',
@@ -299,7 +301,7 @@
             });
         }
       }];
-
+//nemohli by sa akcie registrovat same? do nejakeho servisu? .. t.j. by bola kazda akcia v osobytnom subore. tusim sa to da cez provider..
       if (this.typeDesc().isComposite) {
         actions.push({
           title: 'Add Node',
@@ -484,7 +486,7 @@
 
 
   class TreeModel {
-    constructor(projectModel, propertyAccessorProvider, undoRedoManager, listSelectDialog, treeData) {
+    constructor(jsonSerializer, projectModel, propertyAccessorProvider, undoRedoManager, listSelectDialog, treeData) {
 
       this.version = 1;
 
@@ -495,7 +497,7 @@
         addNodeCommands: _.values(projectModel.nodeTypes)
       };
 
-      //TODO: load from srv
+      this.jsonSerializer = jsonSerializer;
       this.rootNode = new Node(propertyAccessorProvider, projectModel, undoRedoManager, listSelectDialog, this, addCommands, treeData);
     }
 
@@ -509,7 +511,7 @@
   }
 
   class TreeModelProvider {
-    constructor($q, $location, $resource, ProjectModel, PropertyAccessorProvider, UndoRedoManager, ListSelectDialog) {
+    constructor($q, $location, $resource, JsonSerializer, ProjectModel, PropertyAccessorProvider, UndoRedoManager, ListSelectDialog) {
       this.projectModel = ProjectModel;
       this.propertyAccessorProvider = PropertyAccessorProvider;
       this.undoRedoManager = UndoRedoManager;
@@ -519,6 +521,7 @@
       this.treeResource = $resource('api/tree?path=:treePath', {
         treePath: '@treePath'
       });
+      this.jsonSerializer = JsonSerializer;
     }
 
     get() {
@@ -539,12 +542,22 @@
           if (!provider.model) {
             let projectModel = data[0];
             let treeData = data[1];
-            provider.model = new TreeModel(projectModel, this.propertyAccessorProvider, this.undoRedoManager, this.listSelectDialog, treeData);
+            provider.model = new TreeModel(this.jsonSerializer, projectModel, this.propertyAccessorProvider, this.undoRedoManager, this.listSelectDialog, treeData);
           }
           return provider.model;
         });
 
       return this.getPromise;
+    }
+//transformRequest https://www.quora.com/When-should-I-think-of-using-transformRequest-and-transformResponse-in-AngularJS-http-calls
+//+ toJSON
+    save(model){
+      model = this.jsonSerializer.deserialize(this.jsonSerializer.serialize(model)); //$resource ignores toJSON TODO: refactor
+      console.log(model);
+      let resource = new this.treeResource(model);
+      return resource.$save({
+        treePath: this.treePath
+      }).$promise;
     }
   }
 
@@ -552,6 +565,6 @@
     /**
      * Current tree model
      */
-    .service('TreeModel', TreeModelProvider);
+    .service('TreeModelOLD', TreeModelProvider);
 
 })();
