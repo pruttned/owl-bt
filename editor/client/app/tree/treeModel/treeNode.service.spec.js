@@ -46,7 +46,6 @@ describe('Service: Node', function() {
       expect(node.services).toBeDefined();
       expect(node.services.length).toBe(1);
       expect(node.services[0]).toBe(service);
-      expect(service.$meta.node).toBe(node);
     });
 
   it('addDecorator should add decorator to node decorators array and set node to decorator $meta object',
@@ -60,7 +59,6 @@ describe('Service: Node', function() {
       expect(node.decorators).toBeDefined();
       expect(node.decorators.length).toBe(1);
       expect(node.decorators[0]).toBe(decorator);
-      expect(decorator.$meta.node).toBe(node);
     });
 
   it('addChildNode should add child node to childNodes array of the parent node and set node to child node $meta object',
@@ -74,39 +72,6 @@ describe('Service: Node', function() {
       expect(node.childNodes).toBeDefined();
       expect(node.childNodes.length).toBe(1);
       expect(node.childNodes[0]).toBe(childNode);
-      expect(childNode.$meta.parentNode).toBe(node);
     });
 
-  it('addService should fail if the service is already in a node',
-    function() {
-      let node = {};
-      let service = {
-        $meta: {
-          node: {}
-        }
-      };
-      expect(() => TreeNode.addService(node, service)).toThrowError();
-    });
-
-  it('addDecorator should fail if the decorator is already in a node',
-    function() {
-      let node = {};
-      let decorator = {
-        $meta: {
-          node: {}
-        }
-      };
-      expect(() => TreeNode.addDecorator(node, decorator)).toThrowError();
-    });
-
-  it('addChildNode should fail if the node is already child of a node',
-    function() {
-      let node = {};
-      let childNode = {
-        $meta: {
-          parentNode: {}
-        }
-      };
-      expect(() => TreeNode.addChildNode(node, childNode)).toThrowError();
-    });
 });
