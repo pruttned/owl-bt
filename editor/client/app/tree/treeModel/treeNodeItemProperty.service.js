@@ -2,7 +2,7 @@
 
 (function() {
 
-  class NodeItemProperty {
+  class TreeNodeItemProperty {
 
     constructor(_) {
       this._ = _;
@@ -58,5 +58,5 @@
   }
 
   angular.module('editorApp')
-    .service('NodeItemProperty', NodeItemProperty);
+    .service('TreeNodeItemProperty', TreeNodeItemProperty);
 })();

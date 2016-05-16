@@ -1,14 +1,14 @@
 'use strict';
 
-describe('Service: NodeItemProperty', function() {
+describe('Service: TreeNodeItemProperty', function() {
 
   // load the service's module
   beforeEach(module('editorApp'));
 
   // instantiate service
-  let NodeItemProperty;
-  beforeEach(inject(function(_NodeItemProperty_) {
-    NodeItemProperty = _NodeItemProperty_;
+  let TreeNodeItemProperty;
+  beforeEach(inject(function(_TreeNodeItemProperty_) {
+    TreeNodeItemProperty = _TreeNodeItemProperty_;
   }));
 
   it('isSet should return true if properties object contains the specified property', function() {
@@ -17,7 +17,7 @@ describe('Service: NodeItemProperty', function() {
         prop1: 'value1'
       }
     };
-    let res = NodeItemProperty.isSet(item, 'prop1');
+    let res = TreeNodeItemProperty.isSet(item, 'prop1');
     expect(res).toBe(true);
   });
 
@@ -27,7 +27,7 @@ describe('Service: NodeItemProperty', function() {
         prop1: 'value1'
       }
     };
-    let res = NodeItemProperty.isSet(item, 'prop1XX');
+    let res = TreeNodeItemProperty.isSet(item, 'prop1XX');
     expect(res).toBe(false);
   });
 
@@ -45,7 +45,7 @@ describe('Service: NodeItemProperty', function() {
         }
       }
     };
-    let res = NodeItemProperty.value(item, 'prop1');
+    let res = TreeNodeItemProperty.value(item, 'prop1');
     expect(res).toBe('def1');
   });
 
@@ -63,13 +63,13 @@ describe('Service: NodeItemProperty', function() {
         }
       }
     };
-    let res = NodeItemProperty.value(item, 'prop1');
+    let res = TreeNodeItemProperty.value(item, 'prop1');
     expect(res).toBe('value1');
   });
 
   it('value should set value for unset property', function() {
     let item = {};
-    NodeItemProperty.value(item, 'prop1', 'newValue1');
+    TreeNodeItemProperty.value(item, 'prop1', 'newValue1');
     expect(item.properties.prop1).toBe('newValue1');
   });
 
@@ -79,7 +79,7 @@ describe('Service: NodeItemProperty', function() {
         prop1: 'value1'
       }
     };
-    NodeItemProperty.value(item, 'prop1', 'newValue1');
+    TreeNodeItemProperty.value(item, 'prop1', 'newValue1');
     expect(item.properties.prop1).toBe('newValue1');
   });
 
@@ -89,7 +89,7 @@ describe('Service: NodeItemProperty', function() {
         prop1: 'value1'
       }
     };
-    NodeItemProperty.reset(item, 'prop1');
+    TreeNodeItemProperty.reset(item, 'prop1');
     expect(item.properties).not.toBeDefined();
   });
 
@@ -100,7 +100,7 @@ describe('Service: NodeItemProperty', function() {
         prop2: 'value2'
       }
     };
-    NodeItemProperty.reset(item, 'prop1');
+    TreeNodeItemProperty.reset(item, 'prop1');
     expect(item.properties).toBeDefined();
     expect(item.properties.prop1).not.toBeDefined();
   });
@@ -119,7 +119,7 @@ describe('Service: NodeItemProperty', function() {
         }
       }
     };
-    var res = NodeItemProperty.desc(item, 'prop1');
+    var res = TreeNodeItemProperty.desc(item, 'prop1');
     expect(res).toBe(item.$meta.desc.properties[0]);
   });
 
@@ -137,7 +137,7 @@ describe('Service: NodeItemProperty', function() {
         }
       }
     };
-    var res = NodeItemProperty.default(item, 'prop1');
+    var res = TreeNodeItemProperty.default(item, 'prop1');
     expect(res).toBe('def1');
   });
 
