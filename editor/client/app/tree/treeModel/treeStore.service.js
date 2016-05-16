@@ -5,16 +5,14 @@
 (function() {
 
   class TreeStore {
-    constructor($q, $resource, $location, ProjectStore, TreeNodeProvider) {
+    constructor($resource, $location, TreeNodeProvider) {
       this.treePath = $location.search().path;
       this.version = 1;
 
-      this._$q = $q;
       this._treeResource = $resource('api/tree?path=:treePath', {
         treePath: '@treePath'
       });
       this._treeNodeProvider = TreeNodeProvider;
-      this._projectStore = ProjectStore;
     }
 
     rootNode() {
@@ -24,17 +22,12 @@
 
       let _this = this;
 
-      var projectModelPromise = this._projectStore.current();
-      var treePromise = this._treeResource.get({
-        treePath: this.treePath
-      }).$promise;
-
-      this._rootNodePromise = this._$q.all([projectModelPromise, treePromise])
-        .then(data => {
-          if (!_this._current) {
-            let projectModel = data[0];
-            let treeData = data[1];
-            _this._rootNode = this._treeNodeProvider.create(treeData, projectModel);
+      this._rootNodePromise = this._treeResource.get({
+          treePath: this.treePath
+        }).$promise
+        .then(treeData => {
+          if (!_this._rootNode) {
+            _this._rootNode = _this._treeNodeProvider.create(treeData);
           }
           return _this._rootNode;
         });
@@ -49,7 +42,7 @@
         this.version++;
       }
     }
-    
+
   }
 
   angular.module('editorApp')
