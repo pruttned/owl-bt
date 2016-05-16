@@ -58,6 +58,7 @@ describe('Service: TreeNodeProvider', function() {
           expect(node.decorators[0]).not.toBe(dto.decorators[0]);
           expect(node.services[0]).not.toBe(dto.services[0]);
           expect(node.childNodes[0]).not.toBe(dto.childNodes[0]);
+
           expect(node).toEqual({
             type: 'sequence',
             $meta: {
@@ -96,10 +97,7 @@ describe('Service: TreeNodeProvider', function() {
               properties: {
                 prop1: 'value1',
                 prop2: 'value2'
-              },
-              decorators: [],
-              services: [],
-              childNodes: []
+              }
             }]
           });
 

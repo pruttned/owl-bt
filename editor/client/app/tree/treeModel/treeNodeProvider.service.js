@@ -3,13 +3,15 @@
 (function() {
 
   class TreeNodeProvider {
-    constructor($q, ProjectStore, IdProvider, TreeItemPropertyDtoConverter, TreeDecoratorItemProvider, TreeServiceItemProvider) {
+    constructor($q, ProjectStore, IdProvider, TreeItemPropertyDtoConverter,
+        TreeDecoratorItemProvider, TreeServiceItemProvider, TreeNode) {
         this._$q = $q;
         this._projectStore = ProjectStore;
         this._idProvider = IdProvider;
         this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
         this._treeDecoratorItemProvider = TreeDecoratorItemProvider;
         this._treeServiceItemProvider = TreeServiceItemProvider;
+        this._treeNode = TreeNode;
       }
       /**
        * Creates a node
@@ -30,6 +32,10 @@
             version: 1,
             desc: desc
           };
+          delete node.services;
+          delete node.decorators;
+          delete node.childNodes;
+
           node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
 
           let decoratorsPromise = dto.decorators ? _this._$q.all(dto.decorators.map(d => _this._treeDecoratorItemProvider.create(d))) : _this._$q.when([]);
@@ -38,11 +44,17 @@
 
           return _this._$q.all([decoratorsPromise, servicesPromise, childNodesPromise])
             .then(data => {
-              node.decorators = data[0];
-              node.services = data[1];
-              node.childNodes = data[2];
-              return node;
+              for (let decorator of data[0]) {
+                _this._treeNode.addDecorator(node, decorator);
+              }
+              for (let service of data[1]) {
+                _this._treeNode.addService(node, service);
+              }
+              for (let childNode of data[2]) {
+                _this._treeNode.addChildNode(node, childNode);
+              }
 
+              return node;
             });
         });
     }
