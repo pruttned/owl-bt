@@ -3,9 +3,10 @@
 (function() {
 
   class ProjectStore {
-    constructor($interpolate, $resource, $location) {
+    constructor(_, $interpolate, $resource, $location) {
       this.treePath = $location.search().path;
 
+      this._ = _;
       this._$interpolate = $interpolate;
       this._projectResource = $resource('api/project?path=:treePath', {
         treePath: '@treePath'
@@ -37,10 +38,10 @@
       this._currentPromise = this._projectResource.get({
         treePath: this.treePath
       }).$promise.then(prjData => {
-        if (!_this._current) {
-          _this._current = this._compileProject(prjData);
+        if (!_this._currentVal) {
+          _this._currentVal = _this._compileProject(prjData);
         }
-        return _this._current;
+        return _this._currentVal;
       });
 
       return this._currentPromise;
@@ -57,9 +58,9 @@
         decoratorTypes: this._.keyBy(prjData.decorators || [], objByName)
       };
 
-      this.compileDescriptions(prj.nodeTypes);
-      this.compileDescriptions(prj.serviceTypes);
-      this.compileDescriptions(prj.decoratorTypes);
+      this._compileDescriptions(prj.nodeTypes);
+      this._compileDescriptions(prj.serviceTypes);
+      this._compileDescriptions(prj.decoratorTypes);
 
       return prj;
     }
