@@ -5,7 +5,7 @@
   /**
    * Common node functions
    */
-  class Node {
+  class TreeNode {
 
     updateVersion(node) {
       if (node.$meta.version === Number.MAX_SAFE_INTEGER) {
@@ -50,5 +50,5 @@
   }
 
   angular.module('editorApp')
-    .service('Node', Node);
+    .service('TreeNode', TreeNode);
 })();

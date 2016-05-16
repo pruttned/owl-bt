@@ -6,9 +6,9 @@ describe('Service: Node', function() {
   beforeEach(module('editorApp'));
 
   // instantiate service
-  let Node;
-  beforeEach(inject(function(_Node_) {
-    Node = _Node_;
+  let TreeNode;
+  beforeEach(inject(function(_TreeNode_) {
+    TreeNode = _TreeNode_;
   }));
 
   it('updateVersion should inc node version',
@@ -18,7 +18,7 @@ describe('Service: Node', function() {
           version: 1
         }
       };
-      Node.updateVersion(node);
+      TreeNode.updateVersion(node);
 
       expect(node.$meta.version).toBe(2);
     });
@@ -30,7 +30,7 @@ describe('Service: Node', function() {
           version: Number.MAX_SAFE_INTEGER
         }
       };
-      Node.updateVersion(node);
+      TreeNode.updateVersion(node);
 
       expect(node.$meta.version).toBe(1);
     });
@@ -41,7 +41,7 @@ describe('Service: Node', function() {
       let service = {
         $meta: {}
       };
-      Node.addService(node, service);
+      TreeNode.addService(node, service);
 
       expect(node.services).toBeDefined();
       expect(node.services.length).toBe(1);
@@ -55,7 +55,7 @@ describe('Service: Node', function() {
       let decorator = {
         $meta: {}
       };
-      Node.addDecorator(node, decorator);
+      TreeNode.addDecorator(node, decorator);
 
       expect(node.decorators).toBeDefined();
       expect(node.decorators.length).toBe(1);
@@ -69,7 +69,7 @@ describe('Service: Node', function() {
       let childNode = {
         $meta: {}
       };
-      Node.addChildNode(node, childNode);
+      TreeNode.addChildNode(node, childNode);
 
       expect(node.childNodes).toBeDefined();
       expect(node.childNodes.length).toBe(1);
@@ -85,7 +85,7 @@ describe('Service: Node', function() {
           node: {}
         }
       };
-      expect(() => Node.addService(node, service)).toThrowError();
+      expect(() => TreeNode.addService(node, service)).toThrowError();
     });
 
   it('addDecorator should fail if the decorator is already in a node',
@@ -96,7 +96,7 @@ describe('Service: Node', function() {
           node: {}
         }
       };
-      expect(() => Node.addDecorator(node, decorator)).toThrowError();
+      expect(() => TreeNode.addDecorator(node, decorator)).toThrowError();
     });
 
   it('addChildNode should fail if the node is already child of a node',
@@ -107,6 +107,6 @@ describe('Service: Node', function() {
           parentNode: {}
         }
       };
-      expect(() => Node.addChildNode(node, childNode)).toThrowError();
+      expect(() => TreeNode.addChildNode(node, childNode)).toThrowError();
     });
 });
