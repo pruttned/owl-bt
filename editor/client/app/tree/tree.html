@@ -1,16 +1,65 @@
 <div class="col-md-12">
   TREE VIEW
+  <!-- {{tree.current}} -->
+  <div>
+    <button ng-click="tree.undo()">undo</button>
+    <button ng-click="tree.redo()">redo</button>
+  </div>
+
+
+  <ul>
+    <li ng-repeat="node in tree.tmpFlatTree">
+      <a ng-click="tree.selectNode(node)" href="#">{{node.type}}</a>
+      <ul>
+        <li ng-repeat="dec in node.decorators">
+          <a ng-click="tree.selectNodeItem(node, dec)" href="#">dec:{{dec.type}}</a>
+        </li>
+      </ul>
+      <ul>
+        <li ng-repeat="svc in node.services">
+          <a ng-click="tree.selectNodeItem(node, svc)" href="#">scv:{{svc.type}}</a>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+
+  <tree-view root-node="tree.rootNode" sel-item="tree.selItem" sel-node="tree.selNode" ></tree-view>
+
+
+<hr />
+node:
+<div>
+  {{tree.selNode}}
+</div>
+<hr />
+item:
+<div>
+  {{tree.selItem}}
+</div>
+<hr />
+
+<section class="node-item-details" ng-if="tree.selItem">
+  <h1>Details - {{tree.selItem.type}}</h1>
+  <fieldset class="node-item-properties">
+    <legend>Custom properties</legend>
+    <property-editor-list sel-item="tree.selItem" sel-node="tree.selNode"></property-editor-list>
+  </fieldset>
+</section>
+
+  <!-- {{model.projectModel}}
+  <button type="button" class="btn btn-default" ng-click="save()">Save</button>
   <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
   <button type="button" class="btn btn-default" ng-click="undo()">Undo</button>
   <button type="button" class="btn btn-default" ng-click="redo()">Redo</button>
-  <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem" get-node-item-actions="getNodeItemActions"></tree-view>
+  <tree-view tree="model.tree" selected-node-item="model.selectedNodeItem" get-node-item-actions="getNodeItemActions"></tree-view> -->
   <!-- <div>
     <div>
       {{model.selectedNodeItem.typeDesc().name}}
       <input ng-model="model.selectedNodeItem.typeDesc().name" ng-blur="fun(model.selectedNodeItem)"/>
     </div>
   </div> -->
-<div ng-repeat="accessor in model.selectedNodeItem.propertyAccessors()">
+  <!-- <div ng-repeat="accessor in model.selectedNodeItem.propertyAccessors()">
   {{accessor.value()}}
 </div>
   <section class="node-item-details" ng-if="model.selectedNodeItem">
@@ -19,6 +68,6 @@
       <legend>Custom properties</legend>
       <property-editor-list properties="model.selectedNodeItem.propertyAccessors()"></property-editor-list>
     </fieldset>
-  </section>
+  </section> -->
 
 </div>

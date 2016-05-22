@@ -5,6 +5,7 @@ angular.module('editorApp')
     $routeProvider
       .when('/tree', {
         templateUrl: 'app/tree/tree.html',
-        controller: 'TreeCtrl'
+        controller: 'TreeCtrl',
+        controllerAs: 'tree'
       });
   });
