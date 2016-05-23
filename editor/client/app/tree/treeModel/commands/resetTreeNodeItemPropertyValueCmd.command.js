@@ -3,9 +3,9 @@
 (function() {
   class ResetTreeNodeItemPropertyValueCmd {
     constructor(TreeStore, TreeNodeItemProperty, TreeNode) {
-        this._treeStore = TreeStore;
-        this._treeNodeItemProperty = TreeNodeItemProperty;
-        this._treeNode = TreeNode;
+        this._TreeStore = TreeStore;
+        this._TreeNodeItemProperty = TreeNodeItemProperty;
+        this._TreeNode = TreeNode;
       }
       /**
        * @param  {object} params
@@ -20,25 +20,25 @@
       let _this = this;
 
       let nodeItem = params.nodeItem || params.node;
-      let wasSet = this._treeNodeItemProperty.isSet(nodeItem, params.property);
+      let wasSet = this._TreeNodeItemProperty.isSet(nodeItem, params.property);
       let oldValue;
       if (wasSet) {
-        oldValue = this._treeNodeItemProperty.value(nodeItem, params.property);
+        oldValue = this._TreeNodeItemProperty.value(nodeItem, params.property);
       }
 
       return {
         exec: () => {
-          _this._treeNodeItemProperty.reset(nodeItem, params.property);
+          _this._TreeNodeItemProperty.reset(nodeItem, params.property);
 
-          _this._treeStore.updateVersion();
-          _this._treeNode.updateVersion(params.node);
+          _this._TreeStore.updateVersion();
+          _this._TreeNode.updateVersion(params.node);
         },
         undo: () => {
           if (wasSet) {
-            _this._treeNodeItemProperty.value(nodeItem, params.property, oldValue);
+            _this._TreeNodeItemProperty.value(nodeItem, params.property, oldValue);
 
-            _this._treeStore.updateVersion();
-            _this._treeNode.updateVersion(params.node);
+            _this._TreeStore.updateVersion();
+            _this._TreeNode.updateVersion(params.node);
           }
         }
       };

@@ -11,34 +11,34 @@
      * @param  {Object} nodeItem - (optional) node item that owns the property. Null or node for node property
      * @param  {Object} nodeItem.properties (optional-creted/removed if needed)- object (dictionary) that holds the properties (it doesn't need to have the specified property - it's presents marks whether is the property set)
      */
-    constructor(node, nodeItem, desc, treeNodeItemProperty, commandExecutor) {
+    constructor(node, nodeItem, desc, TreeNodeItemProperty, CommandExecutor) {
       this.node = node;
       this.desc = desc;
       this.nodeItem = nodeItem || this.node;
 
-      this._treeNodeItemProperty = treeNodeItemProperty;
-      this._commandExecutor = commandExecutor;
+      this._TreeNodeItemProperty = TreeNodeItemProperty;
+      this._CommandExecutor = CommandExecutor;
     }
     name() {
       return this.desc.name;
     }
     isSet() {
-      return this._treeNodeItemProperty.isSet(this.nodeItem, this.name());
+      return this._TreeNodeItemProperty.isSet(this.nodeItem, this.name());
     }
     value(value) {
       if (arguments.length) {
-        this._commandExecutor.exec('SetTreeNodeItemPropertyValueCmd', {
+        this._CommandExecutor.exec('SetTreeNodeItemPropertyValueCmd', {
           node: this.node,
           nodeItem: this.nodeItem,
           property: this.name(),
           value: value
         });
       } else {
-        return this._treeNodeItemProperty.value(this.nodeItem, this.name());
+        return this._TreeNodeItemProperty.value(this.nodeItem, this.name());
       }
     }
     reset() {
-      this._commandExecutor.exec('ResetTreeNodeItemPropertyValueCmd', {
+      this._CommandExecutor.exec('ResetTreeNodeItemPropertyValueCmd', {
         node: this.node,
         nodeItem: this.nodeItem,
         property: this.name()
@@ -48,8 +48,8 @@
 
   class PropertyViewModelProvider {
     constructor(TreeNodeItemProperty, CommandExecutor) {
-        this._treeNodeItemProperty = TreeNodeItemProperty;
-        this._commandExecutor = CommandExecutor;
+        this._TreeNodeItemProperty = TreeNodeItemProperty;
+        this._CommandExecutor = CommandExecutor;
       }
       /**
        * Returns view models for all properties of a specified node item
@@ -61,7 +61,7 @@
       if (node) {
         let typeDescProperties = nodeItem.$meta.desc.properties;
         if (typeDescProperties) {
-          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, this._treeNodeItemProperty, this._commandExecutor));
+          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, this._TreeNodeItemProperty, this._CommandExecutor));
         }
       }
       return [];

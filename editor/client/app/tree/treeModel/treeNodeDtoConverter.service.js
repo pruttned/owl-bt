@@ -8,7 +8,7 @@
   class TreeNodeDtoConverter {
 
     constructor(TreeItemPropertyDtoConverter){
-      this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
+      this._TreeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
     }
 
     convert(node) {
@@ -18,7 +18,7 @@
       delete dto.$meta;
 
       if (dto.properties) {
-        dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
+        dto.properties = this._TreeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
           delete dto.properties;
         }
@@ -44,7 +44,7 @@
       this._clearEmptyArrays(dto);
       delete dto.$meta;
       if (dto.properties) {
-        dto.properties = this._treeItemPropertyDtoConverter.convertToDto(dto.properties);
+        dto.properties = this._TreeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
           delete dto.properties;
         }

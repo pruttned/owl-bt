@@ -3,14 +3,13 @@
 (function() {
 
   class TreeDecoratorItemProvider {
-    constructor(ProjectStore, IdProvider, TreeItemPropertyDtoConverter) {
-      this._projectStore = ProjectStore;
-      this._idProvider = IdProvider;
+    constructor(ProjectStore, TreeItemPropertyDtoConverter) {
+      this._ProjectStore = ProjectStore;
       this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
     }
 
     create(dto) {
-      let desc = this._projectStore.getDecoratorTypeDesc(dto.type);
+      let desc = this._ProjectStore.getDecoratorTypeDesc(dto.type);
       let decorator = {};
       angular.extend(decorator, dto);
       decorator.type = decorator.type || 'unknown';

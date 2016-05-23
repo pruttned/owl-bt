@@ -6,7 +6,7 @@
       this._ = _;
       this._$q = $q;
       this._$injector = $injector;
-      this._undoRedoManager = UndoRedoManager;
+      this._UndoRedoManager = UndoRedoManager;
 
       this.isBussy = false;
     }
@@ -33,7 +33,7 @@
 
           //undo redo stack
           if (_this._.isFunction(cmd.undo)) {
-            _this._undoRedoManager.add(cmd);
+            _this._UndoRedoManager.add(cmd);
           }
 
           //exec

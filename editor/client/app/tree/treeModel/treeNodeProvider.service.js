@@ -6,12 +6,12 @@
     constructor($q, ProjectStore, IdProvider, TreeItemPropertyDtoConverter,
         TreeDecoratorItemProvider, TreeServiceItemProvider, TreeNode) {
         this._$q = $q;
-        this._projectStore = ProjectStore;
-        this._idProvider = IdProvider;
-        this._treeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
-        this._treeDecoratorItemProvider = TreeDecoratorItemProvider;
-        this._treeServiceItemProvider = TreeServiceItemProvider;
-        this._treeNode = TreeNode;
+        this._ProjectStore = ProjectStore;
+        this._IdProvider = IdProvider;
+        this._TreeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
+        this._TreeDecoratorItemProvider = TreeDecoratorItemProvider;
+        this._TreeServiceItemProvider = TreeServiceItemProvider;
+        this._TreeNode = TreeNode;
       }
       /**
        * Creates a node
@@ -22,12 +22,12 @@
        */
     create(dto) {
       let _this = this;
-      let desc = this._projectStore.getNodeTypeDesc(dto.type);
+      let desc = this._ProjectStore.getNodeTypeDesc(dto.type);
       let node = {};
       angular.extend(node, dto);
       node.type = node.type || 'unknown';
       node.$meta = {
-        id: this._idProvider.newId(),
+        id: this._IdProvider.newId(),
         version: 1,
         desc: desc
       };
@@ -35,21 +35,21 @@
       delete node.decorators;
       delete node.childNodes;
 
-      node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
+      node.properties = this._TreeItemPropertyDtoConverter.convertFromDto(node.properties);
 
       if (dto.decorators) {
         for (let decoratorDto of dto.decorators) {
-          _this._treeNode.addDecorator(node, _this._treeDecoratorItemProvider.create(decoratorDto));
+          _this._TreeNode.addDecorator(node, _this._TreeDecoratorItemProvider.create(decoratorDto));
         }
       }
       if (dto.services) {
         for (let serviceDto of dto.services) {
-          _this._treeNode.addService(node, _this._treeServiceItemProvider.create(serviceDto));
+          _this._TreeNode.addService(node, _this._TreeServiceItemProvider.create(serviceDto));
         }
       }
       if (dto.childNodes) {
         for (let childNodeDto of dto.childNodes) {
-          _this._treeNode.addChildNode(node, _this.create(childNodeDto));
+          _this._TreeNode.addChildNode(node, _this.create(childNodeDto));
         }
       }
 

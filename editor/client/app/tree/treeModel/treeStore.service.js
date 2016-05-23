@@ -15,8 +15,8 @@
         treePath: '@treePath'
       });
       this._$q = $q;
-      this._treeNodeProvider = TreeNodeProvider;
-      this._projectStore = ProjectStore;
+      this._TreeNodeProvider = TreeNodeProvider;
+      this._ProjectStore = ProjectStore;
     }
 
     load() {
@@ -29,12 +29,12 @@
       let treeResourcePromise = this._treeResource.get({
         treePath: this.treePath
       }).$promise;
-      let prjPromise = this._projectStore.load();
+      let prjPromise = this._ProjectStore.load();
 
       this._loadPromise = this._$q.all([treeResourcePromise, prjPromise])
         .then(data => {
           let treeData = data[0];
-          _this.rootNode = _this._treeNodeProvider.create(treeData);
+          _this.rootNode = _this._TreeNodeProvider.create(treeData);
           this.isLoaded = true;
         });
 
