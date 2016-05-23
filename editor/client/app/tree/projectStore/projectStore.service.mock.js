@@ -8,14 +8,14 @@
     }
 
     getNodeTypeDesc(type) {
-      return this._$q.when(type);
+      return type;
     }
 
     getDecoratorTypeDesc(type) {
-      return this._$q.when(type);
+      return type;
     }
     getServiceTypeDesc(type) {
-      return this._$q.when(type);
+      return type;
     }
   }
 

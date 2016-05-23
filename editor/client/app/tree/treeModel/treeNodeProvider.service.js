@@ -22,41 +22,38 @@
        */
     create(dto) {
       let _this = this;
-      return this._projectStore.getNodeTypeDesc(dto.type)
-        .then(desc => {
-          let node = {};
-          angular.extend(node, dto);
-          node.type = node.type || 'unknown';
-          node.$meta = {
-            id: this._idProvider.newId(),
-            version: 1,
-            desc: desc
-          };
-          delete node.services;
-          delete node.decorators;
-          delete node.childNodes;
+      let desc = this._projectStore.getNodeTypeDesc(dto.type);
+      let node = {};
+      angular.extend(node, dto);
+      node.type = node.type || 'unknown';
+      node.$meta = {
+        id: this._idProvider.newId(),
+        version: 1,
+        desc: desc
+      };
+      delete node.services;
+      delete node.decorators;
+      delete node.childNodes;
 
-          node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
+      node.properties = this._treeItemPropertyDtoConverter.convertFromDto(node.properties);
 
-          let decoratorsPromise = dto.decorators ? _this._$q.all(dto.decorators.map(d => _this._treeDecoratorItemProvider.create(d))) : _this._$q.when([]);
-          let servicesPromise = dto.services ? _this._$q.all(dto.services.map(s => _this._treeServiceItemProvider.create(s))) : _this._$q.when([]);
-          let childNodesPromise = dto.childNodes ? _this._$q.all(dto.childNodes.map(n => _this.create(n))) : _this._$q.when([]);
+      if (dto.decorators) {
+        for (let decoratorDto of dto.decorators) {
+          _this._treeNode.addDecorator(node, _this._treeDecoratorItemProvider.create(decoratorDto));
+        }
+      }
+      if (dto.services) {
+        for (let serviceDto of dto.services) {
+          _this._treeNode.addService(node, _this._treeServiceItemProvider.create(serviceDto));
+        }
+      }
+      if (dto.childNodes) {
+        for (let childNodeDto of dto.childNodes) {
+          _this._treeNode.addChildNode(node, _this.create(childNodeDto));
+        }
+      }
 
-          return _this._$q.all([decoratorsPromise, servicesPromise, childNodesPromise])
-            .then(data => {
-              for (let decorator of data[0]) {
-                _this._treeNode.addDecorator(node, decorator);
-              }
-              for (let service of data[1]) {
-                _this._treeNode.addService(node, service);
-              }
-              for (let childNode of data[2]) {
-                _this._treeNode.addChildNode(node, childNode);
-              }
-
-              return node;
-            });
-        });
+      return node;
     }
   }
 

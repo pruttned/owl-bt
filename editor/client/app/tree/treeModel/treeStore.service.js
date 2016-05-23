@@ -5,14 +5,16 @@
 (function() {
 
   class TreeStore {
-    constructor($resource, $location, TreeNodeProvider) {
+    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore) {
       this.treePath = $location.search().path;
       this.version = 1;
 
       this._treeResource = $resource('api/tree?path=:treePath', {
         treePath: '@treePath'
       });
+      this._$q = $q;
       this._treeNodeProvider = TreeNodeProvider;
+      this._projectStore = ProjectStore;
     }
 
     rootNode() {
@@ -22,10 +24,14 @@
 
       let _this = this;
 
-      this._rootNodePromise = this._treeResource.get({
-          treePath: this.treePath
-        }).$promise
-        .then(treeData => {
+      let treeResourcePromise = this._treeResource.get({
+        treePath: this.treePath
+      }).$promise;
+      let prjPromise = this._projectStore.load();
+
+      this._rootNodePromise = this._$q.all([treeResourcePromise, prjPromise])
+        .then(data => {
+          let treeData = data[0];
           if (!_this._rootNode) {
             _this._rootNode = _this._treeNodeProvider.create(treeData);
           }

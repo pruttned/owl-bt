@@ -9,14 +9,12 @@ describe('Service: TreeDecoratorItemProvider', function() {
 
   // instantiate service
   let TreeDecoratorItemProvider;
-  let $scope;
-  beforeEach(inject(function($rootScope, _TreeDecoratorItemProvider_) {
+  beforeEach(inject(function(_TreeDecoratorItemProvider_) {
     TreeDecoratorItemProvider = _TreeDecoratorItemProvider_;
-    $scope = $rootScope.$new();
   }));
 
   it('create should clone provided dto + convert all property collections and generate $meta',
-    function(done) {
+    function() {
       let dto = {
         type: 'd1',
         properties: [{
@@ -24,21 +22,17 @@ describe('Service: TreeDecoratorItemProvider', function() {
           value: 'value1'
         }]
       };
-      TreeDecoratorItemProvider.create(dto)
-        .then(dec => {
-          expect(dec).not.toBe(dto);
-          expect(dec).toEqual({
-            type: 'd1',
-            properties: {
-              prop1: 'value1'
-            },
-            $meta: {
-              desc: 'd1'
-            }
-          });
-          done();
-        });
-
-      $scope.$apply(); //resolve promises
+      let dec = TreeDecoratorItemProvider.create(dto);
+      expect(dec).not.toBe(dto);
+      expect(dec).toEqual({
+        type: 'd1',
+        properties: {
+          prop1: 'value1'
+        },
+        $meta: {
+          desc: 'd1'
+        }
+      });
     });
+
 });

@@ -10,17 +10,15 @@
     }
 
     create(dto) {
-      return this._projectStore.getServiceTypeDesc(dto.type)
-        .then(desc => {
-          let service = {};
-          angular.extend(service, dto);
-          service.type = service.type || 'unknown';
-          service.$meta = {
-            desc: desc
-          };
-          service.properties = this._treeItemPropertyDtoConverter.convertFromDto(service.properties);
-          return service;
-        });
+      let desc = this._projectStore.getServiceTypeDesc(dto.type);
+      let service = {};
+      angular.extend(service, dto);
+      service.type = service.type || 'unknown';
+      service.$meta = {
+        desc: desc
+      };
+      service.properties = this._treeItemPropertyDtoConverter.convertFromDto(service.properties);
+      return service;
     }
   }
 

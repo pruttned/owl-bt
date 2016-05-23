@@ -5,6 +5,7 @@
   class ProjectStore {
     constructor(_, $interpolate, $resource, $location) {
       this.treePath = $location.search().path;
+      this.isLoaded = false;
 
       this._ = _;
       this._$interpolate = $interpolate;
@@ -13,19 +14,35 @@
       });
     }
 
+    load() {
+      return this._current();
+    }
+
     getNodeTypeDesc(name) {
-      return this._current()
-        .then(prj => prj.nodeTypes[name]);
+      this._checkLoaded();
+      if (this.nodeTypes) {
+        return this.nodeTypes[name];
+      }
     }
 
     getServiceTypeDesc(name) {
-      return this._current()
-        .then(prj => prj.serviceTypes[name]);
+      this._checkLoaded();
+      if (this.serviceTypes) {
+        return this.serviceTypes[name];
+      }
     }
 
     getDecoratorTypeDesc(name) {
-      return this._current()
-        .then(prj => prj.decoratorTypes[name]);
+      this._checkLoaded();
+      if (this.decoratorTypes) {
+        return this.decoratorTypes[name];
+      }
+    }
+
+    _checkLoaded() {
+      if (!this.isLoaded) {
+        throw new Error('Project is not loaded');
+      }
     }
 
     _current() {
@@ -38,10 +55,8 @@
       this._currentPromise = this._projectResource.get({
         treePath: this.treePath
       }).$promise.then(prjData => {
-        if (!_this._currentVal) {
-          _this._currentVal = _this._compileProject(prjData);
-        }
-        return _this._currentVal;
+        _this._compileProject(prjData);
+        this.isLoaded = true;
       });
 
       return this._currentPromise;
@@ -52,17 +67,13 @@
         return obj.name;
       }
 
-      let prj = {
-        nodeTypes: this._.keyBy(prjData.nodes || [], objByName),
-        serviceTypes: this._.keyBy(prjData.services || [], objByName),
-        decoratorTypes: this._.keyBy(prjData.decorators || [], objByName)
-      };
+      this.nodeTypes = this._.keyBy(prjData.nodes || [], objByName);
+      this.serviceTypes = this._.keyBy(prjData.services || [], objByName);
+      this.decoratorTypes = this._.keyBy(prjData.decorators || [], objByName);
 
-      this._compileDescriptions(prj.nodeTypes);
-      this._compileDescriptions(prj.serviceTypes);
-      this._compileDescriptions(prj.decoratorTypes);
-
-      return prj;
+      this._compileDescriptions(this.nodeTypes);
+      this._compileDescriptions(this.serviceTypes);
+      this._compileDescriptions(this.decoratorTypes);
     }
 
     _compileDescriptions(typeDict) {

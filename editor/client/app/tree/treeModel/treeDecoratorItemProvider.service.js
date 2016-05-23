@@ -10,17 +10,15 @@
     }
 
     create(dto) {
-      return this._projectStore.getDecoratorTypeDesc(dto.type)
-        .then(desc => {
-          let decorator = {};
-          angular.extend(decorator, dto);
-          decorator.type = decorator.type || 'unknown';
-          decorator.$meta = {
-            desc: desc
-          };
-          decorator.properties = this._treeItemPropertyDtoConverter.convertFromDto(decorator.properties);
-          return decorator;
-        });
+      let desc = this._projectStore.getDecoratorTypeDesc(dto.type);
+      let decorator = {};
+      angular.extend(decorator, dto);
+      decorator.type = decorator.type || 'unknown';
+      decorator.$meta = {
+        desc: desc
+      };
+      decorator.properties = this._treeItemPropertyDtoConverter.convertFromDto(decorator.properties);
+      return decorator;
     }
   }
 
