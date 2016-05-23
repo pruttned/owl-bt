@@ -9,6 +9,8 @@
       this.treePath = $location.search().path;
       this.version = 1;
 
+      this.isLoaded = false;
+      this.rootNode = null;
       this._treeResource = $resource('api/tree?path=:treePath', {
         treePath: '@treePath'
       });
@@ -17,9 +19,9 @@
       this._projectStore = ProjectStore;
     }
 
-    rootNode() {
-      if (this.rootNodePromise) {
-        return this.rootNodePromise;
+    load() {
+      if (this._loadPromise) {
+        return this._loadPromise;
       }
 
       let _this = this;
@@ -29,16 +31,14 @@
       }).$promise;
       let prjPromise = this._projectStore.load();
 
-      this._rootNodePromise = this._$q.all([treeResourcePromise, prjPromise])
+      this._loadPromise = this._$q.all([treeResourcePromise, prjPromise])
         .then(data => {
           let treeData = data[0];
-          if (!_this._rootNode) {
-            _this._rootNode = _this._treeNodeProvider.create(treeData);
-          }
-          return _this._rootNode;
+          _this.rootNode = _this._treeNodeProvider.create(treeData);
+          this.isLoaded = true;
         });
 
-      return this._rootNodePromise;
+      return this._loadPromise;
     }
 
     updateVersion() {

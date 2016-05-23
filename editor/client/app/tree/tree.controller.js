@@ -32,10 +32,10 @@ angular.module('editorApp')
       return outFlatTree;
     }
 
-    TreeStore.rootNode()
-      .then(rootNode => {
-        this.rootNode = rootNode;
-        this.tmpFlatTree = tmpFlattenTree(rootNode);
+    TreeStore.load()
+      .then(() => {
+        this.rootNode = TreeStore.rootNode;
+        this.tmpFlatTree = tmpFlattenTree(TreeStore.rootNode);
       });
 
     $scope.$watch(() => this.selItem, function() {

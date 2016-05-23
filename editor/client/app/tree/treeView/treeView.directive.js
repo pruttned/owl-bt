@@ -386,9 +386,9 @@
           };
         }
 
-        TreeStore.rootNode()
-          .then(rootNode => {
-
+        TreeStore.load()
+          .then(() => {
+            let rootNode = TreeStore.rootNode;
             //  disable context menu on tree
             treeElm
               .on('contextmenu', function() {
