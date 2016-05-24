@@ -23,6 +23,7 @@ angular.module('editorApp')
         event.preventDefault();
         event.stopPropagation();
 
+        this.hide();
 
         if (items && items.length > 0) {
           if (!this.menuElm) {
