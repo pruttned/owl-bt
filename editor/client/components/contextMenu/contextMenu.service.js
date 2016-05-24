@@ -45,8 +45,8 @@ angular.module('editorApp')
             this.ulElm.append(liElm);
           }
 
-          this.menuElm.css('left', event.pageX + 'px');
-          this.menuElm.css('top', event.pageY + 'px');
+          this.menuElm.css('left', event.clientX + 'px');
+          this.menuElm.css('top', event.clientY + 'px');
           this.menuElm.css('display', 'block');
         }
       }
