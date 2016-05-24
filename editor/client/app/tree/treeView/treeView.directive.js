@@ -14,25 +14,9 @@
   const minZoom = 0.1;
   const maxZoom = 2;
 
-  function showContextMenu(ContextMenu, d3, scope, nodeItem) {
-    //http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
-    let getNodeItemActions = scope.getNodeItemActions();
-    if (getNodeItemActions) {
-      let actions = getNodeItemActions(nodeItem);
-      if (actions) {
-        ContextMenu.show(scope, d3.event, actions.map(itemAction => ({
-          title: itemAction.title,
-          icon: itemAction.icon,
-          action: function() {
-            if (itemAction.action) {
-              itemAction.action(nodeItem);
-            }
-          }
-        })));
-      }
-    }
+  function showContextMenu(ContextMenu, d3, scope, viewNodeItem) {
+    ContextMenu.show(scope, d3.event, viewNodeItem.contextMenuActionProvider(viewNodeItem.nodeItem));
   }
-
 
   function bindMouseEvents(ContextMenu, d3, nodeItemElm, viewNodeItem, scope) {
     nodeItemElm
@@ -351,16 +335,6 @@
          */
         selItem: '=',
         selNode: '=',
-        /**
-         * function that provides context menu actions for a node item
-         * @type {function(nodeItem)}
-         * @return {action array}
-         * @return {String} action.title - title of the item
-         * @return {String} action.icon- (optional) icon of the item (fontawsome icon name without 'fa-')
-         * @return {function(nodeItem)} action.action - click action of the item
-         *
-         */
-        getNodeItemActions: '&'
       },
       link: function(scope, element) {
         // note: don't use replaceWith because of jquery problems with svg
