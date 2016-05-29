@@ -44,15 +44,31 @@ describe('Service: ArrayHelper', function() {
     expect(items[1].id).toBe(1);
     expect(items[2].id).toBe(3);
   });
-  it('moveLeft should return true and move item to right', function() {
+  it('moveRight should return true and move item to right', function() {
     let res = ArrayHelper.moveRight(items, items[1]);
     expect(res).toBe(true);
     expect(items[0].id).toBe(1);
     expect(items[1].id).toBe(3);
     expect(items[2].id).toBe(2);
   });
+  it('moveRight should return false and do nothing when moving item that is not in the array', function() {
+    let res = ArrayHelper.moveRight(items, {});
+    expect(res).toBe(false);
+    expect(items.length).toBe(3);
+    expect(items[0].id).toBe(1);
+    expect(items[1].id).toBe(2);
+    expect(items[2].id).toBe(3);
+  });
+  it('moveLeft should return false and do nothing when moving item that is not in the array', function() {
+    let res = ArrayHelper.moveLeft(items, {});
+    expect(res).toBe(false);
+    expect(items.length).toBe(3);
+    expect(items[0].id).toBe(1);
+    expect(items[1].id).toBe(2);
+    expect(items[2].id).toBe(3);
+  });
   it('remove should return false and do nothing when removing item that is not in the array', function() {
-    let res = ArrayHelper.remove(items, {id:1});
+    let res = ArrayHelper.remove(items, {});
     expect(res).toBe(false);
     expect(items.length).toBe(3);
     expect(items[0].id).toBe(1);
@@ -67,7 +83,7 @@ describe('Service: ArrayHelper', function() {
     expect(items[1].id).toBe(3);
   });
   it('contains should return false for item that is not in the array', function() {
-    let res = ArrayHelper.remove(items, {id:1});
+    let res = ArrayHelper.remove(items, {});
     expect(res).toBe(false);
   });
   it('contains should return true for item that is in the array', function() {

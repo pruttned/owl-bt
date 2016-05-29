@@ -28,7 +28,7 @@
      */
     moveRight(array, item) {
       let itemIndex = array.indexOf(item);
-      if (itemIndex < array.length - 1) {
+      if (itemIndex >= 0 && itemIndex < array.length - 1) {
         array[itemIndex] = array[itemIndex + 1];
         array[itemIndex + 1] = item;
 
