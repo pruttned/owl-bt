@@ -3,6 +3,23 @@
 (function() {
 
   class ArrayHelper {
+    
+    canMoveLeft(array, item) {
+      let itemIndex = array.indexOf(item);
+      if (itemIndex > 0) {
+        return true;
+      }
+      return false;
+    }
+
+    canMoveRight(array, item) {
+      let itemIndex = array.indexOf(item);
+      if (itemIndex >= 0 && itemIndex < array.length - 1) {
+        return true;
+      }
+      return false;
+    }
+
     /**
      * moves item in array to left and returns whether the movement was successful
      * @param  {Object[]} array

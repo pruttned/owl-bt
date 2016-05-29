@@ -90,4 +90,28 @@ describe('Service: ArrayHelper', function() {
     let res = ArrayHelper.remove(items, items[1]);
     expect(res).toBe(true);
   });
+  it('canMoveLeft should return false for the left most item', function() {
+    let res = ArrayHelper.canMoveLeft(items, items[0]);
+    expect(res).toBe(false);
+  });
+  it('canMoveRight should return false for the right most item', function() {
+    let res = ArrayHelper.canMoveRight(items, items[2]);
+    expect(res).toBe(false);
+  });
+  it('canMoveLeft should return true for not the left most item', function() {
+    let res = ArrayHelper.canMoveLeft(items, items[1]);
+    expect(res).toBe(true);
+  });
+  it('canMoveRight should return true for not the right most item', function() {
+    let res = ArrayHelper.canMoveRight(items, items[1]);
+    expect(res).toBe(true);
+  });
+  it('canMoveRight should return false when the item is not in the array', function() {
+    let res = ArrayHelper.canMoveRight(items, {});
+    expect(res).toBe(false);
+  });
+  it('canMoveLeft should return false when the item is not in the array', function() {
+    let res = ArrayHelper.canMoveLeft(items, {});
+    expect(res).toBe(false);
+  });
 });
