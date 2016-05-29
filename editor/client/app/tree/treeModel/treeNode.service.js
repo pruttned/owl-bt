@@ -51,7 +51,7 @@
 
     removeSubItem(node, subItem) {
       let subItemArrayName = this._getSubItemArrayName(node, subItem);
-      if(!subItemArrayName){
+      if (!subItemArrayName) {
         return false;
       }
       return this._removeSubItem(node, subItemArrayName, subItem);
@@ -128,18 +128,31 @@
       }
     }
 
-    _getSubItemArrayName(node, subItem) {
+    /**
+     * Get type (decorator/service) of the subItem in the node
+     * @param  {node} node   - node that contains the sub item
+     * @param  {service|decorator} subItem
+     * @return {string} 'service' or 'decorator'
+     */
+    getSubItemType(node, subItem) {
       if (this.indexOfService(node, subItem) >= 0) {
-        return 'services';
+        return 'service';
       }
       if (this.indexOfDecorator(node, subItem) >= 0) {
-        return 'decorators';
+        return 'decorator';
+      }
+    }
+
+    _getSubItemArrayName(node, subItem) {
+      let type = this.getSubItemType(node, subItem);
+      if (type) {
+        return type + 's';
       }
     }
 
     _getSubItemArray(node, subItem) {
       let subItemArrayName = this._getSubItemArrayName(node, subItem);
-      if(subItemArrayName){
+      if (subItemArrayName) {
         return node[subItemArrayName];
       }
     }
