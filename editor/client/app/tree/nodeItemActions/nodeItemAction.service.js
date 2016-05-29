@@ -22,11 +22,11 @@
       return this._getActions(decorator, this._NodeItemActionCfg.decoratorContextMenuActions);
     }
 
-    _getActions(nodeItem, actionServices) {
+    _getActions(nodeItem, actionDescs) {
       let actions = [];
-      for (let actionSvcName of actionServices) {
-        this._$injector.invoke([actionSvcName, actionSvc => {
-          let action = actionSvc.create(nodeItem);
+      for (let actionDesc of actionDescs) {
+        this._$injector.invoke([actionDesc.service, actionSvc => {
+          let action = actionSvc.create(nodeItem, actionDesc);
           if (action) {
             actions.push({
               title: action.title,

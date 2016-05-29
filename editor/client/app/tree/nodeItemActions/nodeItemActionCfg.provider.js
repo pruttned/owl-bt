@@ -10,14 +10,29 @@
       this.nodeContextMenuActions = [];
     }
 
-    registerServiceContextMenuAction(action) {
-      this.serviceContextMenuActions.push(action);
+    /**
+     * register context menu action for services
+     * @param  {Object} actionDesc
+     * @param  {String} actionDesc.service - name of the service, that handles the specified action
+     */
+    registerServiceContextMenuAction(actionDesc) {
+      this.serviceContextMenuActions.push(actionDesc);
     }
-    registerDecoratorContextMenuAction(action) {
-      this.decoratorContextMenuActions.push(action);
+    /**
+     * register context menu action for decorators
+     * @param  {Object} actionDesc
+     * @param  {String} actionDesc.service - name of the service, that handles the specified action
+     */
+    registerDecoratorContextMenuAction(actionDesc) {
+      this.decoratorContextMenuActions.push(actionDesc);
     }
-    registerNodeContextMenuAction(action) {
-      this.nodeContextMenuActions.push(action);
+    /**
+     * register context menu action for nodes
+     * @param  {Object} actionDesc
+     * @param  {String} actionDesc.service - name of the service, that handles the specified action
+     */
+    registerNodeContextMenuAction(actionDesc) {
+      this.nodeContextMenuActions.push(actionDesc);
     }
 
     $get() {

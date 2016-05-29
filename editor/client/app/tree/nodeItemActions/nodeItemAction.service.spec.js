@@ -33,8 +33,12 @@ describe('Service: NodeItemAction', function() {
     NodeItemActionCfg = _NodeItemActionCfg_;
     NodeItemAction = _NodeItemAction_;
     NodeItemActionCfg.nodeContextMenuActions = [];
-    NodeItemActionCfg.registerNodeContextMenuAction('TestAction');
-    NodeItemActionCfg.registerNodeContextMenuAction('DisabledTestAction');
+    NodeItemActionCfg.registerNodeContextMenuAction({
+      service: 'TestAction'
+    });
+    NodeItemActionCfg.registerNodeContextMenuAction({
+      service: 'DisabledTestAction'
+    });
   }));
 
   it('getNodeContextMenuActions should return only allowed actions',

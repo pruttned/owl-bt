@@ -8,10 +8,10 @@
       this._ListSelectDialog = ListSelectDialog;
     }
 
-    create(node) {
+    create(node, actionDesc) {
       if (node.$meta.desc.isComposite) {
         return {
-          title: 'Test Action',
+          title: 'Test Action ' + actionDesc.p,
           icon: 'cog',
           action: () => {
             return this._ListSelectDialog.open([{
@@ -32,7 +32,14 @@
   angular.module('editorApp')
     .service('TestNodeContextMenuAction', TestNodeContextMenuAction)
     .config(function(NodeItemActionCfgProvider) {
-      NodeItemActionCfgProvider.registerNodeContextMenuAction('TestNodeContextMenuAction');
+      NodeItemActionCfgProvider.registerNodeContextMenuAction({
+        service: 'TestNodeContextMenuAction',
+        p:1
+      });
+      NodeItemActionCfgProvider.registerNodeContextMenuAction({
+        service: 'TestNodeContextMenuAction',
+        p:2
+      });
     });
 })();
 //bude kvoli moveup/move down akciam urcite treba mat v node parenta a v servisoch zasa nodu. Najlepsie to bude ale spravit tak, ze tam bude len id a v TreeStore sa bude dat getnut nodu na zaklade id
