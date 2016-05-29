@@ -99,6 +99,13 @@
       return false;
     }
 
+    indexOfChildNode(node, childNode) {
+      if (node.childNodes) {
+        return this._.indexOf(node.childNodes, childNode);
+      }
+      return -1;
+    }
+
     indexOfService(node, service) {
       if (node.services) {
         return this._.indexOf(node.services, service);
