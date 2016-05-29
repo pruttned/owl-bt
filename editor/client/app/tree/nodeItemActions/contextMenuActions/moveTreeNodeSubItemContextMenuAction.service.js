@@ -16,6 +16,7 @@
         return {
           title: actionDesc.title,
           icon: actionDesc.icon,
+          order: actionDesc.order,
           action: () => {
             return this._CommandExecutor.exec('MoveTreeNodeSubItemCmd', {
               node: node,
@@ -35,25 +36,29 @@
         service: 'MoveTreeNodeSubItemContextMenuAction',
         title: 'Move Up',
         icon: 'arrow-up',
-        up: true
+        up: true,
+        order: 100
       });
       NodeItemActionCfgProvider.registerServiceContextMenuAction({
         service: 'MoveTreeNodeSubItemContextMenuAction',
         title: 'Move Down',
         icon: 'arrow-down',
-        up: false
+        up: false,
+        order: 101
       });
       NodeItemActionCfgProvider.registerDecoratorContextMenuAction({
         service: 'MoveTreeNodeSubItemContextMenuAction',
         title: 'Move Up',
         icon: 'arrow-up',
-        up: true
+        up: true,
+        order: 100
       });
       NodeItemActionCfgProvider.registerDecoratorContextMenuAction({
         service: 'MoveTreeNodeSubItemContextMenuAction',
         title: 'Move Down',
         icon: 'arrow-down',
-        up: false
+        up: false,
+        order: 101
       });
     });
 })();

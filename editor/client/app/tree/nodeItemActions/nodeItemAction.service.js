@@ -3,7 +3,6 @@
 (function() {
 
   class NodeItemAction {
-
     constructor($q, $injector, NodeItemActionCfg) {
       this._$injector = $injector;
       this._$q = $q;
@@ -33,12 +32,22 @@
               icon: action.icon,
               action: () => {
                 return this._$q.when(action.action());
-              }
+              },
+              order: action.order
             });
           }
         }]);
       }
+
+      actions.sort(NodeItemAction._actionSortComparer);
       return actions;
+    }
+
+    static _actionSortComparer(action1, action2){
+      let order1 = action1.order || 0;
+      let order2 = action2.order || 0;
+
+      return order1 - order2;
     }
   }
 
