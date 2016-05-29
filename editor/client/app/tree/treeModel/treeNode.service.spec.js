@@ -37,7 +37,11 @@ describe('Service: Node', function() {
 
   it('addService should add service to node services array and set node to service $meta object',
     function() {
-      let node = {};
+      let node = {
+        $meta: {
+          id: 10
+        }
+      };
       let service = {
         $meta: {}
       };
@@ -46,11 +50,16 @@ describe('Service: Node', function() {
       expect(node.services).toBeDefined();
       expect(node.services.length).toBe(1);
       expect(node.services[0]).toBe(service);
+      expect(service.$meta.nodeId).toBe(10);
     });
 
   it('addDecorator should add decorator to node decorators array and set node to decorator $meta object',
     function() {
-      let node = {};
+      let node = {
+        $meta: {
+          id: 10
+        }
+      };
       let decorator = {
         $meta: {}
       };
@@ -59,11 +68,16 @@ describe('Service: Node', function() {
       expect(node.decorators).toBeDefined();
       expect(node.decorators.length).toBe(1);
       expect(node.decorators[0]).toBe(decorator);
+      expect(decorator.$meta.nodeId).toBe(10);
     });
 
   it('addChildNode should add child node to childNodes array of the parent node and set node to child node $meta object',
     function() {
-      let node = {};
+      let node = {
+        $meta: {
+          id: 10
+        }
+      };
       let childNode = {
         $meta: {}
       };
@@ -72,6 +86,7 @@ describe('Service: Node', function() {
       expect(node.childNodes).toBeDefined();
       expect(node.childNodes.length).toBe(1);
       expect(node.childNodes[0]).toBe(childNode);
+      expect(childNode.$meta.parentId).toBe(10);
     });
 
 });

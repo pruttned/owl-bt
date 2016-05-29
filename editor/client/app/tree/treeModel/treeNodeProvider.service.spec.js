@@ -37,7 +37,6 @@ describe('Service: TreeNodeProvider', function() {
           }, {
             name: 'prop2',
             value: 'value2'
-
           }]
         }],
         childNodes: [{
@@ -73,7 +72,8 @@ describe('Service: TreeNodeProvider', function() {
             prop2: 'value2'
           },
           $meta: {
-            desc: 'd1'
+            desc: 'd1',
+            nodeId: 1
           }
         }],
         services: [{
@@ -83,7 +83,8 @@ describe('Service: TreeNodeProvider', function() {
             prop2: 'value2'
           },
           $meta: {
-            desc: 's1'
+            desc: 's1',
+            nodeId: 1
           }
         }],
         childNodes: [{
@@ -91,7 +92,8 @@ describe('Service: TreeNodeProvider', function() {
           $meta: {
             id: 2,
             version: 1,
-            desc: 'chn1'
+            desc: 'chn1',
+            parentId: 1
           },
           properties: {
             prop1: 'value1',
