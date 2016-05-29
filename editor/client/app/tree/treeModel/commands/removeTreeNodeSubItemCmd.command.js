@@ -10,7 +10,7 @@
       /**
        * @param  {object} params
        * @param  {node} params.node - node that contains the specified subItem
-       * @param  {node} params.subItem - sub item that should be moved
+       * @param  {node} params.subItem - sub item that should be removed
        */
     exec(params) {
       let _this = this;
