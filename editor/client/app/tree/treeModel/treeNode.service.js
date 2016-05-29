@@ -21,28 +21,11 @@
     }
 
     addService(node, service) {
-      if (service.$meta.nodeId && service.$meta.nodeId !== node.$meta.id) {
-        throw new Error('Service is already in another node');
-      }
-      if (!node.services) {
-        node.services = [];
-      }
-      node.services.push(service);
-
-      service.$meta.nodeId = node.$meta.id;
+      this._addSubItem(node, 'services', service);
     }
 
     addDecorator(node, decorator) {
-      if (decorator.$meta.nodeId && decorator.$meta.nodeId !== node.$meta.id) {
-        throw new Error('Decorator is already in another node');
-      }
-
-      if (!node.decorators) {
-        node.decorators = [];
-      }
-      node.decorators.push(decorator);
-
-      decorator.$meta.nodeId = node.$meta.id;
+      this._addSubItem(node, 'decorators', decorator);
     }
 
     addChildNode(node, childNode) {
@@ -144,6 +127,18 @@
       if (this.indexOfDecorator(node, subItem) >= 0) {
         return node.decorators;
       }
+    }
+
+    _addSubItem(node, subItemArrayName, subItem) {
+      if (subItem.$meta.nodeId && subItem.$meta.nodeId !== node.$meta.id) {
+        throw new Error('Sub item is already in another node');
+      }
+      if (!node[subItemArrayName]) {
+        node[subItemArrayName] = [];
+      }
+      node[subItemArrayName].push(subItem);
+
+      subItem.$meta.nodeId = node.$meta.id;
     }
 
     _removeSubItem(node, subItemArrayName, subItem) {
