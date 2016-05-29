@@ -4,7 +4,7 @@
 
   class TreeNodeProvider {
     constructor($q, ProjectStore, IdProvider, TreeItemPropertyDtoConverter,
-        TreeDecoratorItemProvider, TreeServiceItemProvider, TreeNode) {
+        TreeDecoratorItemProvider, TreeServiceItemProvider, TreeNode, TreeNodeByIdStore) {
         this._$q = $q;
         this._ProjectStore = ProjectStore;
         this._IdProvider = IdProvider;
@@ -12,6 +12,7 @@
         this._TreeDecoratorItemProvider = TreeDecoratorItemProvider;
         this._TreeServiceItemProvider = TreeServiceItemProvider;
         this._TreeNode = TreeNode;
+        this._TreeNodeByIdStore = TreeNodeByIdStore;
       }
       /**
        * Creates a node
@@ -53,6 +54,7 @@
         }
       }
 
+      this._TreeNodeByIdStore.addNode(node);
       return node;
     }
   }

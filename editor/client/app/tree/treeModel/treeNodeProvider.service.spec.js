@@ -9,8 +9,10 @@ describe('Service: TreeNodeProvider', function() {
 
   // instantiate service
   let TreeNodeProvider;
-  beforeEach(inject(function(_TreeNodeProvider_) {
+  let TreeNodeByIdStore;
+  beforeEach(inject(function(_TreeNodeProvider_, _TreeNodeByIdStore_) {
     TreeNodeProvider = _TreeNodeProvider_;
+    TreeNodeByIdStore = _TreeNodeByIdStore_;
   }));
 
   it('create should clone provided dto and all its subnodes+subitems + convert all property collections and add version/id meta inf',
@@ -97,5 +99,15 @@ describe('Service: TreeNodeProvider', function() {
           }
         }]
       });
+    });
+
+  it('created node should be registered in the TreeNodeByIdStore service',
+    function() {
+      let dto = {
+        type: 'sequence'
+      };
+      let node = TreeNodeProvider.create(dto);
+
+      expect(TreeNodeByIdStore.getNode(node.$meta.id)).toBe(node);
     });
 });
