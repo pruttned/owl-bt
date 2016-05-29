@@ -10,15 +10,15 @@
       this._NodeItemActionCfg = NodeItemActionCfg;
     }
 
-    getNodeContexMenuActions(node) {
+    getNodeContextMenuActions(node) {
       return this._getActions(node, this._NodeItemActionCfg.nodeContextMenuActions);
     }
 
-    getServiceContexMenuActions(service) {
+    getServiceContextMenuActions(service) {
       return this._getActions(service, this._NodeItemActionCfg.serviceContextMenuActions);
     }
 
-    getDecoratorContexMenuActions(decorator) {
+    getDecoratorContextMenuActions(decorator) {
       return this._getActions(decorator, this._NodeItemActionCfg.decoratorContextMenuActions);
     }
 

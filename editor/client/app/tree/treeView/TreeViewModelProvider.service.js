@@ -36,14 +36,14 @@
 
     _initContextMenuActionProviders() {
       //transform to static with this in closures
-      if (!this.getNodeContexMenuActions) {
-        this.getNodeContexMenuActions = (node) => this._NodeItemAction.getNodeContexMenuActions(node);
+      if (!this.getNodeContextMenuActions) {
+        this.getNodeContextMenuActions = (node) => this._NodeItemAction.getNodeContextMenuActions(node);
       }
-      if (!this.getServiceContexMenuActions) {
-        this.getServiceContexMenuActions = (service) => this._NodeItemAction.getServiceContexMenuActions(service);
+      if (!this.getServiceContextMenuActions) {
+        this.getServiceContextMenuActions = (service) => this._NodeItemAction.getServiceContextMenuActions(service);
       }
-      if (!this.getDecoratorContexMenuActions) {
-        this.getDecoratorContexMenuActions = (decorator) => this._NodeItemAction.getDecoratorContexMenuActions(decorator);
+      if (!this.getDecoratorContextMenuActions) {
+        this.getDecoratorContextMenuActions = (decorator) => this._NodeItemAction.getDecoratorContextMenuActions(decorator);
       }
     }
 
@@ -56,14 +56,14 @@
         id: node.$meta.id,
         version: node.$meta.version,
         desc: node.$meta.desc,
-        contextMenuActionProvider: this.getNodeContexMenuActions,
+        contextMenuActionProvider: this.getNodeContextMenuActions,
       };
       if (node.services) {
         viewNode.services = node.services.map(service => ({
           nodeItem: service,
           desc: service.$meta.desc,
           viewNode: viewNode,
-          contextMenuActionProvider: this.getServiceContexMenuActions,
+          contextMenuActionProvider: this.getServiceContextMenuActions,
         }));
       }
       if (node.decorators) {
@@ -71,7 +71,7 @@
           nodeItem: decorator,
           desc: decorator.$meta.desc,
           viewNode: viewNode,
-          contextMenuActionProvider: this.getDecoratorContexMenuActions,
+          contextMenuActionProvider: this.getDecoratorContextMenuActions,
         }));
       }
       if (node.childNodes) {

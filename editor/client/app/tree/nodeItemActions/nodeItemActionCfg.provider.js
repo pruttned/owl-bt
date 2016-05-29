@@ -16,7 +16,7 @@
     registerDecoratorContextMenuAction(action) {
       this.decoratorContextMenuActions.push(action);
     }
-    registerNodeContexMenuAction(action) {
+    registerNodeContextMenuAction(action) {
       this.nodeContextMenuActions.push(action);
     }
 

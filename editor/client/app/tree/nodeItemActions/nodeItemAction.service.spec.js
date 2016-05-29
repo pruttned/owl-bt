@@ -33,26 +33,26 @@ describe('Service: NodeItemAction', function() {
     NodeItemActionCfg = _NodeItemActionCfg_;
     NodeItemAction = _NodeItemAction_;
     NodeItemActionCfg.nodeContextMenuActions = [];
-    NodeItemActionCfg.registerNodeContexMenuAction('TestAction');
-    NodeItemActionCfg.registerNodeContexMenuAction('DisabledTestAction');
+    NodeItemActionCfg.registerNodeContextMenuAction('TestAction');
+    NodeItemActionCfg.registerNodeContextMenuAction('DisabledTestAction');
   }));
 
-  it('getNodeContexMenuActions should return only allowed actions',
+  it('getNodeContextMenuActions should return only allowed actions',
     function() {
       let node = {
         name: 'oldName'
       };
-      let actions = NodeItemAction.getNodeContexMenuActions(node);
+      let actions = NodeItemAction.getNodeContextMenuActions(node);
       expect(actions.length).toBe(1);
       expect(actions[0].title).toBe('TestAction');
     });
 
-  it('Action returned from getNodeContexMenuActions should be executable as promise',
+  it('Action returned from getNodeContextMenuActions should be executable as promise',
     function(done) {
       let node = {
         name: 'oldName'
       };
-      let actions = NodeItemAction.getNodeContexMenuActions(node);
+      let actions = NodeItemAction.getNodeContextMenuActions(node);
       let action = actions[0];
 
       action.action()

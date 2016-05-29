@@ -32,7 +32,7 @@
   angular.module('editorApp')
     .service('TestNodeContextMenuAction', TestNodeContextMenuAction)
     .config(function(NodeItemActionCfgProvider) {
-      NodeItemActionCfgProvider.registerNodeContexMenuAction('TestNodeContextMenuAction');
+      NodeItemActionCfgProvider.registerNodeContextMenuAction('TestNodeContextMenuAction');
     });
 })();
 //bude kvoli moveup/move down akciam urcite treba mat v node parenta a v servisoch zasa nodu. Najlepsie to bude ale spravit tak, ze tam bude len id a v TreeStore sa bude dat getnut nodu na zaklade id
