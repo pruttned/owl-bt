@@ -10,9 +10,11 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
   // instantiate service
   let TreeStore;
   let SetTreeNodeItemPropertyValueCmd;
-  beforeEach(inject(function(_TreeStore_, _SetTreeNodeItemPropertyValueCmd_) {
+  let UndoRedoManager;
+  beforeEach(inject(function(_TreeStore_, _SetTreeNodeItemPropertyValueCmd_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
     SetTreeNodeItemPropertyValueCmd = _SetTreeNodeItemPropertyValueCmd_;
+    UndoRedoManager = _UndoRedoManager_;
   }));
 
   it('exec should set node item property and update versions', function() {
@@ -32,8 +34,7 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    let cmd = SetTreeNodeItemPropertyValueCmd.create(params);
-    cmd.exec();
+    SetTreeNodeItemPropertyValueCmd.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -57,9 +58,8 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    let cmd = SetTreeNodeItemPropertyValueCmd.create(params);
-    cmd.exec();
-    cmd.undo();
+    SetTreeNodeItemPropertyValueCmd.exec(params);
+    UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);
     expect(TreeStore.version).toBe(3);
@@ -83,9 +83,8 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    let cmd = SetTreeNodeItemPropertyValueCmd.create(params);
-    cmd.exec();
-    cmd.undo();
+    SetTreeNodeItemPropertyValueCmd.exec(params);
+    UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);
     expect(TreeStore.version).toBe(3);

@@ -4,10 +4,10 @@
 
   class MoveTreeNodeContextMenuAction {
 
-    constructor(TreeNodeByIdStore, TreeNode, CommandExecutor) {
+    constructor(TreeNodeByIdStore, TreeNode, MoveTreeNodeCmd) {
       this._TreeNodeByIdStore = TreeNodeByIdStore;
       this._TreeNode = TreeNode;
-      this._CommandExecutor = CommandExecutor;
+      this._MoveTreeNodeCmd = MoveTreeNodeCmd;
     }
 
     create(node, actionDesc) {
@@ -19,7 +19,7 @@
             icon: actionDesc.icon,
             order: actionDesc.order,
             action: () => {
-              return this._CommandExecutor.exec('MoveTreeNodeCmd', {
+              return this._MoveTreeNodeCmd.exec({
                 node: parentNode,
                 childNode: node,
                 left: actionDesc.left

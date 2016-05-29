@@ -8,10 +8,12 @@ describe('Service: RemoveTreeNodeSubItemCmd', function() {
   // instantiate service
   let TreeStore;
   let RemoveTreeNodeSubItemCmd;
+  let UndoRedoManager;
   let node;
-  beforeEach(inject(function(_TreeStore_, _RemoveTreeNodeSubItemCmd_) {
+  beforeEach(inject(function(_TreeStore_, _RemoveTreeNodeSubItemCmd_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
     RemoveTreeNodeSubItemCmd = _RemoveTreeNodeSubItemCmd_;
+    UndoRedoManager = _UndoRedoManager_;
 
     node = {
       $meta: {
@@ -42,8 +44,7 @@ describe('Service: RemoveTreeNodeSubItemCmd', function() {
       node: node,
       subItem: node.services[1],
     };
-    let cmd = RemoveTreeNodeSubItemCmd.create(params);
-    cmd.exec();
+    RemoveTreeNodeSubItemCmd.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -57,9 +58,8 @@ describe('Service: RemoveTreeNodeSubItemCmd', function() {
       node: node,
       subItem: node.services[1],
     };
-    let cmd = RemoveTreeNodeSubItemCmd.create(params);
-    cmd.exec();
-    cmd.undo();
+    RemoveTreeNodeSubItemCmd.exec(params);
+    UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);
     expect(TreeStore.version).toBe(3);

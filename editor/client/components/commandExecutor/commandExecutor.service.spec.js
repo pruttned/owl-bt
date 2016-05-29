@@ -2,35 +2,30 @@
 
 describe('Service: CommandExecutor', function() {
 
-  class TestCommand {
-    create(params) {
-      return {
-        exec: function() {
-          params.log.push('TestCommand-exec');
-        },
-        undo: function() {
-          params.log.push('TestCommand-undo');
-        }
-      };
-    }
-  }
-
-  class AsyncTestCommand {
-    create(params) {
-      return {
-        exec: function() {
-          setTimeout(function() {
-            params.log.push('AsyncTestCommand-exec');
-          }, 100);
-        }
-      };
-    }
-  }
-
   // load the service's module
-  beforeEach(module('editorApp', function($provide) {
-    $provide.service('TestCommand', TestCommand);
-    $provide.service('AsyncTestCommand', AsyncTestCommand);
+  let log;
+  let testCommand;
+  let testAsyncCommand;
+  beforeEach(module('editorApp', function() {
+
+    log = [];
+
+    testCommand = {
+      exec: function() {
+        log.push('TestCommand-exec');
+      },
+      undo: function() {
+        log.push('TestCommand-undo');
+      }
+    };
+
+    testAsyncCommand = {
+      exec: function() {
+        setTimeout(function() {
+          log.push('AsyncTestCommand-exec');
+        }, 100);
+      }
+    };
   }));
 
   // instantiate service
@@ -46,14 +41,10 @@ describe('Service: CommandExecutor', function() {
   it('exec should call exec method of a given command service',
     function(done) {
 
-      let params = {
-        log: []
-      };
-
-      CommandExecutor.exec('TestCommand', params)
+      CommandExecutor.exec(testCommand)
         .then(() => {
-          expect(params.log.length).toBe(1);
-          expect(params.log[0]).toBe('TestCommand-exec');
+          expect(log.length).toBe(1);
+          expect(log[0]).toBe('TestCommand-exec');
 
           done();
         });
@@ -64,13 +55,9 @@ describe('Service: CommandExecutor', function() {
   it('exec should fail while another command is being executed',
     function(done) {
 
-      let params = {
-        log: []
-      };
-
-      CommandExecutor.exec('AsyncTestCommand', params)
+      CommandExecutor.exec(testAsyncCommand)
         .then(done);
-      expect(() => CommandExecutor.exec('TestCommand', params)).toThrowError(/bussy/);
+      expect(() => CommandExecutor.exec(testCommand)).toThrowError(/bussy/);
 
       $scope.$apply(); //resolve promises
     });
@@ -78,13 +65,9 @@ describe('Service: CommandExecutor', function() {
   it('should be possible to call another command after the current is finished',
     function(done) {
 
-      let params = {
-        log: []
-      };
-
-      CommandExecutor.exec('AsyncTestCommand', params)
+      CommandExecutor.exec(testAsyncCommand)
         .then(() => {
-          expect(() => CommandExecutor.exec('TestCommand', params)).not.toThrowError(/bussy/);
+          expect(() => CommandExecutor.exec(testCommand)).not.toThrowError(/bussy/);
 
           done();
         });
@@ -95,16 +78,12 @@ describe('Service: CommandExecutor', function() {
   it('exec should add command to undo redo stack',
     function(done) {
 
-      let params = {
-        log: []
-      };
-
-      CommandExecutor.exec('TestCommand', params)
+      CommandExecutor.exec(testCommand)
         .then(() => {
 
           UndoRedoManager.undo();
-          expect(params.log.length).toBe(2);
-          expect(params.log[1]).toBe('TestCommand-undo');
+          expect(log.length).toBe(2);
+          expect(log[1]).toBe('TestCommand-undo');
 
           done();
         });

@@ -2,7 +2,8 @@
 
 (function() {
   class MoveTreeNodeSubItemCmd {
-    constructor(TreeStore, TreeNode) {
+    constructor(CommandExecutor, TreeStore, TreeNode) {
+        this._CommandExecutor = CommandExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
       }
@@ -11,14 +12,11 @@
        * @param  {node} params.node - node that contains the specified subItem
        * @param  {service/decorator} params.subItem - sub item that should be moved
        * @param  {bool} params.up - whether to move sub item up(true) or down(false)
-       * @return {Object} cmd - command instance
-       * @return {function} cmd.exec - function for executing the command
-       * @return {function} cmd.undo - function for undoing the command
        */
-    create(params) {
+    exec(params) {
       let _this = this;
 
-      return {
+      this._CommandExecutor.exec({
         exec: () => {
           _this._TreeNode.moveSubItem(params.node, params.subItem, params.up);
 
@@ -31,7 +29,7 @@
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
         }
-      };
+      });
     }
   }
 

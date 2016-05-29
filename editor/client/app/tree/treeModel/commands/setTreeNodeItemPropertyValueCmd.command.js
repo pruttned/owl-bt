@@ -2,7 +2,8 @@
 
 (function() {
   class SetTreeNodeItemPropertyValueCmd {
-    constructor(TreeStore, TreeNodeItemProperty, TreeNode) {
+    constructor(CommandExecutor, TreeStore, TreeNodeItemProperty, TreeNode) {
+        this._CommandExecutor = CommandExecutor;
         this._TreeStore = TreeStore;
         this._TreeNodeItemProperty = TreeNodeItemProperty;
         this._TreeNode = TreeNode;
@@ -13,11 +14,8 @@
        * @param  {Object} params.nodeItem - (optional) node item that owns the property. Null or node for node property
        * @param  {String} params.property - property that should be set
        * @param  {Object} params.value - new value of the property
-       * @return {Object} cmd - command instance
-       * @return {function} cmd.exec - function for executing the command
-       * @return {function} cmd.undo  - function for undoing the command
        */
-    create(params) {
+    exec(params) {
       let _this = this;
 
       let nodeItem = params.nodeItem || params.node;
@@ -26,7 +24,8 @@
       if (wasSet) {
         oldValue = this._TreeNodeItemProperty.value(nodeItem, params.property);
       }
-      return {
+
+      this._CommandExecutor.exec({
         exec: () => {
           _this._TreeNodeItemProperty.value(nodeItem, params.property, params.value);
 
@@ -42,7 +41,7 @@
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
         }
-      };
+      });
     }
   }
 

@@ -2,14 +2,14 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, CommandExecutor) {
+    TreeStore, UndoCmd, RedoCmd) {
       let _this  = this;
 
       this.undo = function(){
-        CommandExecutor.exec('UndoCmd');
+        UndoCmd.exec();
       };
       this.redo = function(){
-        CommandExecutor.exec('RedoCmd');
+        RedoCmd.exec();
       };
 
       this.selectNodeItem = function(node, item){

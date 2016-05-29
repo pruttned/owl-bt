@@ -2,19 +2,17 @@
 
 (function() {
   class UndoCmd {
-    constructor(UndoRedoManager) {
-        this._undoRedoManager = UndoRedoManager;
-      }
-      /**
-       * @return {Object} cmd - command instance
-       * @return {function} cmd.exec - function for executing the command
-       */
-    create() {
-      return {
+    constructor(CommandExecutor, UndoRedoManager) {
+      this._CommandExecutor = CommandExecutor;
+      this._undoRedoManager = UndoRedoManager;
+    }
+
+    exec() {
+      this._CommandExecutor.exec({
         exec: () => {
           this._undoRedoManager.undo();
         },
-      };
+      });
     }
   }
 
