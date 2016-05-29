@@ -28,6 +28,19 @@
       this._addSubItem(node, 'decorators', decorator);
     }
 
+    /**
+     * add sub item
+     * @param {node} node
+     * @param {service|decorator} subItem
+     * @param {string} type  - 'service' or 'decorator'
+     */
+    addSubItem(node, subItem, type) {
+      if(type !== 'service' && type !== 'decorator'){
+        throw new Error(`invalid sub item type ${type}`);
+      }
+      this._addSubItem(node, type + 's', subItem);
+    }
+
     addChildNode(node, childNode) {
       if (childNode.$meta.parentId && childNode.$meta.parentId !== node.$meta.id) {
         throw new Error('Node is already child of another node');
