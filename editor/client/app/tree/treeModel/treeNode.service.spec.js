@@ -158,7 +158,53 @@ describe('Service: Node', function() {
       expect(childNode.$meta.parentId).not.toBeDefined();
     });
 
+  it('addSubItemAt should add item at a specified index',
+    function() {
+      let node = {
+        $meta: {
+          id: 1
+        },
+        services: [{
+          type: 's1',
+        }, {
+          type: 's2',
+        }]
+      };
+      let service = {
+        type: 'new',
+        $meta: {}
+      };
+      TreeNode.addSubItemAt(node, service, 'service', 1);
 
+      expect(node.services.length).toBe(3);
+      expect(node.services[0].type).toBe('s1');
+      expect(node.services[1].type).toBe('new');
+      expect(node.services[2].type).toBe('s2');
+    });
+
+  it('addChildNode should add node at a specified index',
+    function() {
+      let node = {
+        $meta: {
+          id: 1
+        },
+        childNodes: [{
+          type: 'n1',
+        }, {
+          type: 'n2',
+        }]
+      };
+      let childNode = {
+        type: 'new',
+        $meta: {}
+      };
+      TreeNode.addChildNodeAt(node, childNode, 1);
+
+      expect(node.childNodes.length).toBe(3);
+      expect(node.childNodes[0].type).toBe('n1');
+      expect(node.childNodes[1].type).toBe('new');
+      expect(node.childNodes[2].type).toBe('n2');
+    });
 
   describe('Service: Node - move sub item', function() {
     let node;

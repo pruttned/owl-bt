@@ -35,13 +35,28 @@
      * @param {string} type  - 'service' or 'decorator'
      */
     addSubItem(node, subItem, type) {
+      this.addSubItemAt(node, subItem, type);
+    }
+
+    /**
+     * add sub item at a given index
+     * @param {node} node
+     * @param {service|decorator} subItem
+     * @param {string} type  - 'service' or 'decorator'
+     * @param {int} index
+     */
+    addSubItemAt(node, subItem, type, index) {
       if(type !== 'service' && type !== 'decorator'){
         throw new Error(`invalid sub item type ${type}`);
       }
-      this._addSubItem(node, type + 's', subItem);
+      this._addSubItem(node, type + 's', subItem, index);
     }
 
     addChildNode(node, childNode) {
+      this.addChildNodeAt(node, childNode);
+    }
+
+    addChildNodeAt(node, childNode, index) {
       if (childNode.$meta.parentId && childNode.$meta.parentId !== node.$meta.id) {
         throw new Error('Node is already child of another node');
       }
@@ -49,7 +64,10 @@
       if (!node.childNodes) {
         node.childNodes = [];
       }
-      node.childNodes.push(childNode);
+      if(this._.isUndefined(index)){
+          index = node.childNodes.length;
+      }
+      node.childNodes.splice(index, 0, childNode);
 
       childNode.$meta.parentId = node.$meta.id;
     }
@@ -93,6 +111,14 @@
         return this._.indexOf(node.decorators, decorator);
       }
       return -1;
+    }
+
+    indexOfSubItem(node, subItem){
+      let index = this.indexOfService(node, subItem);
+      if(index >= 0){
+        return index;
+      }
+      return this.indexOfDecorator(node, subItem);
     }
 
     moveChildNode(node, childNode, left) {
@@ -170,14 +196,18 @@
       }
     }
 
-    _addSubItem(node, subItemArrayName, subItem) {
+    _addSubItem(node, subItemArrayName, subItem, index) {
       if (subItem.$meta.nodeId && subItem.$meta.nodeId !== node.$meta.id) {
         throw new Error('Sub item is already in another node');
       }
+
       if (!node[subItemArrayName]) {
         node[subItemArrayName] = [];
       }
-      node[subItemArrayName].push(subItem);
+      if(this._.isUndefined(index)){
+        index = node[subItemArrayName].length;
+      }
+      node[subItemArrayName].splice(index, 0, subItem);
 
       subItem.$meta.nodeId = node.$meta.id;
     }
