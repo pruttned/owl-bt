@@ -49,6 +49,14 @@
       return this._removeSubItem(node, 'decorators', decorator);
     }
 
+    removeSubItem(node, subItem) {
+      let subItemArrayName = this._getSubItemArrayName(node, subItem);
+      if(!subItemArrayName){
+        return false;
+      }
+      return this._removeSubItem(node, subItemArrayName, subItem);
+    }
+
     removeChildNode(node, childNode) {
       if (!node.childNodes) {
         return false;
@@ -120,12 +128,19 @@
       }
     }
 
-    _getSubItemArray(node, subItem) {
+    _getSubItemArrayName(node, subItem) {
       if (this.indexOfService(node, subItem) >= 0) {
-        return node.services;
+        return 'services';
       }
       if (this.indexOfDecorator(node, subItem) >= 0) {
-        return node.decorators;
+        return 'decorators';
+      }
+    }
+
+    _getSubItemArray(node, subItem) {
+      let subItemArrayName = this._getSubItemArrayName(node, subItem);
+      if(subItemArrayName){
+        return node[subItemArrayName];
       }
     }
 
