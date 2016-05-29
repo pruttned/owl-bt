@@ -21,7 +21,7 @@
     }
 
     addService(node, service) {
-      if(service.$meta.nodeId && service.$meta.nodeId !== node.$meta.id){
+      if (service.$meta.nodeId && service.$meta.nodeId !== node.$meta.id) {
         throw new Error('Service is already in another node');
       }
       if (!node.services) {
@@ -33,7 +33,7 @@
     }
 
     addDecorator(node, decorator) {
-      if(decorator.$meta.nodeId && decorator.$meta.nodeId !== node.$meta.id){
+      if (decorator.$meta.nodeId && decorator.$meta.nodeId !== node.$meta.id) {
         throw new Error('Decorator is already in another node');
       }
 
@@ -46,7 +46,7 @@
     }
 
     addChildNode(node, childNode) {
-      if(childNode.$meta.parentId && childNode.$meta.parentId !== node.$meta.id){
+      if (childNode.$meta.parentId && childNode.$meta.parentId !== node.$meta.id) {
         throw new Error('Node is already child of another node');
       }
 
@@ -56,6 +56,25 @@
       node.childNodes.push(childNode);
 
       childNode.$meta.parentId = node.$meta.id;
+    }
+
+    removeService(node, service) {
+      return this._removeSubItem(node, 'services', service);
+    }
+
+    removeDecorator(node, decorator) {
+      return this._removeSubItem(node, 'decorators', decorator);
+    }
+
+    removeChildNode(node, childNode) {
+      if (!node.childNodes) {
+        return false;
+      }
+      if (this._ArrayHelper.remove(node.childNodes, childNode)) {
+        delete childNode.$meta.parentId;
+        return true;
+      }
+      return false;
     }
 
     indexOfService(node, service) {
@@ -72,59 +91,70 @@
       return -1;
     }
 
-    moveChildNode(node, childNode, left){
-      if(!node.childNodes){
+    moveChildNode(node, childNode, left) {
+      if (!node.childNodes) {
         return false;
       }
-      if(left){
+      if (left) {
         return this._ArrayHelper.moveLeft(node.childNodes, childNode);
-      }else{
+      } else {
         return this._ArrayHelper.moveRight(node.childNodes, childNode);
       }
     }
 
-    canMoveChildNode(node, childNode, left){
-      if(!node.childNodes){
+    canMoveChildNode(node, childNode, left) {
+      if (!node.childNodes) {
         return false;
       }
-      if(left){
+      if (left) {
         return this._ArrayHelper.canMoveLeft(node.childNodes, childNode);
-      }else{
+      } else {
         return this._ArrayHelper.canMoveRight(node.childNodes, childNode);
       }
     }
 
-    moveSubItem(node, subItem, up){
+    moveSubItem(node, subItem, up) {
       let subItemArray = this._getSubItemArray(node, subItem);
-      if(!subItemArray){
+      if (!subItemArray) {
         return false;
       }
-      if(up){
+      if (up) {
         return this._ArrayHelper.moveLeft(subItemArray, subItem);
-      }else{
+      } else {
         return this._ArrayHelper.moveRight(subItemArray, subItem);
       }
     }
 
-    canMoveSubItem(node, subItem, up){
+    canMoveSubItem(node, subItem, up) {
       let subItemArray = this._getSubItemArray(node, subItem);
-      if(!subItemArray){
+      if (!subItemArray) {
         return false;
       }
-      if(up){
+      if (up) {
         return this._ArrayHelper.canMoveLeft(subItemArray, subItem);
-      }else{
+      } else {
         return this._ArrayHelper.canMoveRight(subItemArray, subItem);
       }
     }
 
-    _getSubItemArray(node, subItem){
-      if(this.indexOfService(node, subItem) >= 0){
+    _getSubItemArray(node, subItem) {
+      if (this.indexOfService(node, subItem) >= 0) {
         return node.services;
       }
-      if(this.indexOfDecorator(node, subItem) >= 0){
+      if (this.indexOfDecorator(node, subItem) >= 0) {
         return node.decorators;
       }
+    }
+
+    _removeSubItem(node, subItemArrayName, subItem) {
+      if (!node[subItemArrayName]) {
+        return false;
+      }
+      if (this._ArrayHelper.remove(node[subItemArrayName], subItem)) {
+        delete subItem.$meta.nodeId;
+        return true;
+      }
+      return false;
     }
   }
 

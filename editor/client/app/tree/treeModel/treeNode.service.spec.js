@@ -89,6 +89,75 @@ describe('Service: Node', function() {
       expect(childNode.$meta.parentId).toBe(10);
     });
 
+  it('removeService should remove service from node and reset nodeId in its $meta',
+    function() {
+      let node = {
+        services: [{
+          type: 's1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 's2',
+          $meta: {
+            nodeId: 1
+          }
+        }]
+      };
+      let service = node.services[0];
+      TreeNode.removeService(node, service);
+
+      expect(node.services.length).toBe(1);
+      expect(node.services[0]).not.toBe(service);
+      expect(service.$meta.nodeId).not.toBeDefined();
+    });
+
+  it('removeDecorator should remove decorator from node and reset nodeId in its $meta',
+    function() {
+      let node = {
+        decorators: [{
+          type: 'd1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 'd2',
+          $meta: {
+            nodeId: 1
+          }
+        }]
+      };
+      let decorator = node.decorators[0];
+      TreeNode.removeDecorator(node, decorator);
+
+      expect(node.decorators.length).toBe(1);
+      expect(node.decorators[0]).not.toBe(decorator);
+      expect(decorator.$meta.nodeId).not.toBeDefined();
+    });
+
+  it('removeChildNode should remove childNode from node and reset parentId in its $meta',
+    function() {
+      let node = {
+        childNodes: [{
+          type: 'n1',
+          $meta: {
+            parentId: 1
+          }
+        }, {
+          type: 'n2',
+          $meta: {
+            parentId: 1
+          }
+        }]
+      };
+      let childNode = node.childNodes[0];
+      TreeNode.removeChildNode(node, childNode);
+
+      expect(node.childNodes.length).toBe(1);
+      expect(node.childNodes[0]).not.toBe(childNode);
+      expect(childNode.$meta.parentId).not.toBeDefined();
+    });
+
 
 
   describe('Service: Node - move sub item', function() {
