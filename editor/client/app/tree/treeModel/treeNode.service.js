@@ -72,6 +72,28 @@
       return -1;
     }
 
+    moveChildNode(node, childNode, left){
+      if(!node.childNodes){
+        return false;
+      }
+      if(left){
+        return this._ArrayHelper.moveLeft(node.childNodes, childNode);
+      }else{
+        return this._ArrayHelper.moveRight(node.childNodes, childNode);
+      }
+    }
+
+    canMoveChildNode(node, childNode, left){
+      if(!node.childNodes){
+        return false;
+      }
+      if(left){
+        return this._ArrayHelper.canMoveLeft(node.childNodes, childNode);
+      }else{
+        return this._ArrayHelper.canMoveRight(node.childNodes, childNode);
+      }
+    }
+
     moveSubItem(node, subItem, up){
       let subItemArray = this._getSubItemArray(node, subItem);
       if(!subItemArray){

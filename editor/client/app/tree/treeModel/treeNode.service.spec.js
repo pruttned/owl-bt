@@ -196,8 +196,6 @@ describe('Service: Node', function() {
         });
       });
 
-
-
     it('canMoveSubItem up should return false for top service',
       function() {
         expect(TreeNode.canMoveSubItem(node, node.services[0], true)).toBe(false);
@@ -220,27 +218,94 @@ describe('Service: Node', function() {
         expect(TreeNode.canMoveSubItem(node, node.services[1], true)).toBe(true);
       });
 
-      it('canMoveSubItem up should return false for top decorator',
-        function() {
-          expect(TreeNode.canMoveSubItem(node, node.decorators[0], true)).toBe(false);
-        });
+    it('canMoveSubItem up should return false for top decorator',
+      function() {
+        expect(TreeNode.canMoveSubItem(node, node.decorators[0], true)).toBe(false);
+      });
 
-      it('canMoveSubItem down should return false for bottom decorator',
-        function() {
-          expect(TreeNode.canMoveSubItem(node, node.decorators[2], false)).toBe(false);
-        });
+    it('canMoveSubItem down should return false for bottom decorator',
+      function() {
+        expect(TreeNode.canMoveSubItem(node, node.decorators[2], false)).toBe(false);
+      });
 
-      it('canMoveSubItem up should return true for non top decorator',
-        function() {
-          expect(TreeNode.canMoveSubItem(node, node.decorators[1], true)).toBe(true);
-          expect(TreeNode.canMoveSubItem(node, node.decorators[2], true)).toBe(true);
-        });
+    it('canMoveSubItem up should return true for non top decorator',
+      function() {
+        expect(TreeNode.canMoveSubItem(node, node.decorators[1], true)).toBe(true);
+        expect(TreeNode.canMoveSubItem(node, node.decorators[2], true)).toBe(true);
+      });
 
-      it('canMoveSubItem down should return true for non bottom decorator',
-        function() {
-          expect(TreeNode.canMoveSubItem(node, node.decorators[0], false)).toBe(true);
-          expect(TreeNode.canMoveSubItem(node, node.decorators[1], true)).toBe(true);
-        });
+    it('canMoveSubItem down should return true for non bottom decorator',
+      function() {
+        expect(TreeNode.canMoveSubItem(node, node.decorators[0], false)).toBe(true);
+        expect(TreeNode.canMoveSubItem(node, node.decorators[1], true)).toBe(true);
+      });
   });
 
+
+  describe('Service: Node - move child node', function() {
+    let node;
+    beforeEach(function() {
+      node = {
+        childNodes: [{
+          type: 'n1'
+        }, {
+          type: 'n2'
+        }, {
+          type: 'n3'
+        }]
+      };
+    });
+
+    it('moveChildNode left should move node left',
+      function() {
+        TreeNode.moveChildNode(node, node.childNodes[1], true);
+        expect(node).toEqual({
+          childNodes: [{
+            type: 'n2'
+          }, {
+            type: 'n1'
+          }, {
+            type: 'n3'
+          }]
+        });
+      });
+
+    it('moveChildNode right should move node right',
+      function() {
+        TreeNode.moveChildNode(node, node.childNodes[1], false);
+        expect(node).toEqual({
+          childNodes: [{
+            type: 'n1'
+          }, {
+            type: 'n3'
+          }, {
+            type: 'n2'
+          }]
+        });
+      });
+
+
+    it('canMoveChildNode left should return false for top child node',
+      function() {
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[0], true)).toBe(false);
+      });
+
+    it('canMoveChildNode right should return false for bottom child node',
+      function() {
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[2], false)).toBe(false);
+      });
+
+    it('canMoveChildNode left should return true for non top child node',
+      function() {
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[1], true)).toBe(true);
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[2], true)).toBe(true);
+      });
+
+    it('canMoveChildNode right should return true for non bottom child node',
+      function() {
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[0], false)).toBe(true);
+        expect(TreeNode.canMoveChildNode(node, node.childNodes[1], true)).toBe(true);
+      });
+
+  });
 });
