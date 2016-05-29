@@ -7,8 +7,9 @@
    */
   class TreeNode {
 
-    constructor(_) {
+    constructor(_, ArrayHelper) {
       this._ = _;
+      this._ArrayHelper = ArrayHelper;
     }
 
     updateVersion(node) {
@@ -69,6 +70,27 @@
         return this._.indexOf(node.decorators, decorator);
       }
       return -1;
+    }
+
+    moveSubItem(node, subItem, up){
+      let subItemArray = this._getSubItemArray(node, subItem);
+      if(!subItemArray){
+        return false;
+      }
+      if(up){
+        return this._ArrayHelper.moveLeft(subItemArray, subItem);
+      }else{
+        return this._ArrayHelper.moveRight(subItemArray, subItem);
+      }
+    }
+
+    _getSubItemArray(node, subItem){
+      if(this.indexOfService(node, subItem) >= 0){
+        return node.services;
+      }
+      if(this.indexOfDecorator(node, subItem) >= 0){
+        return node.decorators;
+      }
     }
   }
 

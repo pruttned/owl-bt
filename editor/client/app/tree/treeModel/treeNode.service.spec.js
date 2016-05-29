@@ -89,4 +89,179 @@ describe('Service: Node', function() {
       expect(childNode.$meta.parentId).toBe(10);
     });
 
+  it('moveSubItem up should move service up',
+    function() {
+      let node = {
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      };
+
+      TreeNode.moveSubItem(node, node.services[1], true);
+      expect(node).toEqual({
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's2'
+        }, {
+          type: 's1'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      });
+    });
+
+  it('moveSubItem up should move decorator up',
+    function() {
+      let node = {
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      };
+
+      TreeNode.moveSubItem(node, node.decorators[1], true);
+      expect(node).toEqual({
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd2'
+        }, {
+          type: 'd1'
+        }, {
+          type: 'd3'
+        }, ]
+      });
+    });
+
+  it('moveSubItem down should move service down',
+    function() {
+      let node = {
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      };
+
+      TreeNode.moveSubItem(node, node.services[1], false);
+      expect(node).toEqual({
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's3'
+        }, {
+          type: 's2'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      });
+    });
+
+  it('moveSubItem down should move decorator down',
+    function() {
+      let node = {
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd2'
+        }, {
+          type: 'd3'
+        }, ]
+      };
+
+      TreeNode.moveSubItem(node, node.decorators[1], false);
+      expect(node).toEqual({
+        $meta: {
+          id: 10
+        },
+        services: [{
+          type: 's1'
+        }, {
+          type: 's2'
+        }, {
+          type: 's3'
+        }, ],
+        decorators: [{
+          type: 'd1'
+        }, {
+          type: 'd3'
+        }, {
+          type: 'd2'
+        }, ]
+      });
+    });
 });
