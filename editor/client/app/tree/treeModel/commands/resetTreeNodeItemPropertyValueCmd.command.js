@@ -10,7 +10,7 @@
       /**
        * @param  {object} params
        * @param  {node} params.node
-       * @param  {service/decorator} params.nodeItem - optional if property of node should be reset
+       * @param  {Object} params.nodeItem - (optional) node item that owns the property. Null or node for node property
        * @param  {String} params.property - property that should be set
        * @return {Object} cmd - command instance
        * @return {function} cmd.exec - function for executing the command
