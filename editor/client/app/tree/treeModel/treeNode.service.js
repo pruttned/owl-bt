@@ -84,6 +84,18 @@
       }
     }
 
+    canMoveSubItem(node, subItem, up){
+      let subItemArray = this._getSubItemArray(node, subItem);
+      if(!subItemArray){
+        return false;
+      }
+      if(up){
+        return this._ArrayHelper.canMoveLeft(subItemArray, subItem);
+      }else{
+        return this._ArrayHelper.canMoveRight(subItemArray, subItem);
+      }
+    }
+
     _getSubItemArray(node, subItem){
       if(this.indexOfService(node, subItem) >= 0){
         return node.services;
