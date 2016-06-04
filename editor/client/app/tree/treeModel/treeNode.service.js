@@ -56,6 +56,12 @@
       this.addChildNodeAt(node, childNode);
     }
 
+    /**
+     * add child node at a given index
+     * @param {node} node
+     * @param {node} childNode
+     * @param {int} index - (optional) Child node is added to the end if not provided
+     */
     addChildNodeAt(node, childNode, index) {
       if (childNode.$meta.parentId && childNode.$meta.parentId !== node.$meta.id) {
         throw new Error('Node is already child of another node');
