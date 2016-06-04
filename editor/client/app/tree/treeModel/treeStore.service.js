@@ -5,7 +5,7 @@
 (function() {
 
   class TreeStore {
-    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore) {
+    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore, TreeNodeDtoConverter) {
       this.treePath = $location.search().path;
       this.version = 1;
 
@@ -17,6 +17,7 @@
       this._$q = $q;
       this._TreeNodeProvider = TreeNodeProvider;
       this._ProjectStore = ProjectStore;
+      this._TreeNodeDtoConverter = TreeNodeDtoConverter;
     }
 
     load() {
@@ -39,6 +40,18 @@
         });
 
       return this._loadPromise;
+    }
+
+    save() {
+      if (!this.isLoaded) {
+        throw new Error('Unable to save before load');
+      }
+
+      let dto = this._TreeNodeDtoConverter.convert(this.rootNode);
+      let resource = new this._treeResource(dto);
+      return resource.$save({
+        treePath: this.treePath
+      }).$promise;
     }
 
     updateVersion() {

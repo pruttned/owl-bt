@@ -1,27 +1,70 @@
-  {
-    "type": "sequence",
-    "name": "rootNode",
-    "decorators": [{
-      "type": "hasAmmo"
-    }, {
-      "type": "isAwake"
-    }, {
-      "type": "negate"
-    }, {
-      "type": "forceSuccess"
-    }],
-    "services": [{
-      "type": "checkAmmo"
-    }],
-    "childNodes": [{
-      "type": "findPlayer"
-    }, {
-      "type": "gotoPlayer"
-    }, {
-      "type": "playSound",
-      "properties": {
-        "soundName": "myOtherSound.ogg",
-        "modifier": "modif3"
-      }
-    }]
-  }
+{
+	"type": "sequence",
+	"name": "rootNode",
+	"decorators": [
+		{
+			"type": "hasAmmo"
+		},
+		{
+			"type": "isAwake"
+		},
+		{
+			"type": "negate"
+		},
+		{
+			"type": "forceSuccess"
+		}
+	],
+	"services": [
+		{
+			"type": "checkAmmo"
+		}
+	],
+	"childNodes": [
+		{
+			"type": "findPlayer"
+		},
+		{
+			"type": "gotoPlayer"
+		},
+		{
+			"type": "findPlayer",
+			"decorators": [
+				{
+					"type": "isAwake"
+				}
+			],
+			"services": [
+				{
+					"type": "checkAmmo"
+				}
+			]
+		},
+		{
+			"type": "playSound",
+			"properties": [
+				{
+					"name": "soundName",
+					"value": "myOtherSound.ogg"
+				},
+				{
+					"name": "modifier",
+					"value": "modif3"
+				},
+				{
+					"name": "myint",
+					"value": 156
+				}
+			]
+		},
+		{
+			"type": "playSound",
+			"properties": [
+				{
+					"name": "volume",
+					"value": 20
+				}
+			]
+		}
+	]
+}
