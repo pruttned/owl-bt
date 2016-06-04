@@ -9,9 +9,9 @@
       }
       /**
        * @param  {object} params
-       * @param  {node} params.node - node that contains the specified subItem
+       * @param  {node} params.node - node that contains the specified child node
        * @param  {node} params.childNode - child node that should be moved
-       * @param  {bool} params.left - whether to child node item left(true) or right(false)
+       * @param  {bool} params.left - whether to move child node left(true) or right(false)
        */
     exec(params) {
       let _this = this;

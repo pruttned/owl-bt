@@ -9,8 +9,8 @@
       }
       /**
        * @param  {object} params
-       * @param  {node} params.node - node that contains the specified subItem
-       * @param  {node} params.childNode - sub item that should be moved
+       * @param  {node} params.node - node that contains the specified child node
+       * @param  {node} params.childNode - node that should be removed
        */
     exec(params) {
       let _this = this;
