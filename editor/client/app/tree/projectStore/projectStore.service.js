@@ -20,22 +20,22 @@
 
     getNodeTypeDesc(name) {
       this._checkLoaded();
-      if (this.nodeTypes) {
-        return this.nodeTypes[name];
+      if (this.nodeTypeDescs) {
+        return this.nodeTypeDescs[name];
       }
     }
 
     getServiceTypeDesc(name) {
       this._checkLoaded();
-      if (this.serviceTypes) {
-        return this.serviceTypes[name];
+      if (this.serviceTypeDescs) {
+        return this.serviceTypeDescs[name];
       }
     }
 
     getDecoratorTypeDesc(name) {
       this._checkLoaded();
-      if (this.decoratorTypes) {
-        return this.decoratorTypes[name];
+      if (this.decoratorTypeDescs) {
+        return this.decoratorTypeDescs[name];
       }
     }
 
@@ -67,13 +67,13 @@
         return obj.name;
       }
 
-      this.nodeTypes = this._.keyBy(prjData.nodes || [], objByName);
-      this.serviceTypes = this._.keyBy(prjData.services || [], objByName);
-      this.decoratorTypes = this._.keyBy(prjData.decorators || [], objByName);
+      this.nodeTypeDescs = this._.keyBy(prjData.nodes || [], objByName);
+      this.serviceTypeDescs = this._.keyBy(prjData.services || [], objByName);
+      this.decoratorTypeDescs = this._.keyBy(prjData.decorators || [], objByName);
 
-      this._compileDescriptions(this.nodeTypes);
-      this._compileDescriptions(this.serviceTypes);
-      this._compileDescriptions(this.decoratorTypes);
+      this._compileDescriptions(this.nodeTypeDescs);
+      this._compileDescriptions(this.serviceTypeDescs);
+      this._compileDescriptions(this.decoratorTypeDescs);
     }
 
     _compileDescriptions(typeDict) {
