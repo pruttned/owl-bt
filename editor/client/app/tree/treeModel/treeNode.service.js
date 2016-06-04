@@ -43,7 +43,7 @@
      * @param {node} node
      * @param {service|decorator} subItem
      * @param {string} type  - 'service' or 'decorator'
-     * @param {int} index
+     * @param {int} index - (optional) Item is added to the end if not provided
      */
     addSubItemAt(node, subItem, type, index) {
       if(type !== 'service' && type !== 'decorator'){
