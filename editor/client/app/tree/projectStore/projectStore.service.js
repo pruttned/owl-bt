@@ -39,6 +39,36 @@
       }
     }
 
+    getNodeDescs() {
+      this._checkLoaded();
+      return this.nodeTypeDescs;
+    }
+
+    /**
+     * get sub item descriptors of a given type
+     * @param  {string} subItemType - 'service' or 'decorator'
+     * @return {desc}             descriptor
+     */
+    getSubItemDescs(subItemType) {
+      this._checkLoaded();
+
+      if (subItemType !== 'service' && subItemType !== 'decorator') {
+        throw new Error(`invalid sub item type ${subItemType}`);
+      }
+
+      return this[subItemType + 'TypeDescs'];
+    }
+
+    getServiceDescs() {
+      this._checkLoaded();
+      return this.serviceTypeDescs;
+    }
+
+    getDecoratorDescs() {
+      this._checkLoaded();
+      return this.decoratorTypeDescs;
+    }
+
     _checkLoaded() {
       if (!this.isLoaded) {
         throw new Error('Project is not loaded');
