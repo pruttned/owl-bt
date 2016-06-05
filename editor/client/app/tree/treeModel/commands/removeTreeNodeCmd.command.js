@@ -14,7 +14,7 @@
        */
     exec(params) {
       let _this = this;
-      let index = _this._TreeNode.indexOfChildNode(params.node, params.subItem);
+      let index = _this._TreeNode.indexOfChildNode(params.node, params.childNode);
       this._CommandExecutor.exec({
         exec: () => {
           _this._TreeNode.removeChildNode(params.node, params.childNode);

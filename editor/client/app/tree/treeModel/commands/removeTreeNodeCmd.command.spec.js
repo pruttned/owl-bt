@@ -42,21 +42,21 @@ describe('Service: RemoveTreeNodeCmd', function() {
   it('exec should remove child node and update versions', function() {
     let params = {
       node: node,
-      childNode: node.childNodes[1],
+      childNode: node.childNodes[0],
     };
     RemoveTreeNodeCmd.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
     expect(node.childNodes.length).toBe(2);
-    expect(node.childNodes[0].type).toBe('n1');
+    expect(node.childNodes[0].type).toBe('n2');
     expect(node.childNodes[1].type).toBe('n3');
   });
 
   it('undo should add previous child node and update versions', function() {
     let params = {
       node: node,
-      childNode: node.childNodes[1],
+      childNode: node.childNodes[0],
     };
     RemoveTreeNodeCmd.exec(params);
     UndoRedoManager.undo();
