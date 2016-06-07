@@ -58,7 +58,7 @@ angular.module('editorApp')
       }
       _initContextMenu() {
         let body = this.$document.find('body');
-        this.menuElm = angular.element('<div id="serviceContextMenu" class="context-menu"><ul class="selectable"></ul></div>');
+        this.menuElm = angular.element('<div id="serviceContextMenu" class="context-menu"><ul></ul></div>');
         this.ulElm = this.menuElm.find('ul');
         body.append(this.menuElm);
 
