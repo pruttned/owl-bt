@@ -32,13 +32,25 @@ $node-color: white;
 $node-service-color: #333333;
 $node-decorator-color: #333333;
 //context menu
-$context-menu-background-color: $dlg-light-background-color;
-$context-menu-color: $ctrl-color;
-$context-menu-hover-color: $ctrl-hover-color;
-
+$context-menu-border-color: #1C2732;
+$context-menu-background-color: #2C3E50;
+$context-menu-color:#cccccc;
+$context-menu-hover-background-color: $ctrl-hover-color;
+//dropdown
+$dropdown-border-color: #1C2732;
+$dropdown-background-color: #2C3E50;
+$dropdown-color:#cccccc;
+$dropdown-hover-background-color: $ctrl-hover-color;
+//top menu
+$top-menu-border-color: #1C2732;
+$top-menu-background-color: #2C3E50;
+$top-menu-color:#cccccc;
+$top-menu-hover-background-color: $ctrl-hover-color;
 /**
  * App-wide Styles
  */
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .browsehappy {
     margin: 0.2em 0;
@@ -81,6 +93,37 @@ ul.selectable{
     &:hover{
       background: $ctrl-hover-color;
     }
+  }
+}
+
+
+.dropdown-menu {
+  background: $dropdown-background-color;
+  border: solid 1px $dropdown-border-color;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  li {
+    display: block;
+  }
+  a {
+    display: block;
+    &,
+    &:visited,
+    &:focus {
+      color: $dropdown-color;
+      text-decoration: none;
+      background: none;
+    }
+    &:active,
+    &:hover {
+      color: $dropdown-color;
+      text-decoration: none;
+      background: $dropdown-hover-background-color;
+    }
+  }
+  .divider {
+    background: $dropdown-border-color;
   }
 }
 

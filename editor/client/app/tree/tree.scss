@@ -1,6 +1,47 @@
+.tree-page {
+  .top-menu {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    height: 30px;
+    padding: 0 5px;
+    color: $top-menu-color;
+    background: $top-menu-background-color;
+    border-bottom: solid 1px $top-menu-border-color;
+    > li {
+      list-style: none;
+      display: inline-block;
+      a {
+        display: block;
+        padding: 5px;
+        &,
+        &:visited,
+        &:focus {
+          color: $top-menu-color;
+          text-decoration: none;
+        }
+        &:active,
+        &:hover {
+          color: $top-menu-color;
+          text-decoration: none;
+          background: $top-menu-hover-background-color;
+        }
+      }
+    }
+    .dropdown-toggle {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+}
 .tree {
-  width: 500px;
-  height: 500px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   overflow: hidden;
   background-color: $ctrl-background-color;
   .tree-content {
@@ -19,14 +60,15 @@
       top: 0;
       .item {
         position: relative;
-        &:hover::after, &.selected::after {
+        &:hover::after,
+        &.selected::after {
           position: absolute;
           display: block;
           content: '';
-          left:0;
-          right:0;
-          top:0;
-          bottom:0;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
           outline: solid 5px $node-selected-border-color;
           z-index: 21;
         }
