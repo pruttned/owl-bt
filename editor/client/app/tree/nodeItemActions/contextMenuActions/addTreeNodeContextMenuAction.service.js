@@ -4,9 +4,9 @@
 
   class AddTreeNodeContextMenuAction {
 
-    constructor(_, AddTreeNodeCmd, ListSelectDialog, ProjectStore, TreeNodeProvider) {
+    constructor(_, AddTreeNodeAction, ListSelectDialog, ProjectStore, TreeNodeProvider) {
       this._ = _;
-      this._AddTreeNodeCmd = AddTreeNodeCmd;
+      this._AddTreeNodeAction = AddTreeNodeAction;
       this._ListSelectDialog = ListSelectDialog;
       this._ProjectStore = ProjectStore;
       this._TreeNodeProvider = TreeNodeProvider;
@@ -27,7 +27,7 @@
                 let childNode = _this._TreeNodeProvider.create({
                   type: desc.name
                 });
-                return _this._AddTreeNodeCmd.exec({
+                return _this._AddTreeNodeAction.exec({
                   node: node,
                   childNode: childNode
                 });

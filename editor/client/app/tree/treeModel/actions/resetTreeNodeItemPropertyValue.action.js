@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-  class SetTreeNodeItemPropertyValueCmd {
-    constructor(CommandExecutor, TreeStore, TreeNodeItemProperty, TreeNode) {
-        this._CommandExecutor = CommandExecutor;
+  class ResetTreeNodeItemPropertyValueAction {
+    constructor(ActionExecutor, TreeStore, TreeNodeItemProperty, TreeNode) {
+        this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNodeItemProperty = TreeNodeItemProperty;
         this._TreeNode = TreeNode;
@@ -13,7 +13,6 @@
        * @param  {node} params.node
        * @param  {Object} params.nodeItem - (optional) node item that owns the property. Null or node for node property
        * @param  {String} params.property - property that should be set
-       * @param  {Object} params.value - new value of the property
        */
     exec(params) {
       let _this = this;
@@ -25,9 +24,9 @@
         oldValue = this._TreeNodeItemProperty.value(nodeItem, params.property);
       }
 
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
-          _this._TreeNodeItemProperty.value(nodeItem, params.property, params.value);
+          _this._TreeNodeItemProperty.reset(nodeItem, params.property);
 
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
@@ -35,16 +34,15 @@
         undo: () => {
           if (wasSet) {
             _this._TreeNodeItemProperty.value(nodeItem, params.property, oldValue);
-          } else {
-            _this._TreeNodeItemProperty.reset(nodeItem, params.property);
+
+            _this._TreeStore.updateVersion();
+            _this._TreeNode.updateVersion(params.node);
           }
-          _this._TreeStore.updateVersion();
-          _this._TreeNode.updateVersion(params.node);
         }
       });
     }
   }
 
   angular.module('editorApp')
-    .service('SetTreeNodeItemPropertyValueCmd', SetTreeNodeItemPropertyValueCmd);
+    .service('ResetTreeNodeItemPropertyValueAction', ResetTreeNodeItemPropertyValueAction);
 })();

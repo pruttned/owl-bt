@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-  class RemoveTreeNodeCmd {
-    constructor(CommandExecutor, TreeStore, TreeNode) {
-        this._CommandExecutor = CommandExecutor;
+  class RemoveTreeNodeAction {
+    constructor(ActionExecutor, TreeStore, TreeNode) {
+        this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
       }
@@ -15,7 +15,7 @@
     exec(params) {
       let _this = this;
       let index = _this._TreeNode.indexOfChildNode(params.node, params.childNode);
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           _this._TreeNode.removeChildNode(params.node, params.childNode);
 
@@ -33,5 +33,5 @@
   }
 
   angular.module('editorApp')
-    .service('RemoveTreeNodeCmd', RemoveTreeNodeCmd);
+    .service('RemoveTreeNodeAction', RemoveTreeNodeAction);
 })();

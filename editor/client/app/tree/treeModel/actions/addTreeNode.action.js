@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-  class AddTreeNodeCmd {
-    constructor(CommandExecutor, TreeStore, TreeNode) {
-        this._CommandExecutor = CommandExecutor;
+  class AddTreeNodeAction {
+    constructor(ActionExecutor, TreeStore, TreeNode) {
+        this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
       }
@@ -15,7 +15,7 @@
      */
     exec(params) {
       let _this = this;
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           _this._TreeNode.addChildNodeAt(params.node, params.childNode, params.index);
 
@@ -33,5 +33,5 @@
   }
 
   angular.module('editorApp')
-    .service('AddTreeNodeCmd', AddTreeNodeCmd);
+    .service('AddTreeNodeAction', AddTreeNodeAction);
 })();

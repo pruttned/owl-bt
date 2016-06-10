@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: AddTreeNodeSubItemCmd', function() {
+describe('Service: AddTreeNodeSubItemAction', function() {
 
   // load the service's module
   beforeEach(module('editorApp'));
 
   // instantiate service
   let TreeStore;
-  let AddTreeNodeSubItemCmd;
+  let AddTreeNodeSubItemAction;
   let UndoRedoManager;
   let node;
-  beforeEach(inject(function(_TreeStore_, _AddTreeNodeSubItemCmd_, _UndoRedoManager_) {
+  beforeEach(inject(function(_TreeStore_, _AddTreeNodeSubItemAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
-    AddTreeNodeSubItemCmd = _AddTreeNodeSubItemCmd_;
+    AddTreeNodeSubItemAction = _AddTreeNodeSubItemAction_;
     UndoRedoManager = _UndoRedoManager_;
 
     node = {
@@ -43,7 +43,7 @@ describe('Service: AddTreeNodeSubItemCmd', function() {
       },
       subItemType : 'service'
     };
-    AddTreeNodeSubItemCmd.exec(params);
+    AddTreeNodeSubItemAction.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -63,7 +63,7 @@ describe('Service: AddTreeNodeSubItemCmd', function() {
       subItemType : 'service',
       index: 1
     };
-    AddTreeNodeSubItemCmd.exec(params);
+    AddTreeNodeSubItemAction.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -83,7 +83,7 @@ describe('Service: AddTreeNodeSubItemCmd', function() {
       subItemType : 'service',
       index: 1
     };
-    AddTreeNodeSubItemCmd.exec(params);
+    AddTreeNodeSubItemAction.exec(params);
     UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);

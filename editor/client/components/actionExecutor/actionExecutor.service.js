@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  class CommandExecutor {
+  class ActionExecutor {
     constructor(_, $q, $injector, UndoRedoManager) {
       this._ = _;
       this._$q = $q;
@@ -12,15 +12,15 @@
     }
 
     /**
-     * Executes a command and optionally adds it to the undo/redo stack (if command object returned from command service has undo function)
-     * @return {object} cmd
-     * @return {function} cmd.exec - function for executing the command
-     * @return {function} cmd.undo - (optional) function for undoing the command
+     * Executes a action and optionally adds it to the undo/redo stack (if action object returned from action service has undo function)
+     * @return {object} action
+     * @return {function} action.exec - function for executing the action
+     * @return {function} action.undo - (optional) function for undoing the action
      * @return {Promise}
      */
-    exec(cmd) {
+    exec(action) {
       if (this.isBussy) {
-        throw new Error('CommandExecutor is bussy - it is not allowed to run command during another command execution');
+        throw new Error('ActionExecutor is bussy - it is not allowed to run action during another action execution');
       }
 
       let _this = this;
@@ -30,12 +30,12 @@
 
       try {
         //undo redo stack
-        if (_this._.isFunction(cmd.undo)) {
-          _this._UndoRedoManager.add(cmd);
+        if (_this._.isFunction(action.undo)) {
+          _this._UndoRedoManager.add(action);
         }
 
         //exec
-        resPromise = _this._$q.when(cmd.exec())
+        resPromise = _this._$q.when(action.exec())
           .then(() => _this._handleFinish())
           .catch((err) => {
             _this._handleFinish();
@@ -54,5 +54,5 @@
   }
 
   angular.module('editorApp')
-    .service('CommandExecutor', CommandExecutor);
+    .service('ActionExecutor', ActionExecutor);
 })();

@@ -4,10 +4,10 @@
 
   class RemoveTreeNodeContextMenuAction {
 
-    constructor(TreeNodeByIdStore, TreeNode, RemoveTreeNodeCmd) {
+    constructor(TreeNodeByIdStore, TreeNode, RemoveTreeNodeAction) {
       this._TreeNodeByIdStore = TreeNodeByIdStore;
       this._TreeNode = TreeNode;
-      this._RemoveTreeNodeCmd = RemoveTreeNodeCmd;
+      this._RemoveTreeNodeAction = RemoveTreeNodeAction;
     }
 
     create(node, actionDesc) {
@@ -18,7 +18,7 @@
           icon: actionDesc.icon,
           order: actionDesc.order,
           action: () => {
-            return this._RemoveTreeNodeCmd.exec({
+            return this._RemoveTreeNodeAction.exec({
               node: parentNode,
               childNode: node,
             });

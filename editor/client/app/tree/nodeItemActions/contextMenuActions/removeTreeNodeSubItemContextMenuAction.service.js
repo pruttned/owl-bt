@@ -4,9 +4,9 @@
 
   class RemoveTreeNodeSubItemContextMenuAction {
 
-    constructor(TreeNodeByIdStore, RemoveTreeNodeSubItemCmd) {
+    constructor(TreeNodeByIdStore, RemoveTreeNodeSubItemAction) {
       this._TreeNodeByIdStore = TreeNodeByIdStore;
-      this._RemoveTreeNodeSubItemCmd = RemoveTreeNodeSubItemCmd;
+      this._RemoveTreeNodeSubItemAction = RemoveTreeNodeSubItemAction;
     }
 
     create(subItem, actionDesc) {
@@ -16,7 +16,7 @@
         icon: actionDesc.icon,
         order: actionDesc.order,
         action: () => {
-          return this._RemoveTreeNodeSubItemCmd.exec({
+          return this._RemoveTreeNodeSubItemAction.exec({
             node: node,
             subItem: subItem
           });

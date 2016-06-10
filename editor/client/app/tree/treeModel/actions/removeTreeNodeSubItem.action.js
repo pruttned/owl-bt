@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-  class RemoveTreeNodeSubItemCmd {
-    constructor(CommandExecutor, TreeStore, TreeNode) {
-        this._CommandExecutor = CommandExecutor;
+  class RemoveTreeNodeSubItemAction {
+    constructor(ActionExecutor, TreeStore, TreeNode) {
+        this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
       }
@@ -16,7 +16,7 @@
       let _this = this;
       let subItemType = _this._TreeNode.getSubItemType(params.node, params.subItem);
       let index = _this._TreeNode.indexOfSubItem(params.node, params.subItem);
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           _this._TreeNode.removeSubItem(params.node, params.subItem);
 
@@ -34,5 +34,5 @@
   }
 
   angular.module('editorApp')
-    .service('RemoveTreeNodeSubItemCmd', RemoveTreeNodeSubItemCmd);
+    .service('RemoveTreeNodeSubItemAction', RemoveTreeNodeSubItemAction);
 })();

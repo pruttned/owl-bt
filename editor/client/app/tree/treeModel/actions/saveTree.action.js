@@ -1,15 +1,15 @@
 'use strict';
 
 (function() {
-  class SaveTreeCmd {
-    constructor(CommandExecutor, TreeStore) {
-      this._CommandExecutor = CommandExecutor;
+  class SaveTreeAction {
+    constructor(ActionExecutor, TreeStore) {
+      this._ActionExecutor = ActionExecutor;
       this._TreeStore = TreeStore;
     }
 
     exec() {
       let _this = this;
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           return _this._TreeStore.save();
         }
@@ -18,5 +18,5 @@
   }
 
   angular.module('editorApp')
-    .service('SaveTreeCmd', SaveTreeCmd);
+    .service('SaveTreeAction', SaveTreeAction);
 })();

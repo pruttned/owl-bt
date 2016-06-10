@@ -4,9 +4,9 @@
 
   class AddTreeNodeSubItemContextMenuAction {
 
-    constructor(_, AddTreeNodeSubItemCmd, ListSelectDialog, ProjectStore, TreeServiceItemProvider, TreeDecoratorItemProvider) {
+    constructor(_, AddTreeNodeSubItemAction, ListSelectDialog, ProjectStore, TreeServiceItemProvider, TreeDecoratorItemProvider) {
       this._ = _;
-      this._AddTreeNodeSubItemCmd = AddTreeNodeSubItemCmd;
+      this._AddTreeNodeSubItemAction = AddTreeNodeSubItemAction;
       this._ListSelectDialog = ListSelectDialog;
       this._ProjectStore = ProjectStore;
       this._TreeServiceItemProvider = TreeServiceItemProvider;
@@ -28,7 +28,7 @@
               let subItem = provider.create({
                 type: desc.name
               });
-              return _this._AddTreeNodeSubItemCmd.exec({
+              return _this._AddTreeNodeSubItemAction.exec({
                 node: node,
                 subItem: subItem,
                 subItemType: actionDesc.subItemType

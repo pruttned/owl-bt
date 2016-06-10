@@ -1,14 +1,14 @@
 'use strict';
 
 (function() {
-  class RedoCmd {
-    constructor(CommandExecutor, UndoRedoManager) {
-      this._CommandExecutor = CommandExecutor;
+  class RedoAction {
+    constructor(ActionExecutor, UndoRedoManager) {
+      this._ActionExecutor = ActionExecutor;
       this._undoRedoManager = UndoRedoManager;
     }
 
     exec() {
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           this._undoRedoManager.redo();
         },
@@ -17,5 +17,5 @@
   }
 
   angular.module('editorApp')
-    .service('RedoCmd', RedoCmd);
+    .service('RedoAction', RedoAction);
 })();

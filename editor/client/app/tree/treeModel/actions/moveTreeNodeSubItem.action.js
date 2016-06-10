@@ -1,9 +1,9 @@
 'use strict';
 
 (function() {
-  class MoveTreeNodeSubItemCmd {
-    constructor(CommandExecutor, TreeStore, TreeNode) {
-        this._CommandExecutor = CommandExecutor;
+  class MoveTreeNodeSubItemAction {
+    constructor(ActionExecutor, TreeStore, TreeNode) {
+        this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
       }
@@ -16,7 +16,7 @@
     exec(params) {
       let _this = this;
 
-      this._CommandExecutor.exec({
+      this._ActionExecutor.exec({
         exec: () => {
           _this._TreeNode.moveSubItem(params.node, params.subItem, params.up);
 
@@ -34,5 +34,5 @@
   }
 
   angular.module('editorApp')
-    .service('MoveTreeNodeSubItemCmd', MoveTreeNodeSubItemCmd);
+    .service('MoveTreeNodeSubItemAction', MoveTreeNodeSubItemAction);
 })();

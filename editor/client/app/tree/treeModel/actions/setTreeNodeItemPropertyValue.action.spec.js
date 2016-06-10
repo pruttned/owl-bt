@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
+describe('Service: SetTreeNodeItemPropertyValueAction', function() {
 
   // load the service's module
   beforeEach(module('editorApp'));
@@ -9,11 +9,11 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
 
   // instantiate service
   let TreeStore;
-  let SetTreeNodeItemPropertyValueCmd;
+  let SetTreeNodeItemPropertyValueAction;
   let UndoRedoManager;
-  beforeEach(inject(function(_TreeStore_, _SetTreeNodeItemPropertyValueCmd_, _UndoRedoManager_) {
+  beforeEach(inject(function(_TreeStore_, _SetTreeNodeItemPropertyValueAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
-    SetTreeNodeItemPropertyValueCmd = _SetTreeNodeItemPropertyValueCmd_;
+    SetTreeNodeItemPropertyValueAction = _SetTreeNodeItemPropertyValueAction_;
     UndoRedoManager = _UndoRedoManager_;
   }));
 
@@ -34,7 +34,7 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    SetTreeNodeItemPropertyValueCmd.exec(params);
+    SetTreeNodeItemPropertyValueAction.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -58,7 +58,7 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    SetTreeNodeItemPropertyValueCmd.exec(params);
+    SetTreeNodeItemPropertyValueAction.exec(params);
     UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);
@@ -83,7 +83,7 @@ describe('Service: SetTreeNodeItemPropertyValueCmd', function() {
       property: 'prop1',
       value: 'newValue'
     };
-    SetTreeNodeItemPropertyValueCmd.exec(params);
+    SetTreeNodeItemPropertyValueAction.exec(params);
     UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);

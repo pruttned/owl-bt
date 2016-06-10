@@ -11,14 +11,14 @@
      * @param  {Object} nodeItem - (optional) node item that owns the property. Null or node for node property
      * @param  {Object} nodeItem.properties (optional-creted/removed if needed)- object (dictionary) that holds the properties (it doesn't need to have the specified property - it's presents marks whether is the property set)
      */
-    constructor(node, nodeItem, desc, TreeNodeItemProperty, SetTreeNodeItemPropertyValueCmd, ResetTreeNodeItemPropertyValueCmd) {
+    constructor(node, nodeItem, desc, TreeNodeItemProperty, SetTreeNodeItemPropertyValueAction, ResetTreeNodeItemPropertyValueAction) {
       this.node = node;
       this.desc = desc;
       this.nodeItem = nodeItem || this.node;
 
       this._TreeNodeItemProperty = TreeNodeItemProperty;
-      this._SetTreeNodeItemPropertyValueCmd = SetTreeNodeItemPropertyValueCmd;
-      this._ResetTreeNodeItemPropertyValueCmd = ResetTreeNodeItemPropertyValueCmd;
+      this._SetTreeNodeItemPropertyValueAction = SetTreeNodeItemPropertyValueAction;
+      this._ResetTreeNodeItemPropertyValueAction = ResetTreeNodeItemPropertyValueAction;
     }
     name() {
       return this.desc.name;
@@ -28,7 +28,7 @@
     }
     value(value) {
       if (arguments.length) {
-        this._SetTreeNodeItemPropertyValueCmd.exec({
+        this._SetTreeNodeItemPropertyValueAction.exec({
           node: this.node,
           nodeItem: this.nodeItem,
           property: this.name(),
@@ -39,7 +39,7 @@
       }
     }
     reset() {
-      this._ResetTreeNodeItemPropertyValueCmd.exec({
+      this._ResetTreeNodeItemPropertyValueAction.exec({
         node: this.node,
         nodeItem: this.nodeItem,
         property: this.name()
@@ -48,10 +48,10 @@
   }
 
   class PropertyViewModelProvider {
-    constructor(TreeNodeItemProperty, SetTreeNodeItemPropertyValueCmd, ResetTreeNodeItemPropertyValueCmd) {
+    constructor(TreeNodeItemProperty, SetTreeNodeItemPropertyValueAction, ResetTreeNodeItemPropertyValueAction) {
         this._TreeNodeItemProperty = TreeNodeItemProperty;
-        this._SetTreeNodeItemPropertyValueCmd = SetTreeNodeItemPropertyValueCmd;
-        this._ResetTreeNodeItemPropertyValueCmd = ResetTreeNodeItemPropertyValueCmd;
+        this._SetTreeNodeItemPropertyValueAction = SetTreeNodeItemPropertyValueAction;
+        this._ResetTreeNodeItemPropertyValueAction = ResetTreeNodeItemPropertyValueAction;
       }
       /**
        * Returns view models for all properties of a specified node item
@@ -63,7 +63,7 @@
       if (node) {
         let typeDescProperties = nodeItem.$meta.desc.properties;
         if (typeDescProperties) {
-          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, this._TreeNodeItemProperty, this._SetTreeNodeItemPropertyValueCmd, this._ResetTreeNodeItemPropertyValueCmd));
+          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, this._TreeNodeItemProperty, this._SetTreeNodeItemPropertyValueAction, this._ResetTreeNodeItemPropertyValueAction));
         }
       }
       return [];

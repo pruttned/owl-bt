@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: RemoveTreeNodeCmd', function() {
+describe('Service: RemoveTreeNodeAction', function() {
 
   // load the service's module
   beforeEach(module('editorApp'));
 
   // instantiate service
   let TreeStore;
-  let RemoveTreeNodeCmd;
+  let RemoveTreeNodeAction;
   let UndoRedoManager;
   let node;
-  beforeEach(inject(function(_TreeStore_, _RemoveTreeNodeCmd_, _UndoRedoManager_) {
+  beforeEach(inject(function(_TreeStore_, _RemoveTreeNodeAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
-    RemoveTreeNodeCmd = _RemoveTreeNodeCmd_;
+    RemoveTreeNodeAction = _RemoveTreeNodeAction_;
     UndoRedoManager = _UndoRedoManager_;
 
     node = {
@@ -44,7 +44,7 @@ describe('Service: RemoveTreeNodeCmd', function() {
       node: node,
       childNode: node.childNodes[0],
     };
-    RemoveTreeNodeCmd.exec(params);
+    RemoveTreeNodeAction.exec(params);
 
     expect(node.$meta.version).toBe(2);
     expect(TreeStore.version).toBe(2);
@@ -58,7 +58,7 @@ describe('Service: RemoveTreeNodeCmd', function() {
       node: node,
       childNode: node.childNodes[0],
     };
-    RemoveTreeNodeCmd.exec(params);
+    RemoveTreeNodeAction.exec(params);
     UndoRedoManager.undo();
 
     expect(node.$meta.version).toBe(3);
