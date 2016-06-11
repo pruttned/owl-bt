@@ -14,8 +14,20 @@
   const minZoom = 0.1;
   const maxZoom = 2;
 
+  function selectItem(item, scope) {
+    scope.selItem = item.nodeItem;
+    if (item.viewNode) {
+      scope.selNode = item.viewNode.nodeItem;
+    } else {
+      scope.selNode = item.nodeItem;
+    }
+  }
+
   function showContextMenu(ContextMenu, d3, scope, viewNodeItem) {
-    ContextMenu.show(scope, d3.event, viewNodeItem.contextMenuActionProvider(viewNodeItem.nodeItem));
+    scope.$apply(function() {
+      selectItem(viewNodeItem, scope);
+      ContextMenu.show(scope, d3.event, viewNodeItem.contextMenuActionProvider(viewNodeItem.nodeItem));
+    });
   }
 
   function bindMouseEvents(ContextMenu, d3, nodeItemElm, viewNodeItem, scope) {
@@ -23,12 +35,7 @@
       .data([viewNodeItem])
       .on('click', item => {
         scope.$apply(function() {
-          scope.selItem = item.nodeItem;
-          if (item.viewNode) {
-            scope.selNode = item.viewNode.nodeItem;
-          } else {
-            scope.selNode = item.nodeItem;
-          }
+          selectItem(item, scope);
         });
       })
       .on('contextmenu', item => showContextMenu(ContextMenu, d3, scope, item));
