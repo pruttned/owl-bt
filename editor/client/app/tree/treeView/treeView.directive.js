@@ -14,46 +14,46 @@
   const minZoom = 0.1;
   const maxZoom = 2;
 
-  function selectItem(item, scope) {
+  function selectItem(TreeSelection, item) {
     if (item) {
-      scope.selItem = item.nodeItem;
+      TreeSelection.selItem = item.nodeItem;
       if (item.viewNode) {
-        scope.selNode = item.viewNode.nodeItem;
+        TreeSelection.selNode = item.viewNode.nodeItem;
       } else {
-        scope.selNode = item.nodeItem;
+        TreeSelection.selNode = item.nodeItem;
       }
     } else {
-      scope.selItem = null;
-      scope.selNode = null;
+      TreeSelection.selItem = null;
+      TreeSelection.selNode = null;
     }
   }
 
-  function showContextMenu(ContextMenu, d3, scope, viewNodeItem) {
+  function showContextMenu(ContextMenu, d3, TreeSelection, scope, viewNodeItem) {
     scope.$apply(function() {
-      selectItem(viewNodeItem, scope);
+      selectItem(TreeSelection, viewNodeItem);
       ContextMenu.show(scope, d3.event, viewNodeItem.contextMenuActionProvider(viewNodeItem.nodeItem));
     });
   }
 
-  function bindMouseEvents(ContextMenu, d3, nodeItemElm, viewNodeItem, scope) {
+  function bindMouseEvents(ContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem) {
     nodeItemElm
       .data([viewNodeItem])
       .on('click', item => {
         d3.event.stopPropagation();
         scope.$apply(function() {
-          selectItem(item, scope);
+          selectItem(TreeSelection, item);
         });
       })
       .on('contextmenu', item => {
-        showContextMenu(ContextMenu, d3, scope, item);
+        showContextMenu(ContextMenu, d3, TreeSelection, scope, item);
       });
   }
 
-  function bindTreeElmMouseEvents(ContextMenu, d3, treeElm, scope){
+  function bindTreeElmMouseEvents(ContextMenu, d3, TreeSelection, scope, treeElm) {
     treeElm
       .on('click', () => {
         scope.$apply(function() {
-          selectItem(null, scope);
+          selectItem(TreeSelection, null);
         });
       })
       .on('contextmenu', () => {
@@ -62,12 +62,12 @@
 
         ContextMenu.hide();
         scope.$apply(function() {
-          selectItem(null, scope);
+          selectItem(TreeSelection, null);
         });
       });
   }
 
-  function addNodeItemElm(ContextMenu, d3, TreeNodeItem, scope, viewNodeItem, nodeElm, cssClass, index) {
+  function addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, cssClass, index) {
     let desc = viewNodeItem.desc;
     let nodeItemElm = nodeElm.append('div');
     nodeItemElm
@@ -88,18 +88,18 @@
         .attr('class', 'desc')
         .text(TreeNodeItem.getDescription(viewNodeItem.nodeItem));
     }
-    if (viewNodeItem.nodeItem === scope.selItem) {
+    if (viewNodeItem.nodeItem === TreeSelection.selItem) {
       nodeItemElm.classed('selected', true);
     }
 
-    bindMouseEvents(ContextMenu, d3, nodeItemElm, viewNodeItem, scope);
+    bindMouseEvents(ContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem);
   }
 
   function getNodeKey(viewNode) {
     return `${viewNode.id}_${viewNode.version}`;
   }
 
-  function refreshNodes(ContextMenu, TreeNodeItem, d3, rootViewNode, nodeElmsData, scope) {
+  function refreshNodes(ContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData) {
     //add new nodes
     nodeElmsData
       .enter()
@@ -110,16 +110,16 @@
       .each(function(viewNode) {
         let nodeElm = d3.select(this);
 
-        addNodeItemElm(ContextMenu, d3, TreeNodeItem, scope, viewNode, nodeElm, 'node-desc');
+        addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNode, nodeElm, 'node-desc');
 
         if (viewNode.decorators) {
           viewNode.decorators.forEach(function(viewNodeItem, index) {
-            addNodeItemElm(ContextMenu, d3, TreeNodeItem, scope, viewNodeItem, nodeElm, 'decorator', index);
+            addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'decorator', index);
           });
         }
         if (viewNode.services) {
           viewNode.services.forEach(function(viewNodeItem, index) {
-            addNodeItemElm(ContextMenu, d3, TreeNodeItem, scope, viewNodeItem, nodeElm, 'service', index);
+            addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'service', index);
           });
         }
 
@@ -231,7 +231,7 @@
       .attr('y2', viewNode => viewNode.y + viewNode.height + linkStartHeight);
   }
 
-  function refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, rootNode, treeElm, treeContentElm, svgElm, scope) {
+  function refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm) {
     //TODO: reuse tree view model between refreshes in case of perf problems
     let rootViewNode = TreeViewModelProvider.create(rootNode); //because D3 (and also this method) enhances nodes with its fields and parent field creates circular reference
     let viewNodes = TreeViewModelProvider.getAllNodes(rootViewNode);
@@ -253,7 +253,7 @@
     }
 
     //create nodes before tree layout to get real width/height in separation function
-    refreshNodes(ContextMenu, TreeNodeItem, d3, rootViewNode, nodeElmsData, scope);
+    refreshNodes(ContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData);
 
     //update node width and height from content
     nodeElmsData
@@ -311,20 +311,20 @@
     return `.node[data-node-id="${node.$meta.id}"]`;
   }
 
-  function onSelectionChanged(TreeNode, treeContentElm, scope) {
+  function onSelectionChanged(TreeNode, TreeSelection, treeContentElm) {
     //deselect
     treeContentElm.selectAll('.item.selected').classed('selected', false);
     //select
-    if (scope.selItem && scope.selNode) {
-      let nodeElm = treeContentElm.select(getNodeSelector(scope.selNode));
-      if (scope.selNode === scope.selItem) {
+    if (TreeSelection.selItem && TreeSelection.selNode) {
+      let nodeElm = treeContentElm.select(getNodeSelector(TreeSelection.selNode));
+      if (TreeSelection.selNode === TreeSelection.selItem) {
         nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
       } else {
         let itemClass = 'decorator';
-        let subItemIndex = TreeNode.indexOfDecorator(scope.selNode, scope.selItem);
+        let subItemIndex = TreeNode.indexOfDecorator(TreeSelection.selNode, TreeSelection.selItem);
         if (subItemIndex === -1) {
           itemClass = 'service';
-          subItemIndex = TreeNode.indexOfService(scope.selNode, scope.selItem);
+          subItemIndex = TreeNode.indexOfService(TreeSelection.selNode, TreeSelection.selItem);
         }
         if (subItemIndex > -1) {
           nodeElm.selectAll(`.item.${itemClass}[data-index="${subItemIndex}"]`).classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
@@ -357,17 +357,12 @@
     }
   }
 
-  function treeView(TreeStore, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, ContextMenu) {
+  function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, ContextMenu) {
     return {
       templateUrl: 'app/tree/treeView/treeView.html',
       restrict: 'EA',
       replace: true,
       scope: {
-        /**
-         * {Node|Decorator|Service} - selected node item (nodeDesc/decorator/service)
-         */
-        selItem: '=',
-        selNode: '=',
       },
       link: function(scope, element) {
         // note: don't use replaceWith because of jquery problems with svg
@@ -393,7 +388,7 @@
           };
         }
 
-        bindTreeElmMouseEvents(ContextMenu, d3, treeElm, scope);
+        bindTreeElmMouseEvents(ContextMenu, d3, TreeSelection, scope, treeElm);
 
         TreeStore.load()
           .then(() => {
@@ -402,7 +397,7 @@
             let firstRender = true;
             scope.$watch(() => TreeStore.version,
               function() {
-                refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, rootNode, treeElm, treeContentElm, svgElm, scope);
+                refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
 
                 if (firstRender) {
                   treeElm.call(zoomHandler.zoom);
@@ -412,8 +407,8 @@
                 }
               });
 
-            scope.$watch('selItem', function() {
-              onSelectionChanged(TreeNode, treeContentElm, scope);
+            scope.$watch(() => TreeSelection.selItem, function() {
+              onSelectionChanged(TreeNode, TreeSelection, treeContentElm);
             });
           });
       }

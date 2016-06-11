@@ -2,8 +2,9 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, UndoAction, RedoAction, SaveTreeAction) {
-      let _this  = this;
+    TreeStore, TreeSelection, UndoAction, RedoAction, SaveTreeAction) {
+
+      this.TreeSelection = TreeSelection;
 
       this.undo = function(){
         UndoAction.exec();
@@ -13,15 +14,6 @@ angular.module('editorApp')
       };
       this.save = function(){
         SaveTreeAction.exec();
-      };
-
-      this.selectNodeItem = function(node, item){
-        _this.selNode = node;
-        _this.selItem = item;
-      };
-      this.selectNode = function(node){
-        _this.selNode = node;
-        _this.selItem = node;
       };
 
     function tmpFlattenTree(node, outFlatTree) {
@@ -40,9 +32,4 @@ angular.module('editorApp')
         this.rootNode = TreeStore.rootNode;
         this.tmpFlatTree = tmpFlattenTree(TreeStore.rootNode);
       });
-
-    $scope.$watch(() => this.selItem, function() {
-
-    });
-    //watch http://stackoverflow.com/questions/24078535/angularjs-controller-as-syntax-and-watch
   });

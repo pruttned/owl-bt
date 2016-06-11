@@ -18,13 +18,13 @@
 
   </ul>
 
-  <tree-view root-node="tree.rootNode" sel-item="tree.selItem" sel-node="tree.selNode"></tree-view>
+  <tree-view root-node="tree.rootNode"></tree-view>
 
-  <section class="node-item-details" ng-if="tree.selItem">
-    <h1>Details - {{tree.selItem.type}}</h1>
+  <section class="node-item-details" ng-if="tree.TreeSelection.selItem">
+    <h1>Details - {{tree.TreeSelection.selItem.type}}</h1>
     <fieldset class="node-item-properties">
       <legend>Custom properties</legend>
-      <property-editor-list sel-item="tree.selItem" sel-node="tree.selNode"></property-editor-list>
+      <property-editor-list></property-editor-list>
     </fieldset>
   </section>
 
