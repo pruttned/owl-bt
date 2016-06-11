@@ -15,11 +15,16 @@
   const maxZoom = 2;
 
   function selectItem(item, scope) {
-    scope.selItem = item.nodeItem;
-    if (item.viewNode) {
-      scope.selNode = item.viewNode.nodeItem;
+    if (item) {
+      scope.selItem = item.nodeItem;
+      if (item.viewNode) {
+        scope.selNode = item.viewNode.nodeItem;
+      } else {
+        scope.selNode = item.nodeItem;
+      }
     } else {
-      scope.selNode = item.nodeItem;
+      scope.selItem = null;
+      scope.selNode = null;
     }
   }
 
@@ -34,11 +39,32 @@
     nodeItemElm
       .data([viewNodeItem])
       .on('click', item => {
+        d3.event.stopPropagation();
         scope.$apply(function() {
           selectItem(item, scope);
         });
       })
-      .on('contextmenu', item => showContextMenu(ContextMenu, d3, scope, item));
+      .on('contextmenu', item => {
+        showContextMenu(ContextMenu, d3, scope, item);
+      });
+  }
+
+  function bindTreeElmMouseEvents(ContextMenu, d3, treeElm, scope){
+    treeElm
+      .on('click', () => {
+        scope.$apply(function() {
+          selectItem(null, scope);
+        });
+      })
+      .on('contextmenu', () => {
+        d3.event.preventDefault();
+        d3.event.stopPropagation();
+
+        ContextMenu.hide();
+        scope.$apply(function() {
+          selectItem(null, scope);
+        });
+      });
   }
 
   function addNodeItemElm(ContextMenu, d3, TreeNodeItem, scope, viewNodeItem, nodeElm, cssClass, index) {
@@ -367,16 +393,11 @@
           };
         }
 
+        bindTreeElmMouseEvents(ContextMenu, d3, treeElm, scope);
+
         TreeStore.load()
           .then(() => {
             let rootNode = TreeStore.rootNode;
-            //  disable context menu on tree
-            treeElm
-              .on('contextmenu', function() {
-                d3.event.preventDefault();
-                d3.event.stopPropagation();
-                ContextMenu.hide();
-              });
 
             let firstRender = true;
             scope.$watch(() => TreeStore.version,
