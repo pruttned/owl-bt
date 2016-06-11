@@ -431,7 +431,8 @@
 
                 if (firstRender) {
                   treeElm.call(zoomHandler.zoom)
-                    .on('mousedown', () => hasPanned = false);
+                    .on('mousedown', () => hasPanned = false)
+                    .on('dblclick.zoom', null);
 
                   scrollToNode(d3, zoomHandler, treeElmRaw, rootNode);
 
