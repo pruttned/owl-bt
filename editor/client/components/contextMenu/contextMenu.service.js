@@ -66,6 +66,8 @@ angular.module('editorApp')
         body.on('click', function() {
           _this.hide();
         });
+
+        this.menuElm.on('contextmenu', () => false);
       }
       _createItemClickHandler(scope, item) {
         return function() {
