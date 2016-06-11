@@ -13,6 +13,9 @@
   const minTreeHeight = 500;
   const minZoom = 0.1;
   const maxZoom = 2;
+  const dragDistancePreventDefault = 10;
+
+  let hasPanned = true;
 
   function selectItem(TreeSelection, item) {
     if (item) {
@@ -40,30 +43,39 @@
       .data([viewNodeItem])
       .on('click', item => {
         d3.event.stopPropagation();
-        scope.$apply(function() {
-          selectItem(TreeSelection, item);
-        });
+        if (!hasPanned) {
+          scope.$apply(function() {
+            selectItem(TreeSelection, item);
+          });
+        }
       })
       .on('contextmenu', item => {
-        showContextMenu(ContextMenu, d3, TreeSelection, scope, item);
+        d3.event.preventDefault();
+        d3.event.stopPropagation();
+        if (!hasPanned) {
+          showContextMenu(ContextMenu, d3, TreeSelection, scope, item);
+        }
       });
   }
 
   function bindTreeElmMouseEvents(ContextMenu, d3, TreeSelection, scope, treeElm) {
     treeElm
       .on('click', () => {
-        scope.$apply(function() {
-          selectItem(TreeSelection, null);
-        });
+        if (!hasPanned) {
+          scope.$apply(function() {
+            selectItem(TreeSelection, null);
+          });
+        }
       })
       .on('contextmenu', () => {
         d3.event.preventDefault();
         d3.event.stopPropagation();
-
-        ContextMenu.hide();
-        scope.$apply(function() {
-          selectItem(TreeSelection, null);
-        });
+        if (!hasPanned) {
+          ContextMenu.hide();
+          scope.$apply(function() {
+            selectItem(TreeSelection, null);
+          });
+        }
       });
   }
 
@@ -298,9 +310,28 @@
       let translate = zoom.translate();
       treeContentElm.style('transform', `translate(${translate[0]}px,${translate[1]}px) scale(${zoom.scale()})`);
     };
+    let zoomStart = {};
     zoom = d3.behavior.zoom()
       .scaleExtent([minZoom, maxZoom])
-      .on('zoom', handleZoom);
+      .on('zoom', handleZoom)
+      .on('zoomstart', () => {
+        if (d3.event.sourceEvent) {
+          zoomStart = {
+            x: d3.event.sourceEvent.clientX,
+            y: d3.event.sourceEvent.clientY
+          };
+        }
+      })
+      .on('zoomend', () => {
+        if (d3.event.sourceEvent) {
+          let distance = Math.sqrt(Math.pow(d3.event.sourceEvent.clientX - zoomStart.x, 2) + Math.pow(d3.event.sourceEvent.clientY - zoomStart.y, 2));
+          if (distance >= dragDistancePreventDefault) {
+            hasPanned = true;
+          }
+        }
+      });
+
+    //  .on('dblclick.zoom', null);
     return {
       zoom: zoom,
       handleZoom: handleZoom
@@ -362,8 +393,7 @@
       templateUrl: 'app/tree/treeView/treeView.html',
       restrict: 'EA',
       replace: true,
-      scope: {
-      },
+      scope: {},
       link: function(scope, element) {
         // note: don't use replaceWith because of jquery problems with svg
         // note: don't use foreignObject because of webkit scale bugs
@@ -400,7 +430,9 @@
                 refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
 
                 if (firstRender) {
-                  treeElm.call(zoomHandler.zoom);
+                  treeElm.call(zoomHandler.zoom)
+                    .on('mousedown', () => hasPanned = false);
+
                   scrollToNode(d3, zoomHandler, treeElmRaw, rootNode);
 
                   firstRender = false;
