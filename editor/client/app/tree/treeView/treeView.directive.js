@@ -15,7 +15,7 @@
   const maxZoom = 2;
   const dragDistancePreventDefault = 10;
 
-  let hasPanned = true;
+  let hasPanned;
 
   function selectItem(TreeSelection, item) {
     if (item) {
@@ -430,8 +430,15 @@
                 refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
 
                 if (firstRender) {
-                  treeElm.call(zoomHandler.zoom)
-                    .on('mousedown', () => hasPanned = false)
+                  treeElm
+                    .on('mousedown', () => { //must be called before call(zoomHandler.zoom) because of stopImmediatePropagation
+                      hasPanned = false;
+
+                      if(d3.event.button !== 2){
+                        d3.event.stopImmediatePropagation();
+                      }
+                    })
+                    .call(zoomHandler.zoom)
                     .on('dblclick.zoom', null);
 
                   scrollToNode(d3, zoomHandler, treeElmRaw, rootNode);
