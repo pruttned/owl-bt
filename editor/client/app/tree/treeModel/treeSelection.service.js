@@ -5,10 +5,48 @@
 (function() {
 
   class TreeSelection {
-    constructor() {
-      this.selNode = null;
-      this.selItem = null;
-      this.selItemType = null;
+    constructor(TreeNode) {
+      this._TreeNode = TreeNode;
+
+      this._selNode = null;
+      this._selItem = null;
+      this._selItemType = null;
+    }
+
+    selNode() {
+      return this._selNode;
+    }
+
+    selItem() {
+      return this._selItem;
+    }
+
+    /**
+     * gets the type of the currently selected item
+     * @return {string} 'node' or 'service' or 'decorator'
+     */
+    selItemType() {
+      return this._selItemType;
+    }
+
+    /**
+     * select/deselect specified item
+     * @param  {node|service|decorator} item - selected item. null for deselect
+     * @param  {node} node - node that contains the specified sub item or the same node as in item in case of selected node
+     */
+    select(node, item) {
+      this._selNode = node;
+      this._selItem = item;
+
+      if (item) {
+        if (item === node) {
+          this._selItemType = 'node';
+        } else {
+          this._selItemType = this._TreeNode.getSubItemType(node, item);
+        }
+      } else {
+        this._selItemType = null;
+      }
     }
   }
 

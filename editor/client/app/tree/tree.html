@@ -15,13 +15,12 @@
         <li><a href="#" ng-click="tree.redo()">Redo</a></li>
       </ul>
     </li>
-
   </ul>
 
   <tree-view root-node="tree.rootNode"></tree-view>
 
-  <section class="node-item-details" ng-if="tree.TreeSelection.selItem">
-    <h1>Details - {{tree.TreeSelection.selItem.type}}</h1>
+  <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
+    <h1>Details - {{tree.TreeSelection.selItem().type}}</h1>
     <fieldset class="node-item-properties">
       <legend>Custom properties</legend>
       <property-editor-list></property-editor-list>

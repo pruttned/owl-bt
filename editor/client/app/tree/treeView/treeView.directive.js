@@ -19,15 +19,9 @@
 
   function selectItem(TreeSelection, item) {
     if (item) {
-      TreeSelection.selItem = item.nodeItem;
-      if (item.viewNode) {
-        TreeSelection.selNode = item.viewNode.nodeItem;
-      } else {
-        TreeSelection.selNode = item.nodeItem;
-      }
+      TreeSelection.select(item.viewNode ? item.viewNode.nodeItem : item.nodeItem, item.nodeItem);
     } else {
-      TreeSelection.selItem = null;
-      TreeSelection.selNode = null;
+      TreeSelection.select();
     }
   }
 
@@ -100,7 +94,7 @@
         .attr('class', 'desc')
         .text(TreeNodeItem.getDescription(viewNodeItem.nodeItem));
     }
-    if (viewNodeItem.nodeItem === TreeSelection.selItem) {
+    if (viewNodeItem.nodeItem === TreeSelection.selItem()) {
       nodeItemElm.classed('selected', true);
     }
 
@@ -346,16 +340,16 @@
     //deselect
     treeContentElm.selectAll('.item.selected').classed('selected', false);
     //select
-    if (TreeSelection.selItem && TreeSelection.selNode) {
-      let nodeElm = treeContentElm.select(getNodeSelector(TreeSelection.selNode));
-      if (TreeSelection.selNode === TreeSelection.selItem) {
+    if (TreeSelection.selItem() && TreeSelection.selNode()) {
+      let nodeElm = treeContentElm.select(getNodeSelector(TreeSelection.selNode()));
+      if (TreeSelection.selNode() === TreeSelection.selItem()) {
         nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
       } else {
         let itemClass = 'decorator';
-        let subItemIndex = TreeNode.indexOfDecorator(TreeSelection.selNode, TreeSelection.selItem);
+        let subItemIndex = TreeNode.indexOfDecorator(TreeSelection.selNode(), TreeSelection.selItem());
         if (subItemIndex === -1) {
           itemClass = 'service';
-          subItemIndex = TreeNode.indexOfService(TreeSelection.selNode, TreeSelection.selItem);
+          subItemIndex = TreeNode.indexOfService(TreeSelection.selNode(), TreeSelection.selItem());
         }
         if (subItemIndex > -1) {
           nodeElm.selectAll(`.item.${itemClass}[data-index="${subItemIndex}"]`).classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
@@ -447,7 +441,7 @@
                 }
               });
 
-            scope.$watch(() => TreeSelection.selItem, function() {
+            scope.$watch(() => TreeSelection.selItem(), function() {
               onSelectionChanged(TreeNode, TreeSelection, treeContentElm);
             });
           });
