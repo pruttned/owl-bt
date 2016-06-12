@@ -2,9 +2,10 @@
 
 (function() {
   class RemoveTreeNodeSubItemAction {
-    constructor(ActionExecutor, TreeStore, TreeNode) {
+    constructor(ActionExecutor, TreeStore, TreeSelection, TreeNode) {
         this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
+        this._TreeSelection = TreeSelection;
         this._TreeNode = TreeNode;
       }
       /**
@@ -19,6 +20,10 @@
       this._ActionExecutor.exec({
         exec: () => {
           _this._TreeNode.removeSubItem(params.node, params.subItem);
+
+          if(this._TreeSelection.isSelected(params.subItem)){
+            this._TreeSelection.select();
+          }
 
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
