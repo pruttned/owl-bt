@@ -342,7 +342,7 @@
     //select
     if (TreeSelection.hasSelected()) {
       let nodeElm = treeContentElm.select(getNodeSelector(TreeSelection.selNode()));
-      if (TreeSelection.selNode() === TreeSelection.selItem()) {
+      if (TreeSelection.selItemType() === 'node') {
         nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443
       } else {
         let itemClass = 'decorator';
