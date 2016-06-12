@@ -94,7 +94,7 @@
         .attr('class', 'desc')
         .text(TreeNodeItem.getDescription(viewNodeItem.nodeItem));
     }
-    if (viewNodeItem.nodeItem === TreeSelection.selItem()) {
+    if (TreeSelection.isSelected(viewNodeItem.nodeItem)) {
       nodeItemElm.classed('selected', true);
     }
 

@@ -22,6 +22,14 @@
       return !this._.isNil(this._selNode) && !this._.isNil(this._selItem);
     }
 
+    /**
+     * whether is specified item selected
+     * @return {Boolean}
+     */
+    isSelected(item){
+      return this._selItem === item;
+    }
+
     selNode() {
       return this._selNode;
     }
