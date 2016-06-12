@@ -340,7 +340,7 @@
     //deselect
     treeContentElm.selectAll('.item.selected').classed('selected', false);
     //select
-    if (TreeSelection.selItem() && TreeSelection.selNode()) {
+    if (TreeSelection.hasSelected()) {
       let nodeElm = treeContentElm.select(getNodeSelector(TreeSelection.selNode()));
       if (TreeSelection.selNode() === TreeSelection.selItem()) {
         nodeElm.selectAll('.item.node-desc').classed('selected', true); //selectAll instead of select -  https://github.com/mbostock/d3/issues/1443

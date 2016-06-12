@@ -5,12 +5,21 @@
 (function() {
 
   class TreeSelection {
-    constructor(TreeNode) {
+    constructor(_, TreeNode) {
+      this._ = _;
       this._TreeNode = TreeNode;
 
       this._selNode = null;
       this._selItem = null;
       this._selItemType = null;
+    }
+
+    /**
+     * whether is something selected
+     * @return {Boolean}
+     */
+    hasSelected(){
+      return !this._.isNil(this._selNode) && !this._.isNil(this._selItem);
     }
 
     selNode() {
