@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, TreeSelection, UndoAction, RedoAction, SaveTreeAction) {
+    TreeStore, TreeSelection, CommandPalette, UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
 
@@ -14,6 +14,10 @@ angular.module('editorApp')
       };
       this.save = function(){
         SaveTreeAction.exec();
+      };
+
+      this.showCommandPalette = function(){
+        CommandPalette.show();
       };
 
     function tmpFlattenTree(node, outFlatTree) {
