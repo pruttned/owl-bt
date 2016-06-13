@@ -6,7 +6,8 @@ angular.module('editorApp')
      * Service based context menu for usage in d3 tree
      */
     class ContextMenu {
-      constructor($document) {
+      constructor($q, $document) {
+        this._$q = $q;
         this.$document = $document;
       }
 
@@ -18,6 +19,7 @@ angular.module('editorApp')
        * @param  {String} item.title - title of the item
        * @param  {String} item.icon - (optional) icon of the item (fontawsome icon name without 'fa-')
        * @param  {function} item.action - click action of the item
+       * @return promise
        */
       show(scope, event, items) {
         event.preventDefault();
@@ -26,6 +28,8 @@ angular.module('editorApp')
         this.hide();
 
         if (items && items.length > 0) {
+          var deferred = this._$q.defer();
+
           if (!this.menuElm) {
             this._initContextMenu();
           }
@@ -35,20 +39,24 @@ angular.module('editorApp')
           for (let i = 0; i < items.length; i++) {
             var item = items[i];
             let liElm = angular.element('<li></li>');
-            if(item.icon){
+            if (item.icon) {
               liElm.addClass('with-icon');
               let iconElm = angular.element('<span class="fa fa-fw icon"></span>');
               iconElm.addClass('fa-' + item.icon);
               liElm.append(iconElm);
             }
             liElm.append(document.createTextNode(item.title));
-            liElm.on('click', this._createItemClickHandler(scope, item));
+            liElm.on('click', this._createItemClickHandler(scope, deferred, item));
             this.ulElm.append(liElm);
           }
 
           this.menuElm.css('left', event.clientX + 'px');
           this.menuElm.css('top', event.clientY + 'px');
           this.menuElm.css('display', 'block');
+
+          return deferred.promise;
+        } else {
+          return this._$q.when();
         }
       }
       hide() {
@@ -69,12 +77,15 @@ angular.module('editorApp')
 
         this.menuElm.on('contextmenu', () => false);
       }
-      _createItemClickHandler(scope, item) {
+      _createItemClickHandler(scope, deferred, item) {
+        let _this = this;
         return function() {
           if (item.action) {
-            scope.$apply(item.action);
+            _this._$q.when(scope.$apply(item.action))
+              .then((res) => deferred.resolve(res));
+          } else {
+            deferred.resolve();
           }
         };
       }
-
     });
