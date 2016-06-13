@@ -88,12 +88,18 @@
 
   angular.module('editorApp')
     .service('AddTreeNodeItemCommand', AddTreeNodeItemCommand)
-    .config(function(CommandPaletteCfgProvider) {
+    .config(function(CommandPaletteCfgProvider, CommandContextMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'AddTreeNodeItemCommand',
         name: 'core:Add',
         icon: 'plus',
         hotkey: 'ins'
+      });
+
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Add',
+        command: 'core:Add',
+        order: 100
       });
     });
 })();

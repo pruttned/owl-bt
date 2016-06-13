@@ -31,7 +31,7 @@
   }
   angular.module('editorApp')
     .service('MoveTreeNodeSubItemCommand', MoveTreeNodeSubItemCommand)
-    .config(function(CommandPaletteCfgProvider) {
+    .config(function(CommandPaletteCfgProvider, CommandContextMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'MoveTreeNodeSubItemCommand',
         name: 'core:Move Up',
@@ -45,6 +45,17 @@
         icon: 'arrow-down',
         hotkey: 'shift+down',
         up: false
+      });
+
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Move Up',
+        command: 'core:Move Up',
+        order: 100
+      });
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Move Down',
+        command: 'core:Move Down',
+        order: 101
       });
     });
 })();

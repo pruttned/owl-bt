@@ -36,7 +36,7 @@
   }
   angular.module('editorApp')
     .service('MoveTreeNodeCommand', MoveTreeNodeCommand)
-    .config(function(CommandPaletteCfgProvider) {
+    .config(function(CommandPaletteCfgProvider, CommandContextMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'MoveTreeNodeCommand',
         name: 'core:Move Left',
@@ -50,6 +50,17 @@
         icon: 'arrow-right',
          hotkey: 'shift+right',
         left: false
+      });
+
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Move Left',
+        command: 'core:Move Left',
+        order: 100
+      });
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Move Right',
+        command: 'core:Move Right',
+        order: 101
       });
     });
 })();

@@ -38,12 +38,18 @@
   }
   angular.module('editorApp')
     .service('RemoveTreeNodeItemCommand', RemoveTreeNodeItemCommand)
-    .config(function(CommandPaletteCfgProvider) {
+    .config(function(CommandPaletteCfgProvider, CommandContextMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'RemoveTreeNodeItemCommand',
         name: 'core:Remove',
         icon: 'remove',
         hotkey: 'del'
+      });
+
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Remove',
+        command: 'core:Remove',
+        order: 300
       });
     });
 })();

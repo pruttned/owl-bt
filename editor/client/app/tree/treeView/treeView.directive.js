@@ -25,14 +25,14 @@
     }
   }
 
-  function showContextMenu(ContextMenu, d3, TreeSelection, scope, viewNodeItem) {
+  function showContextMenu(CommandContextMenu, d3, TreeSelection, scope, viewNodeItem) {
     scope.$apply(function() {
       selectItem(TreeSelection, viewNodeItem);
-      ContextMenu.show(scope, d3.event, viewNodeItem.contextMenuActionProvider(viewNodeItem.nodeItem));
+      CommandContextMenu.show(scope, d3.event);
     });
   }
 
-  function bindMouseEvents(ContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem) {
+  function bindMouseEvents(CommandContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem) {
     nodeItemElm
       .data([viewNodeItem])
       .on('click', item => {
@@ -47,12 +47,12 @@
         d3.event.preventDefault();
         d3.event.stopPropagation();
         if (!hasPanned) {
-          showContextMenu(ContextMenu, d3, TreeSelection, scope, item);
+          showContextMenu(CommandContextMenu, d3, TreeSelection, scope, item);
         }
       });
   }
 
-  function bindTreeElmMouseEvents(ContextMenu, d3, TreeSelection, scope, treeElm) {
+  function bindTreeElmMouseEvents(CommandContextMenu, d3, TreeSelection, scope, treeElm) {
     treeElm
       .on('click', () => {
         if (!hasPanned) {
@@ -65,7 +65,7 @@
         d3.event.preventDefault();
         d3.event.stopPropagation();
         if (!hasPanned) {
-          ContextMenu.hide();
+          CommandContextMenu.hide();
           scope.$apply(function() {
             selectItem(TreeSelection, null);
           });
@@ -73,7 +73,7 @@
       });
   }
 
-  function addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, cssClass, index) {
+  function addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, cssClass, index) {
     let desc = viewNodeItem.desc;
     let nodeItemElm = nodeElm.append('div');
     nodeItemElm
@@ -98,14 +98,14 @@
       nodeItemElm.classed('selected', true);
     }
 
-    bindMouseEvents(ContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem);
+    bindMouseEvents(CommandContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem);
   }
 
   function getNodeKey(viewNode) {
     return `${viewNode.id}_${viewNode.version}`;
   }
 
-  function refreshNodes(ContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData) {
+  function refreshNodes(CommandContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData) {
     //add new nodes
     nodeElmsData
       .enter()
@@ -116,16 +116,16 @@
       .each(function(viewNode) {
         let nodeElm = d3.select(this);
 
-        addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNode, nodeElm, 'node-desc');
+        addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNode, nodeElm, 'node-desc');
 
         if (viewNode.decorators) {
           viewNode.decorators.forEach(function(viewNodeItem, index) {
-            addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'decorator', index);
+            addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'decorator', index);
           });
         }
         if (viewNode.services) {
           viewNode.services.forEach(function(viewNodeItem, index) {
-            addNodeItemElm(ContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'service', index);
+            addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'service', index);
           });
         }
 
@@ -237,7 +237,7 @@
       .attr('y2', viewNode => viewNode.y + viewNode.height + linkStartHeight);
   }
 
-  function refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm) {
+  function refreshTree(CommandContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm) {
     //TODO: reuse tree view model between refreshes in case of perf problems
     let rootViewNode = TreeViewModelProvider.create(rootNode); //because D3 (and also this method) enhances nodes with its fields and parent field creates circular reference
     let viewNodes = TreeViewModelProvider.getAllNodes(rootViewNode);
@@ -259,7 +259,7 @@
     }
 
     //create nodes before tree layout to get real width/height in separation function
-    refreshNodes(ContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData);
+    refreshNodes(CommandContextMenu, TreeNodeItem, d3, TreeSelection, scope, rootViewNode, nodeElmsData);
 
     //update node width and height from content
     nodeElmsData
@@ -382,7 +382,7 @@
     }
   }
 
-  function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, ContextMenu) {
+  function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, CommandContextMenu) {
     return {
       templateUrl: 'app/tree/treeView/treeView.html',
       restrict: 'EA',
@@ -412,7 +412,7 @@
           };
         }
 
-        bindTreeElmMouseEvents(ContextMenu, d3, TreeSelection, scope, treeElm);
+        bindTreeElmMouseEvents(CommandContextMenu, d3, TreeSelection, scope, treeElm);
 
         TreeStore.load()
           .then(() => {
@@ -421,7 +421,7 @@
             let firstRender = true;
             scope.$watch(() => TreeStore.version,
               function() {
-                refreshTree(ContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
+                refreshTree(CommandContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
 
                 if (firstRender) {
                   treeElm

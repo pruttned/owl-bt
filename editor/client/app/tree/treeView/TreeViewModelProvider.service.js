@@ -4,10 +4,6 @@
 
   class TreeViewModelProvider {
 
-    constructor(NodeItemAction) {
-      this._NodeItemAction = NodeItemAction;
-    }
-
     create(rootNode) {
       return this._toViewTree(rootNode);
     }
@@ -34,36 +30,20 @@
       }
     }
 
-    _initContextMenuActionProviders() {
-      //transform to static with this in closures
-      if (!this.getNodeContextMenuActions) {
-        this.getNodeContextMenuActions = (node) => this._NodeItemAction.getNodeContextMenuActions(node);
-      }
-      if (!this.getServiceContextMenuActions) {
-        this.getServiceContextMenuActions = (service) => this._NodeItemAction.getServiceContextMenuActions(service);
-      }
-      if (!this.getDecoratorContextMenuActions) {
-        this.getDecoratorContextMenuActions = (decorator) => this._NodeItemAction.getDecoratorContextMenuActions(decorator);
-      }
-    }
-
     _toViewTree(node) {
       this._initNodeMapper();
-      this._initContextMenuActionProviders();
 
       let viewNode = {
         nodeItem: node,
         id: node.$meta.id,
         version: node.$meta.version,
         desc: node.$meta.desc,
-        contextMenuActionProvider: this.getNodeContextMenuActions,
       };
       if (node.services) {
         viewNode.services = node.services.map(service => ({
           nodeItem: service,
           desc: service.$meta.desc,
           viewNode: viewNode,
-          contextMenuActionProvider: this.getServiceContextMenuActions,
         }));
       }
       if (node.decorators) {
@@ -71,7 +51,6 @@
           nodeItem: decorator,
           desc: decorator.$meta.desc,
           viewNode: viewNode,
-          contextMenuActionProvider: this.getDecoratorContextMenuActions,
         }));
       }
       if (node.childNodes) {
