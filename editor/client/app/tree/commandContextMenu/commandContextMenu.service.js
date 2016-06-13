@@ -26,9 +26,7 @@
     }
 
     show(scope, event) {
-      this._ContextMenu.show(scope, event, this._getMenuItems()).then(x=>{
-        console.log('asda' + x);
-      });
+      return this._ContextMenu.show(scope, event, this._getMenuItems());
     }
 
     hide() {
