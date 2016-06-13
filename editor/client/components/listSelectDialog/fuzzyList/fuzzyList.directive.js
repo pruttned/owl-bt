@@ -13,6 +13,15 @@ angular.module('editorApp')
         liElm.append(iconElm);
       }
     }
+
+    function addItemAsideInf(liElm, item) {
+      if (item.asideInf) {
+        let asideElm = angular.element('<span class="fuzzy-list-aside-inf"></span>');
+        asideElm.append(document.createTextNode(item.asideInf));
+        liElm.append(asideElm);
+      }
+    }
+
     function bindItemEvents(liElm, items, index, onAccept) {
       liElm.data('index', index);
 
@@ -31,6 +40,7 @@ angular.module('editorApp')
         bindItemEvents(liElm, items, index, onAccept);
         addItemIcon(liElm, item);
         liElm.append(document.createTextNode(item.name));
+        addItemAsideInf(liElm, item);
         ulElm.append(liElm);
       });
     }
@@ -51,6 +61,8 @@ angular.module('editorApp')
             liElm.append(document.createTextNode(part.text));
           }
         });
+
+        addItemAsideInf(liElm, splittedMatch.item);
 
         ulElm.append(liElm);
       });

@@ -17,8 +17,8 @@
             service: cmdSvc,
             name: cmdDesc.name,
             icon: cmdDesc.icon,
-            shortcut: cmdDesc.shortcut,
-            desc: cmdDesc
+            desc: cmdDesc,
+            asideInf: cmdDesc.hotkey
           });
 
           if (cmdDesc.hotkey) {

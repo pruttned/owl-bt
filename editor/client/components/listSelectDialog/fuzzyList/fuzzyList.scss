@@ -1,20 +1,28 @@
-.fuzzy-list{
-  input{
+.fuzzy-list {
+  input {
     width: 100%;
     margin-bottom: 10px;
   }
-  ul{
+  ul {
     max-height: 300px;
     overflow: auto;
-    li{
-      .icon{
+    li {
+      .icon {
         margin-right: 5px;
       }
     }
   }
-  em{
+  em {
     color: white;
     font-style: normal;
     font-weight: bold;
   }
+}
+.fuzzy-list-aside-inf {
+  float: right;
+  color: $ctrl-color;
+  background: rgba(#46627d, 0.3);
+  border: solid 1px $ctrl-color;
+  border-radius: 3px;
+  padding: 0 3px;
 }
