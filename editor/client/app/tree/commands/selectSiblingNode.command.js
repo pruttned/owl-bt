@@ -4,11 +4,12 @@
 
   class SelectSiblingNodeCommand {
 
-    constructor(TreeStore, TreeNodeByIdStore, TreeSelection, TreeNode) {
+    constructor(TreeStore, TreeNodeByIdStore, TreeSelection, TreeNode, TreeFocus) {
       this._TreeStore = TreeStore;
       this._TreeNodeByIdStore = TreeNodeByIdStore;
       this._TreeSelection = TreeSelection;
       this._TreeNode = TreeNode;
+      this._TreeFocus = TreeFocus;
     }
 
     canExec(cmdDesc) {
@@ -19,14 +20,19 @@
       if (this.canExec(cmdDesc)) {
         let selItem = this._TreeSelection.selItem();
         if (!selItem) {
-          this._TreeSelection.select(this._TreeStore.rootNode, this._TreeStore.rootNode);
+          this._select(this._TreeStore.rootNode, this._TreeStore.rootNode);
         } else {
           let sibling = this._getSiblingNode(cmdDesc.left);
           if (sibling) {
-            this._TreeSelection.select(sibling, sibling);
+            this._select(sibling, sibling);
           }
         }
       }
+    }
+
+    _select(node, item){
+      this._TreeSelection.select(node, item);
+      this._TreeFocus.focusNode(node);
     }
 
     _getSiblingNode(left) {
@@ -45,7 +51,6 @@
         }
       }
     }
-
   }
 
   angular.module('editorApp')

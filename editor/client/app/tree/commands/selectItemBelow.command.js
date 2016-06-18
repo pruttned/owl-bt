@@ -4,10 +4,11 @@
 
   class SelectItemBelowCommand {
 
-    constructor(TreeStore, TreeSelection, TreeNode) {
+    constructor(TreeStore, TreeSelection, TreeNode, TreeFocus) {
       this._TreeStore = TreeStore;
       this._TreeSelection = TreeSelection;
       this._TreeNode = TreeNode;
+      this._TreeFocus = TreeFocus;
     }
 
     canExec() {
@@ -18,14 +19,19 @@
       if (this.canExec()) {
         let selItem = this._TreeSelection.selItem();
         if (!selItem) {
-          this._TreeSelection.select(this._TreeStore.rootNode, this._TreeStore.rootNode);
+          this._select(this._TreeStore.rootNode, this._TreeStore.rootNode);
         } else {
           let belowItem = this._TreeNode.getBelowNodeItem(this._TreeSelection.selNode(), selItem);
           if (belowItem) {
-            this._TreeSelection.select(belowItem.node, belowItem.item);
+            this._select(belowItem.node, belowItem.item);
           }
         }
       }
+    }
+
+    _select(node, item){
+      this._TreeSelection.select(node, item);
+      this._TreeFocus.focusNode(node);
     }
   }
 
