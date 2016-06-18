@@ -27,7 +27,7 @@
               description: cmdDesc.name,
               callback: e => {
                 e.preventDefault();
-                if (cmdSvc.canExec(cmdDesc)) {
+                if (_this._.isUndefined(cmdSvc.canExec) || cmdSvc.canExec(cmdDesc)) {
                   cmdSvc.exec(cmdDesc);
                 }
               }
