@@ -2,7 +2,7 @@
 
 (function() {
 
-  class FocusSelNode {
+  class FocusSelNodeCommand {
 
     constructor(TreeSelection, TreeFocus) {
       this._TreeSelection = TreeSelection;
@@ -21,10 +21,10 @@
   }
 
   angular.module('editorApp')
-    .service('FocusSelNode', FocusSelNode)
+    .service('FocusSelNodeCommand', FocusSelNodeCommand)
     .config(function(CommandPaletteCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
-        service: 'FocusSelNode',
+        service: 'FocusSelNodeCommand',
         name: 'core:Focus Selected Node',
         icon: 'crosshairs'
       });
