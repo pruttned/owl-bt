@@ -15,6 +15,7 @@
   const maxZoom = 2;
   const dragDistancePreventDefault = 10;
   const focusMoveDuration = 300;
+  const scrollToNodeTopOffset = 100;
 
   let hasPanned;
 
@@ -365,7 +366,7 @@
       if (nodeElmRaw) {
         let scale = zoomHandler.zoom.scale();
         let destTranslate = [scale * (-nodeElmRaw.offsetLeft - nodeElmRaw.offsetWidth * 0.5) + treeElmRaw.offsetWidth * 0.5,
-          scale * (-nodeElmRaw.offsetTop + separationY * 2)
+          scale * (-nodeElmRaw.offsetTop) + scrollToNodeTopOffset
         ];
         if (duration) {
           d3.transition().duration(duration).tween('scrollToNode', function() {
