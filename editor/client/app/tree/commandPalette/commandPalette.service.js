@@ -44,7 +44,6 @@
         combo: 'ctrl+shift+p',
         description: 'Show command palette',
         callback: (e, c) => {
-          console.log(c);
           e.preventDefault();
           _this.show();
         }
