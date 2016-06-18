@@ -35,6 +35,100 @@ describe('Service: Node', function() {
       expect(node.$meta.version).toBe(1);
     });
 
+  it('getSubItemAt should return service at a given index',
+    function() {
+      let node = {
+        services: [{
+          type: 's1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 's2',
+          $meta: {
+            nodeId: 1
+          }
+        }],
+        decorators: [{
+          type: 'd1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 'd2',
+          $meta: {
+            nodeId: 1
+          }
+        }]
+      };
+      let item = TreeNode.getSubItemAt(node, 'service', 1);
+
+      expect(item).toBeDefined();
+      expect(item.type).toBe('s2');
+    });
+  it('getSubItemAt should return decorator at a given index',
+    function() {
+      let node = {
+        services: [{
+          type: 's1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 's2',
+          $meta: {
+            nodeId: 1
+          }
+        }],
+        decorators: [{
+          type: 'd1',
+          $meta: {
+            nodeId: 1
+          }
+        }, {
+          type: 'd2',
+          $meta: {
+            nodeId: 1
+          }
+        }]
+      };
+      let item = TreeNode.getSubItemAt(node, 'decorator', 1);
+
+      expect(item).toBeDefined();
+      expect(item.type).toBe('d2');
+    });
+
+    it('getSubItemAt should return undefined for invalid index',
+      function() {
+        let node = {
+          services: [{
+            type: 's1',
+            $meta: {
+              nodeId: 1
+            }
+          }, {
+            type: 's2',
+            $meta: {
+              nodeId: 1
+            }
+          }],
+          decorators: [{
+            type: 'd1',
+            $meta: {
+              nodeId: 1
+            }
+          }, {
+            type: 'd2',
+            $meta: {
+              nodeId: 1
+            }
+          }]
+        };
+        let item = TreeNode.getSubItemAt(node, 'decorator', 100);
+
+        expect(item).not.toBeDefined();
+      });
+
   it('addService should add service to node services array and set node to service $meta object',
     function() {
       let node = {

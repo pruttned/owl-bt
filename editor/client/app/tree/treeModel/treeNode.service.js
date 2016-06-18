@@ -20,6 +20,18 @@
       }
     }
 
+    /**
+     * gets sub item at a given index
+     * @param {node} node
+     * @param {string} type  - 'service' or 'decorator'
+     * @param {int} index
+     * @return sub item if exists
+     */
+    getSubItemAt(node, type, index){
+      this._checkSubItemType(type);
+      return node[type+'s'][index];
+    }
+
     addService(node, service) {
       this._addSubItem(node, 'services', service);
     }
@@ -46,9 +58,7 @@
      * @param {int} index - (optional) Item is added to the end if not provided
      */
     addSubItemAt(node, subItem, type, index) {
-      if(type !== 'service' && type !== 'decorator'){
-        throw new Error(`invalid sub item type ${type}`);
-      }
+      this._checkSubItemType(type);
       this._addSubItem(node, type + 's', subItem, index);
     }
 
@@ -234,6 +244,12 @@
         return true;
       }
       return false;
+    }
+
+    _checkSubItemType(type){
+      if(type !== 'service' && type !== 'decorator'){
+        throw new Error(`invalid sub item type ${type}`);
+      }
     }
   }
 
