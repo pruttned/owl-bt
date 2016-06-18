@@ -32,6 +32,20 @@
       return node[type+'s'][index];
     }
 
+    /**
+     * gets number of sub items
+     * @param {node} node
+     * @param {string} type  - 'service' or 'decorator'
+     */
+    getSubItemCount(node, type){
+      this._checkSubItemType(type);
+      let array = node[type+'s'];
+      if(!array){
+        return 0;
+      }
+      return array.length;
+    }
+
     addService(node, service) {
       this._addSubItem(node, 'services', service);
     }
