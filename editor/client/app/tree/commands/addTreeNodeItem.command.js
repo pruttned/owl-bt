@@ -21,7 +21,7 @@
     }
 
     canExec() {
-      return this._TreeSelection.hasSelected() && this._TreeSelection.selItemType() === 'node';
+      return this._TreeSelection.hasSelected();
     }
 
     exec() {
@@ -30,7 +30,7 @@
         this._ensureDescItems(); //not in ctor because ProjectStore load
 
         let _this = this;
-        let selNode = this._TreeSelection.selItem();
+        let selNode = this._TreeSelection.selNode();
 
         return this._ListSelectDialog.open(selNode.$meta.desc.isComposite ? this._descItemsForCompositeNode : this._descItemsForLeefNode)
           .result.then(descItem => {
