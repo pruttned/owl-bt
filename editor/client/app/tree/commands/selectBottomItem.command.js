@@ -4,9 +4,8 @@
 
   class SelectBottomItemCommand {
 
-    constructor(TreeStore, TreeNodeByIdStore, TreeSelection, TreeNode) {
+    constructor(TreeStore, TreeSelection, TreeNode) {
       this._TreeStore = TreeStore;
-      this._TreeNodeByIdStore = TreeNodeByIdStore;
       this._TreeSelection = TreeSelection;
       this._TreeNode = TreeNode;
     }
