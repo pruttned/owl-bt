@@ -2,7 +2,7 @@
 
 (function() {
 
-  class SelectUpperItemCommand {
+  class SelectItemAboveCommand {
 
     constructor(TreeStore, TreeNodeByIdStore, TreeSelection, TreeNode) {
       this._TreeStore = TreeStore;
@@ -53,11 +53,11 @@
   }
 
   angular.module('editorApp')
-    .service('SelectUpperItemCommand', SelectUpperItemCommand)
+    .service('SelectItemAboveCommand', SelectItemAboveCommand)
     .config(function(CommandPaletteCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
-        service: 'SelectUpperItemCommand',
-        name: 'core:Select Upper Item',
+        service: 'SelectItemAboveCommand',
+        name: 'core:Select Item Above',
         icon: 'arrow-up',
         hotkey: 'up',
       });

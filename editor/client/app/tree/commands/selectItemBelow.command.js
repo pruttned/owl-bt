@@ -2,7 +2,7 @@
 
 (function() {
 
-  class SelectBottomItemCommand {
+  class SelectItemBelowCommand {
 
     constructor(TreeStore, TreeSelection, TreeNode) {
       this._TreeStore = TreeStore;
@@ -80,11 +80,11 @@
   }
 
   angular.module('editorApp')
-    .service('SelectBottomItemCommand', SelectBottomItemCommand)
+    .service('SelectItemBelowCommand', SelectItemBelowCommand)
     .config(function(CommandPaletteCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
-        service: 'SelectBottomItemCommand',
-        name: 'core:Select Bottom Item',
+        service: 'SelectItemBelowCommand',
+        name: 'core:Select Item Below',
         icon: 'arrow-down',
         hotkey: 'down',
       });
