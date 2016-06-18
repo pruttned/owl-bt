@@ -14,6 +14,7 @@
   const minZoom = 0.1;
   const maxZoom = 2;
   const dragDistancePreventDefault = 10;
+  const focusMoveDuration = 300;
 
   let hasPanned;
 
@@ -382,7 +383,7 @@
     }
   }
 
-  function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, CommandContextMenu) {
+  function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, CommandContextMenu, TreeFocus) {
     return {
       templateUrl: 'app/tree/treeView/treeView.html',
       restrict: 'EA',
@@ -400,17 +401,9 @@
 
         let zoomHandler = createZoomHandler(d3, treeContentElm);
 
-        //api
-        if (scope.api) {
-          /**
-           * Scrolls the view to a given node
-           * @param  {node} node  -  node to scroll to
-           * @param  {float} duration - optional scroll animation duration in milliseconds. If not defined, then the scoll is immediate
-           */
-          scope.api.scrollToNode = function(node, duration) {
-            scrollToNode(d3, zoomHandler, treeElmRaw, node, duration);
-          };
-        }
+        TreeFocus.subscribe(scope, function(node){
+          scrollToNode(d3, zoomHandler, treeElmRaw, node, focusMoveDuration);
+        });
 
         bindTreeElmMouseEvents(CommandContextMenu, d3, TreeSelection, scope, treeElm);
 
