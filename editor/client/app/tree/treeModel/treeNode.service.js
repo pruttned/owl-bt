@@ -7,9 +7,10 @@
    */
   class TreeNode {
 
-    constructor(_, ArrayHelper) {
+    constructor(_, ArrayHelper, TreeNodeByIdStore) {
       this._ = _;
       this._ArrayHelper = ArrayHelper;
+      this._TreeNodeByIdStore = TreeNodeByIdStore;
     }
 
     updateVersion(node) {
@@ -27,9 +28,9 @@
      * @param {int} index
      * @return sub item if exists
      */
-    getSubItemAt(node, type, index){
+    getSubItemAt(node, type, index) {
       this._checkSubItemType(type);
-      return node[type+'s'][index];
+      return node[type + 's'][index];
     }
 
     /**
@@ -37,13 +38,97 @@
      * @param {node} node
      * @param {string} type  - 'service' or 'decorator'
      */
-    getSubItemCount(node, type){
+    getSubItemCount(node, type) {
       this._checkSubItemType(type);
-      let array = node[type+'s'];
-      if(!array){
+      let array = node[type + 's'];
+      if (!array) {
         return 0;
       }
       return array.length;
+    }
+
+    /**
+     * returns item that is above the specified node item (in render order (parent node/decorators/services)-(node/decorators/services))
+     * @param  {Node} node - node  that contains the specified item or the node alone
+     * @param  {Node|Service|Decorator} item
+     * @return {Object}  - def - above item def if exists
+     * @return {Node|Service|Decorator} - def.item  - above item
+     * @return {Node} - def.node  - node that contains the specified item, or the node itself
+     */
+    getAboveNodeItem(node, item) {
+      if (node === item) { //node
+        let parentNode = this._TreeNodeByIdStore.getNode(item.$meta.parentId);
+        return {
+          node: parentNode,
+          item: this._getLastSubItem(parentNode) || parentNode
+        };
+      } else {
+        let index = this.indexOfSubItem(node, item);
+        let itemType = this.getSubItemType(node, item);
+        if (index === 0) {
+          if (itemType === 'service' && node.decorators && node.decorators.length) {
+            return {
+              node: node,
+              item: node.decorators[node.decorators.length - 1]
+            };
+          } else {
+            return {
+              node: node,
+              item: node
+            };
+          }
+        } else {
+          return {
+            node: node,
+            item: this.getSubItemAt(node, itemType, index - 1)
+          };
+        }
+      }
+    }
+
+    /**
+     * returns item that is below the specified node item (in render order (parent node/decorators/services)-(node/decorators/services))
+     * @param  {Node} node - node  that contains the specified item or the node alone
+     * @param  {Node|Service|Decorator} item
+     * @return {Object}  - def - below item def if exists
+     * @return {Node|Service|Decorator} - def.item  - above item
+     * @return {Node} - def.node  - node that contains the specified item, or the node itself
+     */
+    getBelowNodeItem(node, item) {
+      if (node === item) { //node
+        if (node.decorators && node.decorators.length) {
+          return {
+            node: node,
+            item: node.decorators[0]
+          };
+        }
+        if (node.services && node.services.length) {
+          return {
+            node: node,
+            item: node.services[0]
+          };
+        }
+        return this._getBelowNodeSel(node);
+      } else {
+        let index = this.indexOfSubItem(node, item);
+        let itemType = this.getSubItemType(node, item);
+        let itemCnt = this.getSubItemCount(node, itemType);
+        if (index === itemCnt - 1) {
+          if (itemType === 'decorator' && node.services && node.services.length) {
+            return {
+              node: node,
+              item: node.services[0]
+            };
+          } else {
+            return this._getBelowNodeSel(node);
+          }
+        } else {
+          return {
+            node: node,
+            item: this.getSubItemAt(node, itemType, index + 1)
+          };
+        }
+      }
     }
 
     addService(node, service) {
@@ -94,8 +179,8 @@
       if (!node.childNodes) {
         node.childNodes = [];
       }
-      if(this._.isUndefined(index)){
-          index = node.childNodes.length;
+      if (this._.isUndefined(index)) {
+        index = node.childNodes.length;
       }
       node.childNodes.splice(index, 0, childNode);
 
@@ -150,9 +235,9 @@
       return -1;
     }
 
-    indexOfSubItem(node, subItem){
+    indexOfSubItem(node, subItem) {
       let index = this.indexOfService(node, subItem);
-      if(index >= 0){
+      if (index >= 0) {
         return index;
       }
       return this.indexOfDecorator(node, subItem);
@@ -241,7 +326,7 @@
       if (!node[subItemArrayName]) {
         node[subItemArrayName] = [];
       }
-      if(this._.isUndefined(index)){
+      if (this._.isUndefined(index)) {
         index = node[subItemArrayName].length;
       }
       node[subItemArrayName].splice(index, 0, subItem);
@@ -260,11 +345,31 @@
       return false;
     }
 
-    _checkSubItemType(type){
-      if(type !== 'service' && type !== 'decorator'){
+    _checkSubItemType(type) {
+      if (type !== 'service' && type !== 'decorator') {
         throw new Error(`invalid sub item type ${type}`);
       }
     }
+
+    _getLastSubItem(node) {
+      if (node.services && node.services.length) {
+        return node.services[node.services.length - 1];
+      }
+      if (node.decorators && node.decorators.length) {
+        return node.decorators[node.decorators.length - 1];
+      }
+    }
+
+    _getBelowNodeSel(node) {
+      if (node.childNodes && node.childNodes.length) {
+        let bottomNode = node.childNodes[Math.floor((node.childNodes.length - 1) / 2)];
+        return {
+          node: bottomNode,
+          item: bottomNode
+        };
+      }
+    }
+
   }
 
   angular.module('editorApp')
