@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -73,12 +73,15 @@
   <!-- endbower -->
   <script src="babel-polyfill/polyfill.js"></script>
   <script src="string_score/string_score.js"></script>
+  <script src="socket.io-client/socket.io.js"></script>
   <!-- endbuild -->
 
   <!-- build:js(.tmp) app/app.js -->
 
   <script src="app/app.js"></script>
   <!-- injector:js -->
+  <script src="app/actions/redoAction.action.js"></script>
+  <script src="app/actions/undoCmd.action.js"></script>
   <script src="app/main/jsonSerializer/jsonSerializer.service.js"></script>
   <script src="app/main/main.controller.js"></script>
   <script src="app/main/main.js"></script>
@@ -86,21 +89,59 @@
   <script src="app/project/project.controller.js"></script>
   <script src="app/project/project.js"></script>
   <script src="app/project/projectTree/projectTree.service.js"></script>
-  <script src="app/tree/projectModel/projectModel.service.js"></script>
-  <script src="app/tree/propertyAccessorProvider.service.js"></script>
-  <script src="app/tree/propertyTypes/boolParamEditor.directive.js"></script>
-  <script src="app/tree/propertyTypes/enumParamEditor.directive.js"></script>
-  <script src="app/tree/propertyTypes/numberParamEditor.directive.js"></script>
-  <script src="app/tree/propertyTypes/propertyEditorList.directive.js"></script>
-  <script src="app/tree/propertyTypes/stringParamEditor.directive.js"></script>
+  <script src="app/tree/commandContextMenu/commandContextMenu.service.js"></script>
+  <script src="app/tree/commandContextMenu/commandContextMenuCfg.provider.js"></script>
+  <script src="app/tree/commandPalette/commandPalette.service.js"></script>
+  <script src="app/tree/commandPalette/commandPaletteCfg.provider.js"></script>
+  <script src="app/tree/commands/addTreeNodeItem.command.js"></script>
+  <script src="app/tree/commands/focusSelNode.command.js"></script>
+  <script src="app/tree/commands/moveTreeNode.command.js"></script>
+  <script src="app/tree/commands/moveTreeNodeSubItem.command.js"></script>
+  <script src="app/tree/commands/removeTreeNodeItem.command.js"></script>
+  <script src="app/tree/commands/selectItemAbove.command.js"></script>
+  <script src="app/tree/commands/selectItemBelow.command.js"></script>
+  <script src="app/tree/commands/selectSiblingNode.command.js"></script>
+  <script src="app/tree/projectStore/projectStore.service.js"></script>
+  <script src="app/tree/propertyEditor/boolParamEditor.directive.js"></script>
+  <script src="app/tree/propertyEditor/enumParamEditor.directive.js"></script>
+  <script src="app/tree/propertyEditor/numberParamEditor.directive.js"></script>
+  <script src="app/tree/propertyEditor/propertyEditorList.directive.js"></script>
+  <script src="app/tree/propertyEditor/propertyViewModelProvider.service.js"></script>
+  <script src="app/tree/propertyEditor/stringParamEditor.directive.js"></script>
   <script src="app/tree/tree.controller.js"></script>
   <script src="app/tree/tree.js"></script>
-  <script src="app/tree/treeModel/treeModel.service.js"></script>
-  <script src="app/tree/treeView.directive.js"></script>
+  <script src="app/tree/treeModel/actions/addTreeNode.action.js"></script>
+  <script src="app/tree/treeModel/actions/addTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/treeModel/actions/moveTreeNode.action.js"></script>
+  <script src="app/tree/treeModel/actions/moveTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/treeModel/actions/removeTreeNode.action.js"></script>
+  <script src="app/tree/treeModel/actions/removeTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/treeModel/actions/resetTreeNodeItemPropertyValue.action.js"></script>
+  <script src="app/tree/treeModel/actions/saveTree.action.js"></script>
+  <script src="app/tree/treeModel/actions/setTreeNodeItemPropertyValue.action.js"></script>
+  <script src="app/tree/treeModel/treeDecoratorItemProvider.service.js"></script>
+  <script src="app/tree/treeModel/treeFocus.service.js"></script>
+  <script src="app/tree/treeModel/treeItemPropertyDtoConverter.service.js"></script>
+  <script src="app/tree/treeModel/treeModelOLD.service.js"></script>
+  <script src="app/tree/treeModel/treeNode.service.js"></script>
+  <script src="app/tree/treeModel/treeNodeByIdStore.service.js"></script>
+  <script src="app/tree/treeModel/treeNodeDtoConverter.service.js"></script>
+  <script src="app/tree/treeModel/treeNodeItem.service.js"></script>
+  <script src="app/tree/treeModel/treeNodeItemProperty.service.js"></script>
+  <script src="app/tree/treeModel/treeNodeProvider.service.js"></script>
+  <script src="app/tree/treeModel/treeSelection.service.js"></script>
+  <script src="app/tree/treeModel/treeServiceItemProvider.service.js"></script>
+  <script src="app/tree/treeModel/treeStore.service.js"></script>
+  <script src="app/tree/treeOLD.controller.js"></script>
+  <script src="app/tree/treeView/TreeViewModelProvider.service.js"></script>
+  <script src="app/tree/treeView/treeView.directive.js"></script>
   <script src="common/projectItemType.js"></script>
+  <script src="components/actionExecutor/actionExecutor.service.js"></script>
+  <script src="components/arrayHelper/arrayHelper.service.js"></script>
   <script src="components/contextMenu/contextMenu.service.js"></script>
   <script src="components/encodeURIComponent/encodeURIComponent.filter.js"></script>
   <script src="components/fuzzyFilter/fuzzyFilter.service.js"></script>
+  <script src="components/idProvider/idProvider.service.js"></script>
   <script src="components/listSelectDialog/fuzzyList/fuzzyList.directive.js"></script>
   <script src="components/listSelectDialog/listSelectDialog.controller.js"></script>
   <script src="components/listSelectDialog/listSelectDialog.service.js"></script>
