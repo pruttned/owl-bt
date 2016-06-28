@@ -19,6 +19,7 @@
     "method-override": "~1.0.0",
     "morgan": "~1.0.0",
     "serve-favicon": "~2.0.1",
+    "socket.io": "^1.4.6",
     "string_score": "^0.1.22"
   },
   "devDependencies": {
