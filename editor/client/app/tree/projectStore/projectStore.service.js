@@ -3,11 +3,12 @@
 (function() {
 
   class ProjectStore {
-    constructor(_, $interpolate, $resource, $location) {
+    constructor(_, io, $interpolate, $resource, $location) {
       this.treePath = $location.search().path;
       this.isLoaded = false;
 
       this._ = _;
+      this._io = io;
       this._$interpolate = $interpolate;
       this._projectResource = $resource('api/project?path=:treePath', {
         treePath: '@treePath'
@@ -87,6 +88,14 @@
       }).$promise.then(prjData => {
         _this._compileProject(prjData);
         this.isLoaded = true;
+
+        this.socket = this._io('/prj-watch', {
+          query: `treePath=${this.treePath}`
+        });
+        this.socket.on('prj-reload', (data)=>{
+          console.log('prj reload');
+          console.log(data);
+        });
       });
 
       return this._currentPromise;
