@@ -1,0 +1,9 @@
+<div class="msg-panel">
+    {{msgPanel.messages}}
+
+     <uib-alert ng-repeat="alert in alertPanel.alerts" type="{{alert.level}}" close="alertPanel.closeAlert($index)">
+       <div class="alert-message">
+         {{alert.message}}
+       </div>
+     </uib-alert>
+</div>

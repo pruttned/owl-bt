@@ -1,0 +1,15 @@
+.msg-panel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right:0;
+  padding-top: 30px;
+  z-index: 20;
+  overflow-y: auto;
+  max-height: 100%;
+
+  .alert-message{
+    max-height: 100px;
+    overflow-y: auto;
+  }
+}
