@@ -127,6 +127,11 @@ ul.selectable{
   }
 }
 
+.alert{
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'main/main.scss';
@@ -137,4 +142,5 @@ ul.selectable{
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'modal/modal.scss';
+@import 'msgPanel/msgPanel.scss';
 // endinjector
