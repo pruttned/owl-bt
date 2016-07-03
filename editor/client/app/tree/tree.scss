@@ -103,9 +103,21 @@
             border-left-color: $node-service-icon-background-color;
           }
         }
+        &.decorator.invalid {
+          .content {
+            color: $node-color;
+            background: $invalid-node-item-background-color;
+          }
+        }
+        &.service.invalid {
+          .content {
+            color:  $node-color;
+            background: $invalid-node-item-background-color;
+          }
+        }
       }
       &.composite {
-        .item.node-desc {
+        .node-desc {
           .content {
             background: $composite-node-background-color;
             border-left-color: $composite-node-icon-background-color;
@@ -113,11 +125,29 @@
         }
       }
       &.action {
-        .item.node-desc {
+        .node-desc {
           .content {
             background: $action-node-background-color;
             border-left-color: $action-node-icon-background-color;
           }
+        }
+      }
+      .node-desc.invalid {
+        .content {
+          background: $invalid-node-item-background-color;
+          border-left-color: $invalid-node-item-background-color;
+        }
+      }
+      &.decorator.invalid {
+        .content {
+          color: $node-decorator-color;
+          background: $invalid-node-item-background-color;
+        }
+      }
+      &.service.invalid {
+        .content {
+          color: $node-service-color;
+          background: $invalid-node-item-background-color;
         }
       }
     }

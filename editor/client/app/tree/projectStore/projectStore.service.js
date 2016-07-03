@@ -21,23 +21,34 @@
 
     getNodeTypeDesc(name) {
       this._checkLoaded();
-      if (this.nodeTypeDescs) {
-        return this.nodeTypeDescs[name];
+      let desc = this.nodeTypeDescs[name];
+      if (!desc) {
+        return {
+          isInvalid: true,
+          name: name,
+          isComposite: true,
+          icon: 'exclamation-triangle'
+        };
       }
+      return desc;
     }
 
     getServiceTypeDesc(name) {
       this._checkLoaded();
-      if (this.serviceTypeDescs) {
-        return this.serviceTypeDescs[name];
+      let desc = this.serviceTypeDescs[name];
+      if(!desc){
+        return this._getFallbackSubItemDesc(name);
       }
+      return desc;
     }
 
     getDecoratorTypeDesc(name) {
       this._checkLoaded();
-      if (this.decoratorTypeDescs) {
-        return this.decoratorTypeDescs[name];
+      let desc = this.decoratorTypeDescs[name];
+      if(!desc){
+        return this._getFallbackSubItemDesc(name);
       }
+      return desc;
     }
 
     getNodeDescs() {
@@ -92,7 +103,7 @@
         this.socket = this._io('/prj-watch', {
           query: `treePath=${this.treePath}`
         });
-        this.socket.on('prj-reload', (data)=>{
+        this.socket.on('prj-reload', (data) => {
           console.log('prj reload');
           console.log(data);
         });
@@ -124,6 +135,14 @@
           }
         }
       }
+    }
+
+    _getFallbackSubItemDesc(name){
+      return {
+        isInvalid: true,
+        name: name,
+        icon: 'exclamation-triangle'
+      };
     }
   }
 

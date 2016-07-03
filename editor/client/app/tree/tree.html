@@ -25,7 +25,10 @@
 
   <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
     <h1>Details - {{tree.TreeSelection.selItem().type}}</h1>
-    <fieldset class="node-item-properties">
+    <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
+      Error: Missing descriptor in project file
+    </div>
+    <fieldset class="node-item-properties" ng-if="!tree.TreeSelection.selItem().$meta.desc.isInvalid">
       <legend>Custom properties</legend>
       <property-editor-list></property-editor-list>
     </fieldset>

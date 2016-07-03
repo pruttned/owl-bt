@@ -79,7 +79,7 @@
     let desc = viewNodeItem.desc;
     let nodeItemElm = nodeElm.append('div');
     nodeItemElm
-      .attr('class', 'item ' + cssClass)
+      .attr('class', 'item ' + cssClass + (desc.isInvalid ? ' invalid' : ''))
       .attr('data-index', index)
       .append('span')
       .attr('class', `icon fa fa-${desc.icon}`);
