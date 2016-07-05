@@ -3,16 +3,15 @@
 (function() {
 
   class MissingNodeItemDescValidation {
-    constructor(_, AlertList, TreeStore, Tree) {
+    constructor(_, AlertList, Tree) {
       this._ = _;
       this._AlertList = AlertList;
-      this._TreeStore = TreeStore;
       this._Tree = Tree;
     }
 
-    check() {
-      if (this._TreeStore.rootNode) {
-        let missingDescs = this._getMissingDescriptors();
+    check(rootNode) {
+      if (rootNode) {
+        let missingDescs = this._getMissingDescriptors(rootNode);
 
         let missingNodeDescs = this._.keys(missingDescs.node);
         if (missingNodeDescs.length > 0) {
@@ -31,14 +30,14 @@
       }
     }
 
-    _getMissingDescriptors() {
+    _getMissingDescriptors(rootNode) {
       let missingDescs = {
         node: {},
         decorator: {},
         service: {}
       };
 
-      this._Tree.forEachNode(this._TreeStore.rootNode, node=>{
+      this._Tree.forEachNode(rootNode, node=>{
         if (node.$meta.desc.isInvalid) {
           missingDescs.node[node.$meta.desc.name] = true;
         }

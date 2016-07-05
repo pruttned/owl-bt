@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, TreeSelection, CommandPalette, MissingNodeItemDescValidation,
+    TreeStore, TreeSelection, CommandPalette,
     UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
@@ -26,6 +26,5 @@ angular.module('editorApp')
     TreeStore.load()
       .then(() => {
         this.rootNode = TreeStore.rootNode;
-        MissingNodeItemDescValidation.check();
       });
   });
