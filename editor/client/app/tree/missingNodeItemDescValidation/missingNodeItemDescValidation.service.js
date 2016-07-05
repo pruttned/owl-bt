@@ -3,15 +3,16 @@
 (function() {
 
   class MissingNodeItemDescValidation {
-    constructor(_, AlertList, TreeStore) {
+    constructor(_, AlertList, TreeStore, Tree) {
       this._ = _;
       this._AlertList = AlertList;
       this._TreeStore = TreeStore;
+      this._Tree = Tree;
     }
 
     check() {
       if (this._TreeStore.rootNode) {
-        let missingDescs = this._getMissingDescriptors(this._TreeStore.rootNode);
+        let missingDescs = this._getMissingDescriptors();
 
         let missingNodeDescs = this._.keys(missingDescs.node);
         if (missingNodeDescs.length > 0) {
@@ -30,37 +31,34 @@
       }
     }
 
-    _getMissingDescriptors(node, missingDescs) {
-      missingDescs = missingDescs || {
+    _getMissingDescriptors() {
+      let missingDescs = {
         node: {},
         decorator: {},
         service: {}
       };
 
-      if (node.$meta.desc.isInvalid) {
-        missingDescs.node[node.$meta.desc.name] = true;
-      }
+      this._Tree.forEachNode(this._TreeStore.rootNode, node=>{
+        if (node.$meta.desc.isInvalid) {
+          missingDescs.node[node.$meta.desc.name] = true;
+        }
 
-      if (node.decorators) {
-        for (let dec of node.decorators) {
-          if (dec.$meta.desc.isInvalid) {
-            missingDescs.decorator[dec.$meta.desc.name] = true;
+        if (node.decorators) {
+          for (let dec of node.decorators) {
+            if (dec.$meta.desc.isInvalid) {
+              missingDescs.decorator[dec.$meta.desc.name] = true;
+            }
           }
         }
-      }
-      if (node.services) {
-        for (let svc of node.services) {
-          if (svc.$meta.desc.isInvalid) {
-            missingDescs.service[svc.$meta.desc.name] = true;
+        if (node.services) {
+          for (let svc of node.services) {
+            if (svc.$meta.desc.isInvalid) {
+              missingDescs.service[svc.$meta.desc.name] = true;
+            }
           }
         }
-      }
+      });
 
-      if (node.childNodes) {
-        for (let i = 0; i < node.childNodes.length; i++) {
-          this._getMissingDescriptors(node.childNodes[i], missingDescs);
-        }
-      }
       return missingDescs;
     }
   }
