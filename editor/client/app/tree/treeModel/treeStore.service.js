@@ -5,7 +5,7 @@
 (function() {
 
   class TreeStore {
-    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore, TreeNodeDtoConverter) {
+    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode) {
       this.treePath = $location.search().path;
       this.version = 1;
 
@@ -18,6 +18,11 @@
       this._TreeNodeProvider = TreeNodeProvider;
       this._ProjectStore = ProjectStore;
       this._TreeNodeDtoConverter = TreeNodeDtoConverter;
+      this._Tree = Tree;
+      this._TreeNode = TreeNode;
+      this._$rootScope = $rootScope;
+
+      $rootScope.$watch(() => ProjectStore.version, () => this._handlePrjReload());
     }
 
     load() {
@@ -62,6 +67,16 @@
       }
     }
 
+    _handlePrjReload() {
+      let _this = this;
+      if (this.isLoaded) {
+        this._Tree.forEachNode(this.rootNode, node => {
+          node.$meta.desc = _this._ProjectStore.getNodeTypeDesc(node.type);
+          _this._TreeNode.updateVersion(node);
+        });
+        this.updateVersion();
+      }
+    }
   }
 
   angular.module('editorApp')

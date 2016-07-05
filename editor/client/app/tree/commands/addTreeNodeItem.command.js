@@ -4,7 +4,8 @@
 
   class AddTreeNodeItemCommand {
 
-    constructor(_, AddTreeNodeAction, AddTreeNodeSubItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider) {
+    constructor(_, AddTreeNodeAction, AddTreeNodeSubItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider,
+      $rootScope) {
       this._ = _;
       this._AddTreeNodeAction = AddTreeNodeAction;
       this._AddTreeNodeSubItemAction = AddTreeNodeSubItemAction;
@@ -18,6 +19,8 @@
         'service': TreeServiceItemProvider,
         'decorator': TreeDecoratorItemProvider
       };
+
+      $rootScope.$watch(() => ProjectStore.version, () => this._handlePrjReload());
     }
 
     canExec() {
@@ -32,24 +35,27 @@
         let _this = this;
         let selNode = this._TreeSelection.selNode();
 
-        return this._ListSelectDialog.open(selNode.$meta.desc.isComposite ? this._descItemsForCompositeNode : this._descItemsForLeefNode)
-          .result.then(descItem => {
-
-            let nodeItem = _this._ItemProviders[descItem.itemType].create({
-              type: descItem.desc.name
-            });
-
-            if (descItem.itemType === 'node') {
-              return _this._AddTreeNodeAction.exec({
-                node: selNode,
-                childNode: nodeItem
+        this._openDlg = this._ListSelectDialog.open(selNode.$meta.desc.isComposite ? this._descItemsForCompositeNode : this._descItemsForLeefNode);
+        return this._openDlg.result
+          .then(descItem => {
+            this._openDlg = null;
+            if (descItem) {
+              let nodeItem = _this._ItemProviders[descItem.itemType].create({
+                type: descItem.desc.name
               });
-            } else {
-              return _this._AddTreeNodeSubItemAction.exec({
-                node: selNode,
-                subItem: nodeItem,
-                subItemType: descItem.itemType
-              });
+
+              if (descItem.itemType === 'node') {
+                return _this._AddTreeNodeAction.exec({
+                  node: selNode,
+                  childNode: nodeItem
+                });
+              } else {
+                return _this._AddTreeNodeSubItemAction.exec({
+                  node: selNode,
+                  subItem: nodeItem,
+                  subItemType: descItem.itemType
+                });
+              }
             }
           });
       }
@@ -83,6 +89,16 @@
         this._descItemsForCompositeNode = this._.sortBy(this._descItemsForCompositeNode, 'name');
         this._descItemsForLeefNode = this._.sortBy(this._descItemsForLeefNode, 'name');
       }
+    }
+
+    _handlePrjReload() {
+      if (this._openDlg) {
+        this._openDlg.close();
+        this._openDlg = null;
+      }
+
+      this._descItemsForCompositeNode = null;
+      this._descItemsForLeefNode = null;
     }
   }
 

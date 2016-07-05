@@ -1,15 +1,17 @@
 'use strict';
 
 (function() {
-
   class ProjectStore {
-    constructor(_, io, $interpolate, $resource, $location) {
+    constructor(_, io, $interpolate, $resource, $location, $rootScope) {
       this.treePath = $location.search().path;
       this.isLoaded = false;
+      this.version = 1;
 
       this._ = _;
       this._io = io;
       this._$interpolate = $interpolate;
+      this._$rootScope = $rootScope;
+
       this._projectResource = $resource('api/project?path=:treePath', {
         treePath: '@treePath'
       });
@@ -36,7 +38,7 @@
     getServiceTypeDesc(name) {
       this._checkLoaded();
       let desc = this.serviceTypeDescs[name];
-      if(!desc){
+      if (!desc) {
         return this._getFallbackSubItemDesc(name);
       }
       return desc;
@@ -45,7 +47,7 @@
     getDecoratorTypeDesc(name) {
       this._checkLoaded();
       let desc = this.decoratorTypeDescs[name];
-      if(!desc){
+      if (!desc) {
         return this._getFallbackSubItemDesc(name);
       }
       return desc;
@@ -100,16 +102,23 @@
         _this._compileProject(prjData);
         this.isLoaded = true;
 
-        this.socket = this._io('/prj-watch', {
-          query: `treePath=${this.treePath}`
-        });
-        this.socket.on('prj-reload', (data) => {
-          console.log('prj reload');
-          console.log(data);
-        });
+        this._startPrjChangeWatch();
       });
 
       return this._currentPromise;
+    }
+
+    _startPrjChangeWatch() {
+      let _this = this;
+      this.socket = this._io('/prj-watch', {
+        query: `treePath=${this.treePath}`
+      });
+      this.socket.on('prj-reload', prjDataStr => {
+        _this._compileProject(JSON.parse(prjDataStr));
+        _this._$rootScope.$apply(() => {
+          _this.updateVersion();
+        });
+      });
     }
 
     _compileProject(prjData) {
@@ -137,12 +146,20 @@
       }
     }
 
-    _getFallbackSubItemDesc(name){
+    _getFallbackSubItemDesc(name) {
       return {
         isInvalid: true,
         name: name,
         icon: 'exclamation-triangle'
       };
+    }
+
+    updateVersion() {
+      if (this.version === Number.MAX_SAFE_INTEGER) {
+        this.version = 1;
+      } else {
+        this.version++;
+      }
     }
   }
 
