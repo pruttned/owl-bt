@@ -76,6 +76,17 @@
         this._Tree.forEachNode(this.rootNode, node => {
           node.$meta.desc = _this._ProjectStore.getNodeTypeDesc(node.type);
           _this._TreeNode.updateVersion(node);
+
+          if(node.decorators){
+            for (let dec of node.decorators) {
+              dec.$meta.desc = _this._ProjectStore.getDecoratorTypeDesc(dec.type);
+            }
+          }
+          if(node.services){
+            for (let svc of node.services) {
+              svc.$meta.desc = _this._ProjectStore.getServiceTypeDesc(svc.type);
+            }
+          }
         });
         this.updateVersion();
         this._MissingNodeItemDescValidation.check(this.rootNode);
