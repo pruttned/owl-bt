@@ -26,6 +26,10 @@
     <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
       Error: Missing descriptor in project file
     </div>
+    <fieldset class="node-item-properties" ng-if="tree.selIsDecorator()">
+      <legend>Base properties</legend>
+      <div ng-include="'app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.html'"></div>
+    </fieldset>
     <fieldset class="node-item-properties" ng-if="!tree.TreeSelection.selItem().$meta.desc.isInvalid">
       <legend>Custom properties</legend>
       <property-editor-list></property-editor-list>

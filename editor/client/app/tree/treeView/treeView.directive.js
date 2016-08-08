@@ -75,6 +75,13 @@
       });
   }
 
+  function getNodeItemNamePrefix(nodeItem){
+    if(nodeItem.inverseCheckCondition){
+      return '[not] ';
+    }
+    return '';
+  }
+
   function addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, cssClass, index) {
     let desc = viewNodeItem.desc;
     let nodeItemElm = nodeElm.append('div');
@@ -88,7 +95,7 @@
     itemContentElm
       .append('div')
       .attr('class', 'name')
-      .text(desc.name);
+      .text(getNodeItemNamePrefix(viewNodeItem.nodeItem) + desc.name);
 
     if (desc.description) {
       itemContentElm

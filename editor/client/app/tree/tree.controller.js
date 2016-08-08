@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, TreeSelection, CommandPalette,
+    TreeStore, TreeSelection, CommandPalette, TreeNode,
     UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
@@ -21,7 +21,9 @@ angular.module('editorApp')
         CommandPalette.show();
       };
 
-
+      this.selIsDecorator = function(){
+        return TreeSelection.selItemType() === 'decorator';
+      };
 
     TreeStore.load()
       .then(() => {
