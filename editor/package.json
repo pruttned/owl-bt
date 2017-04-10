@@ -81,9 +81,10 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "grunt serve",
+    "start": "node server/app.js",
     "test": "grunt test",
-    "build": "grunt build"
+    "build": "grunt build",
+    "serve": "grunt serve"
   },
   "private": true,
   "config": {
