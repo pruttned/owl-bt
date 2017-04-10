@@ -27,6 +27,7 @@
     "grunt-autoprefixer": "~0.7.2",
     "grunt-babel": "^6.0.0",
     "grunt-build-control": "~0.4.0",
+    "grunt-cli": "^1.2.0",
     "grunt-concurrent": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.4.0",
@@ -80,7 +81,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node server/app.js",
+    "start": "grunt serve",
     "test": "grunt test"
   },
   "private": true,
