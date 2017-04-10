@@ -82,7 +82,8 @@
   },
   "scripts": {
     "start": "grunt serve",
-    "test": "grunt test"
+    "test": "grunt test",
+    "build": "grunt build"
   },
   "private": true,
   "config": {
