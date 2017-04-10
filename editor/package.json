@@ -54,7 +54,6 @@
     "grunt-node-inspector": "^0.4.1",
     "grunt-nodemon": "~0.2.0",
     "grunt-open": "~0.2.3",
-    "grunt-protractor-runner": "^1.1.0",
     "grunt-rev": "~0.1.0",
     "grunt-svgmin": "~0.4.0",
     "grunt-usemin": "~2.1.1",
@@ -86,8 +85,7 @@
   },
   "scripts": {
     "start": "node server/app.js",
-    "test": "grunt test",
-    "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
+    "test": "grunt test"
   },
   "private": true,
   "config": {
