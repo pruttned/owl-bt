@@ -13,8 +13,6 @@ module.exports = function(app) {
   app.use('/api/project', require('./api/project'));
   app.use('/api/tree', require('./api/tree'));
   app.use('/api/projectTree', require('./api/projectTree'));
-  app.use('/api/things', require('./api/thing'));
-  app.use('/api/myTest', require('./api/myTest'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets|node_modules|common)/*')
