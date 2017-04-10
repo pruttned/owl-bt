@@ -381,6 +381,7 @@ module.exports = function (grunt) {
           src: [
             'package.json',
             'server/**/*',
+            '!server/**/*.spec.js',
             'common/**/*.js'
           ]
         }]
