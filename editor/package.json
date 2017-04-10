@@ -8,7 +8,6 @@
     "body-parser": "^1.5.2",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
-    "connect-mongo": "^0.8.1",
     "cookie-parser": "~1.0.1",
     "ejs": "~0.8.4",
     "errno-codes": "^1.0.2",
