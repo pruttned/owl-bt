@@ -75,13 +75,14 @@
     "rewire": "^2.5.1",
     "should": "~3.3.1",
     "supertest": "~0.11.0",
-    "time-grunt": "~0.3.1"
+    "time-grunt": "~0.3.1",
+    "cross-env": "^4.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node server/app.js",
+    "start": "cross-env NODE_ENV=production node server/app.js",
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve"
