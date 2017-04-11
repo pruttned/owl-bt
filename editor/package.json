@@ -84,7 +84,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node server/app.js",
+    "start": "node server/run.js",
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve"

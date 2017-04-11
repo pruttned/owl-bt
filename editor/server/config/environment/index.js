@@ -21,8 +21,7 @@ var all = {
   // Server port
   port: process.env.PORT || 9000,
 
-  // Server IP
-  ip: process.env.IP || '0.0.0.0',
+  baseUrl: 'http://localhost',
 };
 
 // Export the config object based on the NODE_ENV
