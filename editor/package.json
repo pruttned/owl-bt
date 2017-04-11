@@ -1,7 +1,7 @@
 {
   "name": "owlbt",
   "version": "0.0.0",
-  "main": "server/app.js",
+  "main": "server/run.js",
   "dependencies": {
     "babel-polyfill": "^6.0.14",
     "bluebird": "^3.3.1",
