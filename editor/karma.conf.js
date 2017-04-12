@@ -24,7 +24,7 @@ module.exports = function(config) {
       'client/bower_components/angular-hotkeys/build/hotkeys.js',
       'node_modules/babel-polyfill/dist/polyfill.js',
       'node_modules/string_score/string_score.js',
-      'node_modules/socket.io-client/socket.io.js',
+      'node_modules/socket.io-client/dist/socket.io.js',
       'client/app/app.js',
       'client/app/**/*.js',
       'client/components/**/*.js',
