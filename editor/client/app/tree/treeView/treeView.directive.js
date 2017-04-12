@@ -415,7 +415,7 @@
 
         bindTreeElmMouseEvents(CommandContextMenu, d3, TreeSelection, scope, treeElm);
 
-        TreeStore.load()
+        TreeStore.ensureLoad()
           .then(() => {
             let rootNode = TreeStore.rootNode;
 

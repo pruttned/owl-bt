@@ -1,9 +1,9 @@
 'use strict';
 
-(function() {
+(function () {
   class ProjectStore {
-    constructor(_, io, $interpolate, $resource, $location, $rootScope) {
-      this.treePath = $location.search().path;
+    constructor(_, io, $interpolate, $resource, $rootScope) {
+      //this.treePath = $location.search().path;
       this.isLoaded = false;
       this.version = 1;
 
@@ -17,7 +17,18 @@
       });
     }
 
-    load() {
+    load(treePath) {
+      if(this.socket){
+        this.socket.disconnect();
+        this.socket = null;
+      }
+      this.treePath = treePath;
+      this.isLoaded = false;
+      
+      return this._current();
+    }
+
+    ensureLoad(){
       return this._current();
     }
 
@@ -90,10 +101,6 @@
     }
 
     _current() {
-      if (this._currentPromise) {
-        return this._currentPromise;
-      }
-
       let _this = this;
 
       this._currentPromise = this._projectResource.get({

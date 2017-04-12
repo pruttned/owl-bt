@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeStore, TreeSelection, CommandPalette, TreeNode,
+    TreeMruList, TreeStore, TreeSelection, CommandPalette, TreeNode, UndoRedoManager,
     UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
@@ -25,8 +25,11 @@ angular.module('editorApp')
         return TreeSelection.selItemType() === 'decorator';
       };
 
-    TreeStore.load()
+    UndoRedoManager.clear();
+    TreeSelection.select();
+    TreeStore.load($location.search().path)
       .then(() => {
+        TreeMruList.register(TreeStore.treePath);
         this.rootNode = TreeStore.rootNode;
       });
   });

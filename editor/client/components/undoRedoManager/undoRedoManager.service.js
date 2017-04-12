@@ -28,4 +28,8 @@ angular.module('editorApp')
       redo(){
         this._undoManager.redo();
       }
+
+      clear(){
+        this._undoManager.clear();
+      }
     });

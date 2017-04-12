@@ -5,8 +5,9 @@
 (function() {
 
   class TreeStore {
-    constructor($q, $resource, $location, TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode, MissingNodeItemDescValidation) {
-      this.treePath = $location.search().path;
+    constructor($q, $resource,  TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode, MissingNodeItemDescValidation) {
+      console.log('asdasdasdasd');
+     // this.treePath = $location.search().path;
       this.version = 1;
 
       this.isLoaded = false;
@@ -26,17 +27,17 @@
       $rootScope.$watch(() => ProjectStore.version, () => this._handlePrjReload());
     }
 
-    load() {
-      if (this._loadPromise) {
-        return this._loadPromise;
-      }
-
+    load(treePath) {
       let _this = this;
+      
+      this.treePath = treePath;
+      this.isLoaded = false;
+      this.rootNode = null;
 
       let treeResourcePromise = this._treeResource.get({
         treePath: this.treePath
       }).$promise;
-      let prjPromise = this._ProjectStore.load();
+      let prjPromise = this._ProjectStore.load(this.treePath);
 
       this._loadPromise = this._$q.all([treeResourcePromise, prjPromise])
         .then(data => {
@@ -47,6 +48,10 @@
           _this._MissingNodeItemDescValidation.check(_this.rootNode);
         });
 
+      return this._loadPromise;
+    }
+
+    ensureLoad(){
       return this._loadPromise;
     }
 
