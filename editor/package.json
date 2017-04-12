@@ -45,7 +45,6 @@
     "grunt-dom-munger": "^3.4.0",
     "grunt-env": "~0.4.1",
     "grunt-express-server": "~0.4.17",
-    "grunt-google-cdn": "~0.4.0",
     "grunt-injector": "~0.5.4",
     "grunt-karma": "^0.12.1",
     "grunt-mocha-test": "~0.10.2",
