@@ -1,7 +1,7 @@
 {
   "name": "owlbt",
   "version": "0.0.0",
-  "main": "server/run.js",
+  "main": "server/app.js",
   "dependencies": {
     "babel-polyfill": "^6.0.14",
     "bluebird": "^3.3.1",
@@ -84,7 +84,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node server/run.js",
+    "start": "node server/app.js",
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve",

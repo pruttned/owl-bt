@@ -15,6 +15,7 @@ const express = require('express'),
 
 /**
  * @param  {Function()} (optional) success - callback after succesfull server run
+ * @return {express} - expressa pp
  * */
 function run({ success } = {}) {
   var app = express();
@@ -40,6 +41,8 @@ function run({ success } = {}) {
       success();
     }
   });
+
+  return app;
 }
 
 module.exports = {
