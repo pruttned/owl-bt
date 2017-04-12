@@ -5,13 +5,20 @@
     <div class="col-lg-12">
 
       <div>
-        <input type="text" ng-model="treePath" placeholder="Enter full tree path"/>
+        <input type="text" ng-model="treePath" placeholder="Enter full tree path" />
         <button ng-click="main.openTree(treePath)">Open</button>
       </div>
+      <div>
+        <ul>
+          <li ng-repeat="mruItem in main.treeMruItems">
+            <a ng-href="{{mruItem.url}}">{{mruItem.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- <footer class="footer">
+  <!-- <footer class="footer">
   <div class="container">
   </div>
 </footer> -->
