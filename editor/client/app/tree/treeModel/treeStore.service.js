@@ -6,7 +6,6 @@
 
   class TreeStore {
     constructor($q, $resource,  TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode, MissingNodeItemDescValidation) {
-      console.log('asdasdasdasd');
      // this.treePath = $location.search().path;
       this.version = 1;
 
