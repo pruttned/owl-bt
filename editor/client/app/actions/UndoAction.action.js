@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   class UndoAction {
     constructor(ActionExecutor, UndoRedoManager) {
       this._ActionExecutor = ActionExecutor;
@@ -11,7 +11,7 @@
       this._ActionExecutor.exec({
         exec: () => {
           this._undoRedoManager.undo();
-        },
+        }
       });
     }
   }

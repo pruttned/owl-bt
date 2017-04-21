@@ -32,4 +32,12 @@ angular.module('editorApp')
       clear(){
         this._undoManager.clear();
       }
+
+      hasUndo(){
+        return this._undoManager.hasUndo();
+      }
+      
+      hasRedo(){
+        return this._undoManager.hasRedo();
+      }
     });
