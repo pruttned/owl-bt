@@ -80,8 +80,6 @@
 
   <script src="app/app.js"></script>
   <!-- injector:js -->
-  <script src="app/actions/undoAction.action.js"></script>
-  <script src="app/actions/redoAction.action.js"></script>
   <script src="app/main/main.controller.js"></script>
   <script src="app/main/main.js"></script>
   <script src="app/main/projectStore/projectStore.service.js"></script>
@@ -89,6 +87,18 @@
   <script src="app/project/project.controller.js"></script>
   <script src="app/project/project.js"></script>
   <script src="app/project/projectTree/projectTree.service.js"></script>
+  <script src="app/tree/actions/SetTreeNodeItemBasePropertyValueAction.action.js"></script>
+  <script src="app/tree/actions/addTreeNode.action.js"></script>
+  <script src="app/tree/actions/addTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/moveTreeNode.action.js"></script>
+  <script src="app/tree/actions/moveTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/redoAction.action.js"></script>
+  <script src="app/tree/actions/removeTreeNode.action.js"></script>
+  <script src="app/tree/actions/removeTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/resetTreeNodeItemPropertyValue.action.js"></script>
+  <script src="app/tree/actions/saveTree.action.js"></script>
+  <script src="app/tree/actions/setTreeNodeItemPropertyValue.action.js"></script>
+  <script src="app/tree/actions/undoAction.action.js"></script>
   <script src="app/tree/commandContextMenu/commandContextMenu.service.js"></script>
   <script src="app/tree/commandContextMenu/commandContextMenuCfg.provider.js"></script>
   <script src="app/tree/commandPalette/commandPalette.service.js"></script>
@@ -102,7 +112,6 @@
   <script src="app/tree/commands/selectItemAbove.command.js"></script>
   <script src="app/tree/commands/selectItemBelow.command.js"></script>
   <script src="app/tree/commands/selectSiblingNode.command.js"></script>
-  <script src="app/tree/commands/undo.command.1.js"></script>
   <script src="app/tree/commands/undo.command.js"></script>
   <script src="app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.controller.js"></script>
   <script src="app/tree/missingNodeItemDescValidation/missingNodeItemDescValidation.service.js"></script>
@@ -115,16 +124,6 @@
   <script src="app/tree/propertyEditor/stringParamEditor.directive.js"></script>
   <script src="app/tree/tree.controller.js"></script>
   <script src="app/tree/tree.js"></script>
-  <script src="app/tree/treeModel/actions/SetTreeNodeItemBasePropertyValueAction.action.js"></script>
-  <script src="app/tree/treeModel/actions/addTreeNode.action.js"></script>
-  <script src="app/tree/treeModel/actions/addTreeNodeSubItem.action.js"></script>
-  <script src="app/tree/treeModel/actions/moveTreeNode.action.js"></script>
-  <script src="app/tree/treeModel/actions/moveTreeNodeSubItem.action.js"></script>
-  <script src="app/tree/treeModel/actions/removeTreeNode.action.js"></script>
-  <script src="app/tree/treeModel/actions/removeTreeNodeSubItem.action.js"></script>
-  <script src="app/tree/treeModel/actions/resetTreeNodeItemPropertyValue.action.js"></script>
-  <script src="app/tree/treeModel/actions/saveTree.action.js"></script>
-  <script src="app/tree/treeModel/actions/setTreeNodeItemPropertyValue.action.js"></script>
   <script src="app/tree/treeModel/tree.service.js"></script>
   <script src="app/tree/treeModel/treeDecoratorItemProvider.service.js"></script>
   <script src="app/tree/treeModel/treeFocus.service.js"></script>
