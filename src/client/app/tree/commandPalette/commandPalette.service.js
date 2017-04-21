@@ -41,7 +41,7 @@
       this._commandsByName = _.keyBy(this._commands, 'name');
 
       hotkeys.add({
-        combo: 'ctrl+shift+p',
+        combo: 'mod+shift+p',
         description: 'Show command palette',
         callback: (e, c) => {
           e.preventDefault();

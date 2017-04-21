@@ -27,7 +27,7 @@
         service: 'UndoCommand',
         name: 'core:Undo',
         icon: 'undo',
-        hotkey: 'ctrl+z'
+        hotkey: 'mod+z'
       });
     });
 })();

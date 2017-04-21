@@ -27,7 +27,7 @@
         service: 'RedoCommand',
         name: 'core:Redo',
         icon: 'repeat',
-        hotkey: 'ctrl+y'
+        hotkey: 'mod+y'
       });
     });
 })();
