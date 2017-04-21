@@ -29,7 +29,7 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'src/client',
       common: 'src/common',
-      dist: 'dist'
+      dist: '.dist'
     },
     express: {
       options: {
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
       },
       prod: {
         options: {
-          script: 'dist/server/app.js'
+          script: '.dist/server/app.js'
         }
       }
     },

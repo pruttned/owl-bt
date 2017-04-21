@@ -4,6 +4,6 @@ public
 .sass-cache
 .idea
 bower_components
-dist
+.dist
 server/config/local.env.js
 npm-debug.log
