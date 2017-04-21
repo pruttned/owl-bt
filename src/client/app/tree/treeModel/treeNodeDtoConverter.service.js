@@ -1,13 +1,14 @@
 'use strict';
 
-(function() {
+(function () {
 
   /**
    * Converts node (tree) to dto
    */
   class TreeNodeDtoConverter {
 
-    constructor(TreeItemPropertyDtoConverter){
+    constructor(_, TreeItemPropertyDtoConverter) {
+      this._ = _;
       this._TreeItemPropertyDtoConverter = TreeItemPropertyDtoConverter;
     }
 
@@ -15,7 +16,7 @@
       let dto = {};
       angular.extend(dto, node);
 
-      delete dto.$meta;
+      dto = this._removeInternalProperties(dto);
 
       if (dto.properties) {
         dto.properties = this._TreeItemPropertyDtoConverter.convertToDto(dto.properties);
@@ -24,10 +25,10 @@
         }
       }
       if (dto.decorators) {
-        dto.decorators = dto.decorators.map(d => this._convertSubItem(d));
+        dto.decorators = dto.decorators.map(d => this.convertSubItem(d));
       }
       if (dto.services) {
-        dto.services = dto.services.map(s => this._convertSubItem(s));
+        dto.services = dto.services.map(s => this.convertSubItem(s));
       }
       if (dto.childNodes) {
         dto.childNodes = dto.childNodes.map(n => this.convert(n));
@@ -38,11 +39,11 @@
       return dto;
     }
 
-    _convertSubItem(item) {
+    convertSubItem(item) {
       let dto = {};
       angular.extend(dto, item);
       this._clearEmptyArrays(dto);
-      delete dto.$meta;
+      dto = this._removeInternalProperties(dto);
       if (dto.properties) {
         dto.properties = this._TreeItemPropertyDtoConverter.convertToDto(dto.properties);
         if (_.isEmpty(dto.properties)) {
@@ -61,6 +62,10 @@
           }
         }
       }
+    }
+
+    _removeInternalProperties(obj) {
+      return this._.pickBy(obj, (v, key) => key[0] !== '$');
     }
 
   }

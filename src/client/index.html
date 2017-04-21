@@ -87,8 +87,12 @@
   <script src="app/tree/actions/SetTreeNodeItemBasePropertyValueAction.action.js"></script>
   <script src="app/tree/actions/addTreeNode.action.js"></script>
   <script src="app/tree/actions/addTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/copyTreeNode.action.js"></script>
+  <script src="app/tree/actions/copyTreeNodeItem.action.js"></script>
   <script src="app/tree/actions/moveTreeNode.action.js"></script>
   <script src="app/tree/actions/moveTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/pasteTreeNode.action.js"></script>
+  <script src="app/tree/actions/pasteTreeNodeItem.action.js"></script>
   <script src="app/tree/actions/redoAction.action.js"></script>
   <script src="app/tree/actions/removeTreeNode.action.js"></script>
   <script src="app/tree/actions/removeTreeNodeSubItem.action.js"></script>
@@ -101,10 +105,11 @@
   <script src="app/tree/commandPalette/commandPalette.service.js"></script>
   <script src="app/tree/commandPalette/commandPaletteCfg.provider.js"></script>
   <script src="app/tree/commands/addTreeNodeItem.command.js"></script>
+  <script src="app/tree/commands/copyTreeNodeItem.command.js"></script>
   <script src="app/tree/commands/focusSelNode.command.js"></script>
   <script src="app/tree/commands/moveTreeNode.command.js"></script>
   <script src="app/tree/commands/moveTreeNodeSubItem.command.js"></script>
-  <script src="app/tree/commands/redo.command.1.js"></script>
+  <script src="app/tree/commands/pasteTreeNodeItem.command.js"></script>
   <script src="app/tree/commands/redo.command.js"></script>
   <script src="app/tree/commands/removeTreeNodeItem.command.js"></script>
   <script src="app/tree/commands/saveTree.command.js"></script>
@@ -141,6 +146,7 @@
   <script src="components/actionExecutor/actionExecutor.service.js"></script>
   <script src="components/alertExceptionHandler/alertExceptionHandler.js"></script>
   <script src="components/arrayHelper/arrayHelper.service.js"></script>
+  <script src="components/clipboard/clipboard.service.js"></script>
   <script src="components/contextMenu/contextMenu.service.js"></script>
   <script src="components/encodeURIComponent/encodeURIComponent.filter.js"></script>
   <script src="components/fuzzyFilter/fuzzyFilter.service.js"></script>
