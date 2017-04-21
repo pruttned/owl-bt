@@ -1,7 +1,7 @@
 const path = require('path'),
     opn = require('opn'),
-    server = require('../../server'),
-    serverConfig = require('../../server/config/environment');
+    server = require('../../src/server'),
+    serverConfig = require('../../src/server/config/environment');
 
 function handler(argv) {
 

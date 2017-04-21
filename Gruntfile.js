@@ -4,7 +4,7 @@
 module.exports = function (grunt) {
   var localConfig;
   try {
-    localConfig = require('./server/config/local.env');
+    localConfig = require('./src/server/config/local.env');
   } catch(e) {
     localConfig = {};
   }
@@ -27,8 +27,8 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
-      client: require('./bower.json').appPath || 'client',
-      common: 'common',
+      client: require('./bower.json').appPath || 'src/client',
+      common: 'src/common',
       dist: 'dist'
     },
     express: {
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: 'server/app.js',
+          script: 'src/server/app.js',
           debug: true
         }
       },
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
         tasks: ['injector:css']
       },
       mochaTest: {
-        files: ['server/**/*.spec.js'],
+        files: ['src/server/**/*.spec.js'],
         tasks: ['env:test', 'mochaTest']
       },
       jsTest: {
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
       },
       express: {
         files: [
-          'server/**/*.{js,json}',
+          'src/server/**/*.{js,json}',
           '<%= yeoman.common %>/**/*.js'
         ],
         tasks: ['express:dev', 'wait'],
@@ -138,18 +138,18 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          jshintrc: 'server/.jshintrc'
+          jshintrc: 'src/server/.jshintrc'
         },
         src: [
-          'server/**/*.js',
-          '!server/**/*.spec.js'
+          'src/server/**/*.js',
+          '!src/server/**/*.spec.js'
         ]
       },
       serverTest: {
         options: {
-          jshintrc: 'server/.jshintrc-spec'
+          jshintrc: 'src/server/.jshintrc-spec'
         },
-        src: ['server/**/*.spec.js']
+        src: ['src/server/**/*.spec.js']
       },
       all: [
         '<%= yeoman.client %>/{app,components}/**/*.js',
@@ -208,7 +208,7 @@ module.exports = function (grunt) {
     // Use nodemon to run server in debug mode with an initial breakpoint
     nodemon: {
       debug: {
-        script: 'server/app.js',
+        script: 'src/server/app.js',
         options: {
           nodeArgs: ['--debug-brk'],
           env: {
@@ -373,8 +373,8 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             'package.json',
-            'server/**/*',
-            '!server/**/*.spec.js',
+            'src/server/**/*',
+            '!src/server/**/*.spec.js',
             'common/**/*.js',
             'bin/**/*.js'
           ]
@@ -449,7 +449,7 @@ module.exports = function (grunt) {
       options: {
         reporter: 'spec'
       },
-      src: ['server/**/*.spec.js']
+      src: ['src/server/**/*.spec.js']
     },
 
     env: {
@@ -471,7 +471,7 @@ module.exports = function (grunt) {
       server: {
         files: [{
           expand: true,
-          cwd: 'client',
+          cwd: 'src/client',
           src: [
             '{app,components}/**/*.js',
             '!{app,components}/**/*.spec.js'
@@ -480,7 +480,7 @@ module.exports = function (grunt) {
         },
         {
           expand: true,
-          cwd: 'common',
+          cwd: 'src/common',
           src: [
             '**/*.js',
             '!**/*.spec.js'
@@ -515,7 +515,7 @@ module.exports = function (grunt) {
       scripts: {
         options: {
           transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/src/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<script src="' + filePath + '"></script>';
           },
@@ -540,8 +540,8 @@ module.exports = function (grunt) {
       sass: {
         options: {
           transform: function(filePath) {
-            filePath = filePath.replace('/client/app/', '');
-            filePath = filePath.replace('/client/components/', '');
+            filePath = filePath.replace('/src/client/app/', '');
+            filePath = filePath.replace('/src/client/components/', '');
             return '@import \'' + filePath + '\';';
           },
           starttag: '// injector',
@@ -559,7 +559,7 @@ module.exports = function (grunt) {
       css: {
         options: {
           transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/src/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<link rel="stylesheet" href="' + filePath + '">';
           },
