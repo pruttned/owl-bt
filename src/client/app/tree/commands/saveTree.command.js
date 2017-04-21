@@ -27,7 +27,8 @@
         service: 'SaveTreeCommand',
         name: 'core:Save',
         icon: 'save',
-        hotkey: 'mod+s'
+        hotkey: 'mod+s',
+        allowHotkeyInForms: true
       });
     });
 })();

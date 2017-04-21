@@ -15,6 +15,7 @@
      * @param  {String} (optional) commandDesc.name - command title to be displayed
      * @param  {String} (optional) commandDesc.icon - command icon
      * @param  {String} (optional) commandDesc.shortcut - keyboard shortcut for the command
+     * @param  {Bool} (optional) commandDesc.allowHotkeyInForms - whether to enable keyboard shortcut in form elements
      */
     addCommand(commandDesc) {
       this.commands.push(commandDesc);

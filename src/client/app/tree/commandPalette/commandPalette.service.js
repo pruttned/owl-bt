@@ -2,6 +2,8 @@
 
 (function() {
 
+  const formElms = ['INPUT', 'SELECT', 'TEXTAREA'];
+
   class CommandPalette {
     constructor(_, $q, $injector, hotkeys, CommandPaletteCfg, ListSelectDialog) {
       let _this = this;
@@ -25,6 +27,7 @@
             hotkeys.add({
               combo: cmdDesc.hotkey,
               description: cmdDesc.name,
+              allowIn: cmdDesc.allowHotkeyInForms ? formElms : undefined,
               callback: e => {
                 e.preventDefault();
                 if (_this._.isUndefined(cmdSvc.canExec) || cmdSvc.canExec(cmdDesc)) {
@@ -43,6 +46,7 @@
       hotkeys.add({
         combo: 'mod+shift+p',
         description: 'Show command palette',
+        allowIn: formElms,
         callback: (e, c) => {
           e.preventDefault();
           _this.show();
