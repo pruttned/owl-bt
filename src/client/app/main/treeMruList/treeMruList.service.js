@@ -8,29 +8,28 @@
         constructor(_) {
             this._ = _;
             this.maxItemCnt = maxItemCnt;
+        }
 
+        getList() {
             const itemsStorageValue = localStorage.getItem(itemsStorageKey);
             if (itemsStorageValue) {
-                this._items = JSON.parse(itemsStorageValue);
+                return JSON.parse(itemsStorageValue);
             } else {
-                this._items = [];
+                return [];
             }
-
-        }
-        getList() {
-            return this._items;
         }
 
         register(treePath) {
-            this._.remove(this._items, { path: treePath });
-            this._items.unshift({
+            let items = this.getList();
+            this._.remove(items, { path: treePath });
+            items.unshift({
                 path: treePath
             });
-            if (this._items.length > maxItemCnt) {
-                this._items.splice(-1);
+            if (items.length > this.maxItemCnt) {
+                items.splice(-1);
             }
 
-            localStorage.setItem(itemsStorageKey, JSON.stringify(this._items));
+            localStorage.setItem(itemsStorageKey, JSON.stringify(items));
         }
     }
 
