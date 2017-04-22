@@ -1,9 +1,10 @@
 'use strict';
 
-const bluebird = require('bluebird');
-var fs = bluebird.promisifyAll(require("fs"));
-const path = require('path');
-const errors = require('errno-codes');
+const bluebird = require('bluebird'),
+  fs = bluebird.promisifyAll(require("fs")),
+  path = require('path'),
+  errors = require('errno-codes'),
+  project = require('../../components/project');
 
 function checkTreePath(treePath, res) {
   if (!treePath) {
@@ -17,7 +18,17 @@ function checkTreePath(treePath, res) {
   return true;
 }
 
-function handleFsError(err, res, next) {
+function checkIsInProject(treePath, res) {
+  return project.getProject(treePath)
+    .then(prj => {
+      if (prj) {
+        return true;
+      }
+      res.status(403).send('Path must be in project');
+    });
+}
+
+function handleError(err, res, next) {
   if (err.code !== errors.ENOENT.code) {
     next(err);
   } else {
@@ -25,25 +36,35 @@ function handleFsError(err, res, next) {
   }
 }
 
-exports.index = function(req, res, next) {
+exports.index = function (req, res, next) {
   let treePath = req.query.path;
   if (checkTreePath(treePath, res)) {
-
-    fs.readFileAsync(treePath, 'utf8')
-      .then(treeContent => {
-        res.contentType('application/json').send(treeContent)
+    checkIsInProject(treePath, res)
+      .then(isInProject => {
+        if (isInProject) {
+          return fs.readFileAsync(treePath, 'utf8')
+            .then(treeContent => {
+              res.contentType('application/json').send(treeContent)
+            });
+        }
       })
-      .catch(err => handleFsError(err, res, next));
+      .catch(err => handleError(err, res, next));
   }
 };
 
-exports.save = function(req, res, next) {
+exports.save = function (req, res, next) {
   let treePath = req.query.path;
+
   if (checkTreePath(treePath, res)) {
-    fs.writeFileAsync(treePath, JSON.stringify(req.body, null, '\t'), 'utf8')
-      .then(treeContent => {
-        res.status(200).send();
+    checkIsInProject(treePath, res)
+      .then(isInProject => {
+        if (isInProject) {
+          return fs.writeFileAsync(treePath, JSON.stringify(req.body, null, '\t'), 'utf8')
+            .then(treeContent => {
+              res.status(200).send();
+            });
+        }
       })
-      .catch(err => handleFsError(err, res, next));
+      .catch(err => handleError(err, res, next));
   }
 };
