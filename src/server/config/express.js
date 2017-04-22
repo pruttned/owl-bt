@@ -43,7 +43,6 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, 'src/client')));
     app.use('/babel-polyfill', express.static(path.join(config.root, 'node_modules/babel-polyfill/dist')));
     app.use('/string_score', express.static(path.join(config.root, 'node_modules/string_score')));
-    app.use('/socket.io-client', express.static(path.join(config.root, 'node_modules/socket.io-client')));
     app.use('/common', express.static(path.join(config.root, 'src/common')));
     app.set('appPath', path.join(config.root, 'src/client'));
     app.use(morgan('dev'));
