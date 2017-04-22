@@ -30,7 +30,6 @@ function start(io) {
     let prjWatcher;
 
     let treePath = socket.request._query.treePath;
-    let pathDir = path.dirname(treePath);
 
     socket.on('disconnect', () => {
       if (prjWatcher) {
@@ -38,7 +37,7 @@ function start(io) {
       }
     });
 
-    project.getProject(pathDir)
+    project.getProject(treePath)
       .then(prj => {
         prjWatcher = getFileWatcher(prj.path);
         prjWatcher.addListener(socket.id, (prjContent) => {

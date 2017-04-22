@@ -4,18 +4,17 @@ const path = require('path');
 const project = require('../../components/project');
 
 exports.index = function(req, res, next) {
-  let currentPath = req.query.path;
-  if (!currentPath) {
+  let treePath = req.query.path;
+  if (!treePath) {
     res.status(400).send('Missing path');
     return;
   }
-  if (!path.isAbsolute(currentPath)) {
+  if (!path.isAbsolute(treePath)) {
     res.status(400).send('Path must be absolute');
     return;
   }
 
-  let pathDir = path.dirname(currentPath);
-  project.getProject(pathDir)
+  project.getProject(treePath)
     .then(prj => {
       if (!prj) {
         res.status(404).send('No project found');

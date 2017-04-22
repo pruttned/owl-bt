@@ -16,12 +16,12 @@ function getParentPath(absolutePath) {
   return parentPath;
 }
 
-function getProject(currentAbsolutePath) {
+function getProjectForDir(currentAbsolutePath) {
   let projectAbsolutePath = path.join(currentAbsolutePath, projectFileName);
   return fs.readFileAsync(projectAbsolutePath, 'utf8')
     .then(prjContent => ({
-      path : projectAbsolutePath,
-      content : prjContent
+      path: projectAbsolutePath,
+      content: prjContent
     }))
     .catch(err => {
       if (err.code !== errors.ENOENT.code) {
@@ -29,10 +29,14 @@ function getProject(currentAbsolutePath) {
       } else {
         var parentPath = getParentPath(currentAbsolutePath);
         if (parentPath) {
-          return getProject(parentPath);
+          return getProjectForDir(parentPath);
         }
       }
     });
+}
+
+function getProject(treePath) {
+  return getProjectForDir(path.dirname(treePath));
 }
 
 module.exports = {
