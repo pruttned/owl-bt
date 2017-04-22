@@ -20,7 +20,7 @@ describe('Service: TreeMruList', function () {
       return store[key];
     });
     spyOn(localStorage, 'setItem').and.callFake(function (key, value) {
-      store[key] = value + '';
+      store[key] = value;
     });
     spyOn(localStorage, 'clear').and.callFake(function () {
       store = {};
