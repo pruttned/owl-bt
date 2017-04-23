@@ -57,6 +57,29 @@ body{
   background: $main-background-color;
 }
 
+a{
+  &:focus,
+  &:visited{
+      color: #cccccc;
+      text-decoration: none
+  }
+  &:active,
+  &:hover {
+      color: #cccccc;
+      text-decoration: underline
+  }
+}
+
+.breadcrumb {
+    margin: 0;
+    border-radius: 0;
+    background: $main-background-color;
+    border-bottom: solid 1px $top-menu-border-color;
+    &>li+li:before {
+        content: '>';
+    }
+}
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .browsehappy {

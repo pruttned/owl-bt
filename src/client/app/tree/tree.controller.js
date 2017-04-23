@@ -6,6 +6,7 @@ angular.module('editorApp')
     UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
+      this.path = $location.search().path;
 
       this.undo = function(){
         UndoAction.exec();
@@ -27,7 +28,7 @@ angular.module('editorApp')
 
     UndoRedoManager.clear();
     TreeSelection.select();
-    TreeStore.load($location.search().path)
+    TreeStore.load(this.path)
       .then(() => {
         TreeMruList.register(TreeStore.treePath);
         this.rootNode = TreeStore.rootNode;

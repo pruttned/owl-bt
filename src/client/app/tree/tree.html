@@ -1,24 +1,30 @@
 <div class="tree-page">
 
-  <ul class="top-menu" ng-if="tree.rootNode">
-    <li class="btn-group" uib-dropdown class="dropdown">
-      <a uib-dropdown-toggle href="#" class="dropdown-toggle">File</a>
-      <ul class="dropdown-menu" uib-dropdown-menu>
-        <li><a href="#" ng-click="tree.save()">Save</a></li>
-      </ul>
-    </li>
+  <div class="tree-page-head">
+    <ul class="top-menu" ng-if="tree.rootNode">
+      <li class="btn-group" uib-dropdown class="dropdown">
+        <a uib-dropdown-toggle href="#" class="dropdown-toggle">File</a>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+          <li><a href="#" ng-click="tree.save()">Save</a></li>
+        </ul>
+      </li>
 
-    <li class="btn-group" uib-dropdown class="dropdown">
-      <a uib-dropdown-toggle href="#" class="dropdown-toggle">Edit</a>
-      <ul class="dropdown-menu" uib-dropdown-menu>
-        <li><a href="#" ng-click="tree.undo()">Undo</a></li>
-        <li><a href="#" ng-click="tree.redo()">Redo</a></li>
-      </ul>
-    </li>
+      <li class="btn-group" uib-dropdown class="dropdown">
+        <a uib-dropdown-toggle href="#" class="dropdown-toggle">Edit</a>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+          <li><a href="#" ng-click="tree.undo()">Undo</a></li>
+          <li><a href="#" ng-click="tree.redo()">Redo</a></li>
+        </ul>
+      </li>
 
-    <li><a href="#" ng-click="tree.showCommandPalette()">CommandPalette</a></li>
-  </ul>
-
+      <li><a href="#" ng-click="tree.showCommandPalette()">CommandPalette</a></li>
+    </ul>
+    <ol class="breadcrumb">
+      <li><a ng-href="/">Home</a></li>
+      <li class="active">{{tree.path}}</li>
+    </ol>
+    <alert-panel></alert-panel>
+  </div>
   <tree-view root-node="tree.rootNode"></tree-view>
 
   <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
@@ -35,7 +41,5 @@
       <property-editor-list></property-editor-list>
     </fieldset>
   </section>
-
-  <alert-panel></alert-panel>
 
 </div>
