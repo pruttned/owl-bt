@@ -2,7 +2,7 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeMruList, TreeStore, TreeSelection, CommandPalette, TreeNode, UndoRedoManager,
+    TreeMruList, TreeStore, TreeSelection, CommandPalette, TreeNode, UndoRedoManager, AlertList,
     UndoAction, RedoAction, SaveTreeAction) {
 
       this.TreeSelection = TreeSelection;
@@ -31,5 +31,8 @@ angular.module('editorApp')
       .then(() => {
         TreeMruList.register(TreeStore.treePath);
         this.rootNode = TreeStore.rootNode;
+      })
+      .catch((err)=>{
+        AlertList.addErr(`Failed to load tree. Error = '${err.data}'`);
       });
   });
