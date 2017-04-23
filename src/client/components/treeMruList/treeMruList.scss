@@ -1,0 +1,29 @@
+.tree-mru-list {
+    margin: 0;
+    a {
+        display: block;
+        padding: 5px 15px;
+        margin-bottom: 15px;
+        border-left: solid 10px #1C2732;
+        background: #202e3c;
+        &:focus,
+        &:visited,
+        &:active,
+        &:hover {
+            text-decoration: none
+        }
+        &:active,
+        &:hover {
+            border-left-color: #2C3E50;
+            text-decoration: none
+        }
+    }
+    .name {
+        font-size: 1.6rem;
+        color: #cccccc;
+    }
+    .path {
+        font-size: 1.4rem;
+        color: #929292;
+    }
+}

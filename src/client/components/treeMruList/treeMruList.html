@@ -1,0 +1,12 @@
+<ul class="tree-mru-list">
+    <li ng-repeat="item in treeMruList.items"> 
+         <a ng-href="{{item.url}}">
+             <div class="name">
+                {{item.name}}
+             </div>
+             <div class="path">
+                {{item.path}}
+             </div>
+        </a>
+    </li>
+</ul>
