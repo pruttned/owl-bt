@@ -29,6 +29,9 @@
     remove(index) {
       this.alerts.splice(index, 1);
     }
+    clear(){
+      this.alerts = [];
+    }
   }
 
   angular.module('editorApp')
