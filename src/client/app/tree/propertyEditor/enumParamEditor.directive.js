@@ -4,7 +4,7 @@ angular.module('editorApp')
   .directive('enumPropertyEditor', function() {
 
     return {
-      template: '<select ng-model="property.value" ng-model-options="{ getterSetter: true}" ng-options="option for option in property.desc.values"></select>',
+      template: '<select class="form-control" ng-model="property.value" ng-model-options="{ getterSetter: true}" ng-options="option for option in property.desc.values"></select>',
       restrict: 'EA',
       replace: true,
       scope: {

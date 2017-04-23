@@ -3,7 +3,7 @@
 angular.module('editorApp')
   .directive('stringPropertyEditor', function() {
     return {
-      template: '<input ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: \'blur\' }"></input>',
+      template: '<input class="form-control" ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: \'blur\' }"></input>',
       restrict: 'EA',
       replace: true,
       scope: {

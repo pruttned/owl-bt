@@ -4,7 +4,7 @@ angular.module('editorApp')
   .directive('numberPropertyEditor', function() {
 
     return {
-      template: '<input type="number" ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: \'blur\' }"></input>',
+      template: '<input type="number" class="form-control" ng-model="property.value" ng-model-options="{ getterSetter: true, updateOn: \'blur\' }"></input>',
       restrict: 'EA',
       replace: true,
       scope: {
