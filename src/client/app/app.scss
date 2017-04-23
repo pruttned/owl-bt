@@ -8,6 +8,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 /**
  * Settings
  */
+$main-background-color: #243342;
 $dlg-light-background-color : #507295;
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
@@ -51,6 +52,11 @@ $top-menu-hover-background-color: $ctrl-hover-color;
  * App-wide Styles
  */
 
+
+body{
+  background: $main-background-color;
+}
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .browsehappy {
@@ -58,11 +64,6 @@ $top-menu-hover-background-color: $ctrl-hover-color;
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
-}
-
-input, select, button{
-  padding: 4px;
-  color: $ctrl-input-color;
 }
 
 .icon-button{
@@ -142,4 +143,5 @@ ul.selectable{
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'msgPanel/msgPanel.scss';
+@import 'treeMruList/treeMruList.scss';
 // endinjector

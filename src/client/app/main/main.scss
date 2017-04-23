@@ -1,34 +1,14 @@
-.thing-form {
-    margin: 20px 0;
-}
-
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
-}
-
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
-.hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: #F5F5F5;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
-}
-
-.footer {
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 70px;
-    border-top: 1px solid #E5E5E5;
-}
-
-.navbar-text {
-  margin-left: 15px;
+.main-page {
+    .main-page-head {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 10px;
+        background: $top-menu-background-color;
+        border-bottom: solid 1px $top-menu-border-color;
+    }
+    .main-page-body {
+        padding-top: 100px;
+    }
 }
