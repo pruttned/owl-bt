@@ -17,7 +17,7 @@ angular.module('editorApp')
         childScope.properties = PropertyViewModelProvider.create(TreeSelection.selNode(), TreeSelection.selItem());
         for (let i = 0; i < childScope.properties.length; i++) {
           let propertyType = childScope.properties[i].desc.type;
-          let template = $compile(`<li class="property-editor"><label>{{properties[${i}].name()}}</label><span class="fa fa-undo icon-button" ng-click="properties[${i}].reset()" ng-if="properties[${i}].isSet()"></span><div ${propertyType}-property-editor property="properties[${i}]">Missing editor for <em>${propertyType}</em> property type</div></li>`);
+          let template = $compile(`<li class="property-editor"><div ${propertyType}-property-editor property="properties[${i}]"><label>{{properties[${i}].name()}}</label><div>Missing editor for <em>${propertyType}</em> property type</div></div></li>`);
           element.append(template(childScope));
         }
       }
