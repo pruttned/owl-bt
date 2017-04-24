@@ -47,4 +47,24 @@
   .icon-button{
     margin-left: 12px;
   }
+
+  fieldset {
+      position: relative;
+      margin: 5px 0 20px 0;
+      &:before {
+          position: absolute;
+          top: -5px;
+          left: 0;
+          right: 0;
+          content: "";
+          display: block;
+          padding: 2px 0;
+          border-top: 1px solid #1c2732;
+      }
+      &:first-of-type {
+          &:before{
+            display: none;
+          }
+      }
+  }
 }
