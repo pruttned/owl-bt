@@ -18,6 +18,7 @@
           icon: menuItemDesc.icon || command.icon,
           order: menuItemDesc.order || 0,
           command: menuItemDesc.command,
+          hotkey: command.hotkey,
           action: () => $q.when(CommandPalette.exec(menuItemDesc.command))
         };
       });

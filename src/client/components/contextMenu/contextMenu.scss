@@ -29,5 +29,10 @@
         display:none;
       }
     }
+    .hotkey {
+      float: right;
+      color: $text-light-color;
+      margin-left: 20px;
+    }    
   }
 }

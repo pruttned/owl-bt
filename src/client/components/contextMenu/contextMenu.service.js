@@ -46,6 +46,11 @@ angular.module('editorApp')
               liElm.append(iconElm);
             }
             liElm.append(document.createTextNode(item.title));
+            if (item.hotkey) {
+              let hotkeyElm = angular.element('<span class="hotkey"></span>');
+              hotkeyElm.text(item.hotkey);
+              liElm.append(hotkeyElm);
+            }                 
             liElm.on('click', this._createItemClickHandler(scope, deferred, item));
             this.ulElm.append(liElm);
           }

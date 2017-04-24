@@ -20,6 +20,7 @@
             name: cmdDesc.name,
             icon: cmdDesc.icon,
             desc: cmdDesc,
+            hotkey: cmdDesc.hotkey,
             asideInf: cmdDesc.hotkey
           });
 
