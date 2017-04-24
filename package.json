@@ -88,7 +88,7 @@
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve",
-    "deploy-g": "npm run build && npm install ./dist -g"
+    "deploy-g": "npm run build && npm install ./.dist -g"
   },
   "private": true,
   "config": {
