@@ -28,7 +28,7 @@
 
   <div ng-view=""></div>
 
-  <!-- build:js({client,node_modules}) app/vendor.js -->
+  <!-- build:js({src/client,node_modules}) app/vendor.js -->
   <!-- bower:js -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
@@ -44,8 +44,8 @@
   <!-- endbower -->
   <script src="babel-polyfill/polyfill.js"></script>
   <script src="string_score/string_score.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
   <!-- endbuild -->
+  <script src="/socket.io/socket.io.js"></script>
 
   <!-- build:js(.tmp) app/app.js -->
 
