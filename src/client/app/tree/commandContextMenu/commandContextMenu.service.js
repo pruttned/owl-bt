@@ -21,8 +21,7 @@
           action: () => $q.when(CommandPalette.exec(menuItemDesc.command))
         };
       });
-
-      this.menuItems = _.sortBy(this._menuItems, 'order');
+      this._menuItems = _.sortBy(this._menuItems, 'order');
     }
 
     show(scope, event) {

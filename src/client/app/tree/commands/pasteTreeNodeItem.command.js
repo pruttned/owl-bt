@@ -48,7 +48,7 @@
       CommandContextMenuCfgProvider.addMenuItem({
         title: 'Paste',
         command: 'core:Paste',
-        order: 300
+        order: 201
       });
     });
 })();
