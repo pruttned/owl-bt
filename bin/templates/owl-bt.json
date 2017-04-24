@@ -1,0 +1,53 @@
+{
+    "nodes": [
+        {
+            "name": "Selector",
+            "icon": "question",
+            "isComposite": true
+        },
+        {
+            "name": "Sequence",
+            "icon": "arrow-right",
+            "isComposite": true
+        }
+    ],
+    "decorators": [
+        {
+            "name": "Failure",
+            "icon": "thumbs-o-down"
+        },
+        {
+            "name": "Invert",
+            "icon": "exchange"
+        },
+        {
+            "name": "Success",
+            "icon": "thumbs-o-up"
+        },
+        {
+            "name": "IsBlackboardValueSet",
+            "icon": "table",
+            "description": "Is blackboard value \"{{Field}}\" set",
+            "properties": [
+                {
+                    "name": "Field",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "services": [
+        {
+            "name": "Sample service",
+            "icon": "cog",
+            "description": "sample service",
+            "properties": [
+                {
+                    "name": "BlackboardKey",
+                    "default": "Target",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}
