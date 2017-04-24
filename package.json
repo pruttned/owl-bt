@@ -19,7 +19,7 @@
     "serve-favicon": "~2.0.1",
     "socket.io": "~1.7.3",
     "string_score": "^0.1.22",
-    "yargs": "^7.0.2"
+    "yargs": "^7.1.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.0.14",
