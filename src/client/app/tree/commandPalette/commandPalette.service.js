@@ -15,13 +15,17 @@
       this._commands = [];
       for (let cmdDesc of CommandPaletteCfg.commands) {
         $injector.invoke([cmdDesc.service, cmdSvc => {
+          
+          //TODO: platform specific / add configurable hotkey map
+          let hotkeyStr = cmdDesc.hotkey ? cmdDesc.hotkey.replace(/mod\+/i, 'ctrl+') : undefined;
+          
           this._commands.push({
             service: cmdSvc,
             name: cmdDesc.name,
             icon: cmdDesc.icon,
             desc: cmdDesc,
-            hotkey: cmdDesc.hotkey,
-            asideInf: cmdDesc.hotkey
+            hotkeyStr: hotkeyStr,
+            asideInf: hotkeyStr
           });
 
           if (cmdDesc.hotkey) {
