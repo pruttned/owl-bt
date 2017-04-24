@@ -2,25 +2,10 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function ($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeMruList, TreeStore, TreeSelection, CommandPalette, TreeNode, UndoRedoManager, AlertList,
-    UndoAction, RedoAction, SaveTreeAction) {
+    TreeMruList, TreeStore, TreeSelection, TreeNode, UndoRedoManager, AlertList) {
 
     this.TreeSelection = TreeSelection;
     this.path = $location.search().path;
-
-    this.undo = function () {
-      UndoAction.exec();
-    };
-    this.redo = function () {
-      RedoAction.exec();
-    };
-    this.save = function () {
-      SaveTreeAction.exec();
-    };
-
-    this.showCommandPalette = function () {
-      CommandPalette.show();
-    };
 
     this.selIsDecorator = function () {
       return TreeSelection.selItemType() === 'decorator';

@@ -22,12 +22,18 @@
 
   angular.module('editorApp')
     .service('RedoCommand', RedoCommand)
-    .config(function (CommandPaletteCfgProvider) {
+    .config(function (CommandPaletteCfgProvider, CommandTopMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'RedoCommand',
         name: 'core:Redo',
         icon: 'repeat',
         hotkey: 'mod+y'
+      });
+      CommandTopMenuCfgProvider.addMenuItem({
+        title: 'Redo',
+        section: 'Edit',
+        command: 'core:Redo',
+        order: 210
       });
     });
 })();

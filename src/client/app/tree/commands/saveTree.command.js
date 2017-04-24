@@ -22,13 +22,19 @@
 
   angular.module('editorApp')
     .service('SaveTreeCommand', SaveTreeCommand)
-    .config(function (CommandPaletteCfgProvider) {
+    .config(function (CommandPaletteCfgProvider, CommandTopMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'SaveTreeCommand',
         name: 'core:Save',
         icon: 'save',
         hotkey: 'mod+s',
         allowHotkeyInForms: true
+      });
+     CommandTopMenuCfgProvider.addMenuItem({
+        title: 'Save',
+        section: 'File',
+        command: 'core:Save',
+        order: 100
       });
     });
 })();

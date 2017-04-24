@@ -161,6 +161,7 @@ ul.selectable{
 // Component styles are injected through grunt
 // injector
 @import 'main/main.scss';
+@import 'tree/commandTopMenu/commandTopMenu.scss';
 @import 'tree/tree.scss';
 @import 'tree/treeNodeItemDetails.scss';
 @import 'contextMenu/contextMenu.scss';

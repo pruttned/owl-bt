@@ -22,12 +22,18 @@
 
   angular.module('editorApp')
     .service('UndoCommand', UndoCommand)
-    .config(function (CommandPaletteCfgProvider) {
+    .config(function (CommandPaletteCfgProvider, CommandTopMenuCfgProvider) {
       CommandPaletteCfgProvider.addCommand({
         service: 'UndoCommand',
         name: 'core:Undo',
         icon: 'undo',
         hotkey: 'mod+z'
+      });
+      CommandTopMenuCfgProvider.addMenuItem({
+        title: 'Undo',
+        section: 'Edit',
+        command: 'core:Undo',
+        order: 200
       });
     });
 })();

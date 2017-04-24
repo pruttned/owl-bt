@@ -1,0 +1,43 @@
+.top-menu {
+    padding: 0 5px;
+    margin: 0;
+    color: $top-menu-color;
+    background: $top-menu-background-color;
+    border-bottom: solid 1px $top-menu-border-color;
+    >li {
+        list-style: none;
+        display: inline-block;
+        a {
+            display: block;
+            padding: 5px;
+            &,
+            &:visited,
+            &:focus {
+                color: $top-menu-color;
+                text-decoration: none;
+            }
+            &:active,
+            &:hover {
+                color: $top-menu-color;
+                text-decoration: none;
+                background: $top-menu-hover-background-color;
+            }
+        }
+        .dropdown-menu {
+            a {
+                position: relative;
+                padding-right: 100px;
+                .hotkey {
+                    position: absolute;
+                    right: 5px;
+                    color: $text-light-color;
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+    .dropdown-toggle {
+        outline: 0;
+        box-shadow: none;
+    }
+}
