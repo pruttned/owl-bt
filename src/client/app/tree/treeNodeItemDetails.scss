@@ -43,7 +43,10 @@
   input[type="checkbox"]{
     width: auto;
   }
-
+  label{
+    font-weight: normal;
+    font-size: 1.5rem;
+  }
   .icon-button{
     margin-left: 12px;
   }
