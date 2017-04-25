@@ -376,7 +376,8 @@ module.exports = function (grunt) {
             'src/server/**/*',
             '!src/server/**/*.spec.js',
             'common/**/*.js',
-            'bin/**/*.js'
+            'bin/**/*.js',
+            'bin/**/*.json',
           ]
         }]
       },
