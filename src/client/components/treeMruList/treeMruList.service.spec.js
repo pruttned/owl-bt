@@ -40,7 +40,7 @@ describe('Service: TreeMruList', function () {
       expect(items[0].path).toBe('newItem1');
     });
 
-  it('register should move existing item after registration to begining',
+  it('register should move existing item after registration to beginning',
     function () {
       TreeMruList.register('url2');
       const items = TreeMruList.getList();
