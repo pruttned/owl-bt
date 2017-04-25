@@ -5,7 +5,8 @@
    * Used for setting base properties of node items. Like 'inverseCheckCondition' in decorator
    */
   class SetTreeNodeItemBasePropertyValueAction {
-    constructor(ActionExecutor, TreeStore, TreeNodeItemProperty, TreeNode) {
+    constructor(_, ActionExecutor, TreeStore, TreeNodeItemProperty, TreeNode) {
+        this._ = _;
         this._ActionExecutor = ActionExecutor;
         this._TreeStore = TreeStore;
         this._TreeNode = TreeNode;
@@ -25,18 +26,26 @@
 
       this._ActionExecutor.exec({
         exec: () => {
-          nodeItem[params.property] = params.value;
+          _this._setProperty(nodeItem, params.property, params.value);
 
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
         },
         undo: () => {
-          nodeItem[params.property] = oldValue;
+          _this._setProperty(nodeItem, params.property, oldValue);
 
           _this._TreeStore.updateVersion();
           _this._TreeNode.updateVersion(params.node);
         }
       });
+    }
+
+    _setProperty(obj, property, value) {
+      if (_.isNil(value)) {
+        delete obj[property];
+      } else {
+        obj[property] = value;
+      }
     }
   }
 
