@@ -33,7 +33,7 @@ describe('Service: TreeMruList', function () {
     TreeMruList = _TreeMruList_;
   }));
 
-  it('register should add item to begining',
+  it('register should add item to beginning',
     function () {
       TreeMruList.register('newItem1');
       const items = TreeMruList.getList();
