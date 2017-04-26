@@ -96,7 +96,6 @@
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve",
-    "deploy": "npm run build && npm install -g",
     "prepublish": "npm run build"
   },
   "bin": {
