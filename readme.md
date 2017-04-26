@@ -13,7 +13,7 @@ We have tried some of the existing solutions, but they haven't meet our requirem
 
 ## Install
 ```sh
-npm install owlbt
+npm install owl-bt
 ```
 ## Usage
 - help
