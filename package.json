@@ -1,7 +1,21 @@
 {
   "name": "owlbt",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "owl-bt is editor for Behavior trees. It has been inspired by Unreal engine behavior trees in a way, that it supports special node items like decorators and services. This makes trees smaller and much more readable.",
+  "keywords": ["game", "behavior", "tree", "artificial-intelligence", "ai", "behavior-tree"],
   "main": "server/app.js",
+  "bugs": {
+    "url": "https://github.com/pruttned/owl-bt/issues"
+  },  
+  "license": "MIT",
+  "author": {
+    "name": "Peter Ruttkay-Nedecký",
+    "email": "pruttned@gmail.com"
+  },  
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/pruttned/owl-bt.git"
+  },  
   "dependencies": {
     "babel-polyfill": "^6.0.14",
     "bluebird": "^3.3.1",
@@ -82,9 +96,9 @@
     "test": "grunt test",
     "build": "grunt build",
     "serve": "grunt serve",
-    "deploy": "npm run build && npm install -g"
+    "deploy": "npm run build && npm install -g",
+    "prepublish": "npm run build"
   },
-  "private": true,
   "bin": {
     "owlbt": "./bin/index.js"
   }
