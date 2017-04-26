@@ -29,7 +29,7 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'src/client',
       common: 'src/common',
-      dist: '.dist'
+      dist: 'dist'
     },
     express: {
       options: {
@@ -368,17 +368,6 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/public/assets/images',
           src: ['generated/*']
-        }, {
-          expand: true,
-          dest: '<%= yeoman.dist %>',
-          src: [
-            'package.json',
-            'src/server/**/*',
-            '!src/server/**/*.spec.js',
-            'common/**/*.js',
-            'bin/**/*.js',
-            'bin/**/*.json',
-          ]
         }]
       },
       styles: {
@@ -388,7 +377,6 @@ module.exports = function (grunt) {
         src: ['{app,components}/**/*.css']
       }
     },
-
     buildcontrol: {
       options: {
         dir: 'dist',
