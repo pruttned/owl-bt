@@ -68,7 +68,6 @@
     "grunt-mocha-test": "~0.10.2",
     "grunt-newer": "~0.7.0",
     "grunt-ng-annotate": "^3.0.0",
-    "grunt-node-inspector": "^0.4.1",
     "grunt-nodemon": "~0.2.0",
     "grunt-open": "~0.2.3",
     "grunt-rev": "~0.1.0",
