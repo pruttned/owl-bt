@@ -1,5 +1,26 @@
 .tree-mru-list {
     margin: 0;
+    padding: 0;
+    .mru-item {
+        position: relative;
+        list-style: none;
+    }
+    .remove-btn {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        color: #cccccc;
+        &:focus,
+        &:visited {
+            color: #cccccc;
+            text-decoration: none
+        }
+        &:active,
+        &:hover {
+            color: $warn-color;
+            text-decoration: none
+        }
+    }
     a {
         display: block;
         padding: 5px 15px;

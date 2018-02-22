@@ -1,12 +1,13 @@
 <ul class="tree-mru-list">
-    <li ng-repeat="item in treeMruList.items"> 
-         <a ng-href="{{item.url}}">
-             <div class="name">
+    <li ng-repeat="item in treeMruList.items" class="mru-item">
+        <a ng-href="{{item.url}}">
+            <div class="name">
                 {{item.name}}
-             </div>
-             <div class="path">
+            </div>
+            <div class="path">
                 {{item.path}}
-             </div>
+            </div>
+            <div class="remove-btn fa fa-fw icon fa-times" ng-click="treeMruList.removeItem($event, item)"></div>
         </a>
     </li>
 </ul>

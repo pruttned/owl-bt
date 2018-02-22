@@ -31,6 +31,12 @@
 
             localStorage.setItem(itemsStorageKey, JSON.stringify(items));
         }
+
+        remove(treePath) {
+            let items = this.getList();
+            this._.remove(items, { path: treePath });
+            localStorage.setItem(itemsStorageKey, JSON.stringify(items));
+        }
     }
 
     angular.module('editorApp')
