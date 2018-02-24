@@ -95,7 +95,7 @@
   },
   "scripts": {
     "start": "node src/server/app.js",
-    "test": "grunt test",
+    "test": "grunt test:client",
     "build": "grunt build",
     "serve": "grunt serve",
     "prepublish": "npm run build"

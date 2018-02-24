@@ -22,6 +22,7 @@ module.exports = function(config) {
       'src/client/bower_components/lodash/dist/lodash.min.js',
       'src/client/bower_components/undo-manager/lib/undomanager.js',
       'src/client/bower_components/angular-hotkeys/build/hotkeys.js',
+      'src/client/bower_components/toposort/build/toposort.js',
       'node_modules/babel-polyfill/dist/polyfill.js',
       'node_modules/string_score/string_score.js',
       'src/client/app/app.js',

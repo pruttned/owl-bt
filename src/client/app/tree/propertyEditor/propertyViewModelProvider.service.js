@@ -63,7 +63,8 @@
       if (node) {
         let typeDescProperties = nodeItem.$meta.desc.properties;
         if (typeDescProperties) {
-          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, this._TreeNodeItemProperty, this._SetTreeNodeItemPropertyValueAction, this._ResetTreeNodeItemPropertyValueAction));
+          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, 
+            this._TreeNodeItemProperty, this._SetTreeNodeItemPropertyValueAction, this._ResetTreeNodeItemPropertyValueAction));
         }
       }
       return [];

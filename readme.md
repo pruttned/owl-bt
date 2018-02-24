@@ -73,6 +73,8 @@ Project file defines all nodes and node item types that can be used in trees.
 
 ### Node
 - *name* - (required) node type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - node icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
 - *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - node description. It may contain placeholders for properties `{{PropertyName}}`
@@ -81,6 +83,8 @@ Project file defines all nodes and node item types that can be used in trees.
 
 ### Decorator
 - *name* - (required) decorator type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - decorator icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
 - *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - decorator description. It may contain placeholders for properties `{{PropertyName}}`
@@ -88,6 +92,8 @@ Project file defines all nodes and node item types that can be used in trees.
 
 ### Service
 - *name* - (required) service type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - service icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
 - *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - service description. It may contain placeholders for properties `{{PropertyName}}`
@@ -104,7 +110,6 @@ Project file defines all nodes and node item types that can be used in trees.
 - *values*- (required for enum type) - list of possible enum values
 - *min*- (for number type) - min allowed value
 - *max*- (for number type) - max allowed value
-
 
 Example:
 ```json
@@ -189,3 +194,80 @@ Example:
 	]
 }
 ```
+
+### Inheritance
+It is possible to derive a node item type from another type using `base` setting. 
+
+E.q. we may create a base node:
+
+```json
+{
+      "name": "MyBaseNode",
+      "icon": "arrow-right",
+      "color": "red",
+      "isAbstract" : true,
+      "properties": [
+        {
+          "name": "prop-from-base1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "type": "number"
+        }
+      ]
+    },
+```
+
+And derived node:
+
+```json
+{
+      "name": "MyDerivedNode",
+      "color": "blue",
+      "base": "MyBaseNode",
+      "properties": [
+        {
+          "name": "prop1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "default" : "abc",          
+          "type": "string"
+        }
+      ]
+    },
+```
+
+Resulting node after applying inheritance is going to look like:
+
+```json
+{
+      "name": "MyDerivedNode",
+      "icon": "arrow-right",      
+      "color": "blue",
+      "base": "MyBaseNode",
+      "properties": [
+        {
+          "name": "prop-from-base1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "default" : "abc",          
+          "type": "string"
+        },
+        {
+          "name": "prop1",
+          "type": "string"
+        }
+      ]
+    },
+```
+
+## Changelog
+### 1.1.0
+- Add support for tree item type inheritance - see `base` and `isAbstract` properties in project definition
+- Add support to override tree item type color
+- Add support to remove items from MRU list

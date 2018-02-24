@@ -2,7 +2,7 @@
 
 (function () {
   class ProjectStore {
-    constructor(_, io, $interpolate, $resource, $rootScope) {
+    constructor(_, io, $interpolate, $resource, $rootScope, Toposort) {
       //this.treePath = $location.search().path;
       this.isLoaded = false;
       this.version = 1;
@@ -11,6 +11,7 @@
       this._io = io;
       this._$interpolate = $interpolate;
       this._$rootScope = $rootScope;
+      this.Toposort = Toposort;
 
       this._projectResource = $resource('api/project?path=:treePath', {
         treePath: '@treePath'
@@ -18,17 +19,17 @@
     }
 
     load(treePath) {
-      if(this.socket){
+      if (this.socket) {
         this.socket.disconnect();
         this.socket = null;
       }
       this.treePath = treePath;
       this.isLoaded = false;
-      
+
       return this._current();
     }
 
-    ensureLoad(){
+    ensureLoad() {
       return this._current();
     }
 
@@ -129,17 +130,64 @@
     }
 
     _compileProject(prjData) {
-      function objByName(obj) {
-        return obj.name;
-      }
+      let nodeTypeDescs = this._.keyBy(prjData.nodes || [], 'name');
+      let serviceTypeDescs = this._.keyBy(prjData.services || [], 'name');
+      let decoratorTypeDescs = this._.keyBy(prjData.decorators || [], 'name');
 
-      this.nodeTypeDescs = this._.keyBy(prjData.nodes || [], objByName);
-      this.serviceTypeDescs = this._.keyBy(prjData.services || [], objByName);
-      this.decoratorTypeDescs = this._.keyBy(prjData.decorators || [], objByName);
+      this._compileInheritances(nodeTypeDescs);
+      this._compileInheritances(serviceTypeDescs);
+      this._compileInheritances(decoratorTypeDescs);
+
+      this.nodeTypeDescs = this._withoutAbstract(nodeTypeDescs);
+      this.serviceTypeDescs = this._withoutAbstract(serviceTypeDescs);
+      this.decoratorTypeDescs = this._withoutAbstract(decoratorTypeDescs);
 
       this._compileDescriptions(this.nodeTypeDescs);
       this._compileDescriptions(this.serviceTypeDescs);
       this._compileDescriptions(this.decoratorTypeDescs);
+    }
+
+    _compileInheritances(typeDescs) {
+      let toposort = new this.Toposort();
+      this._.forEach(typeDescs, desc => {
+        toposort.add(desc.name, (desc.base && [desc.base]) || []);
+      });
+      for (const typeDescName of toposort.sort().reverse()) {
+        let typeDesc = typeDescs[typeDescName];
+        if (typeDesc) {
+          if (typeDesc.base) {
+            const baseTypeDesc = typeDescs[typeDesc.base];
+            if (!baseTypeDesc) {
+              throw new Error(`Missing base type '${typeDesc.base}' for '${typeDesc.name}'`)
+            }
+
+            let newTypeDesc = Object.assign({}, baseTypeDesc, typeDesc, { isAbstract: typeDesc.isAbstract });
+
+            if (baseTypeDesc.properties && baseTypeDesc.properties.length) {
+              let properties = baseTypeDesc.properties.slice(0);
+
+              if (typeDesc.properties && typeDesc.properties.length) {
+                for (const property of typeDesc.properties) {
+                  const existingPropertyIndex = this._.findIndex(properties, p => p.name === property.name);
+                  if (existingPropertyIndex >= 0) {
+                    properties[existingPropertyIndex] = property;
+                  } else {
+                    properties.push(property);
+                  }
+                }
+              }
+
+              newTypeDesc.properties = properties;
+            }
+
+            typeDescs[typeDescName] = newTypeDesc;
+          }
+        }
+      }
+    }
+
+    _withoutAbstract(typeDesc) {
+      return _.pickBy(typeDesc, typeDesc => !typeDesc.isAbstract);
     }
 
     _compileDescriptions(typeDict) {
