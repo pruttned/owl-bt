@@ -74,6 +74,7 @@ Project file defines all nodes and node item types that can be used in trees.
 ### Node
 - *name* - (required) node type name 
 - *icon* - node icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - node description. It may contain placeholders for properties `{{PropertyName}}`
 - *isComposite* - whether node may contain another child nodes
 - *properties* - list of node properties (see [property](#Property) definition)
@@ -81,12 +82,14 @@ Project file defines all nodes and node item types that can be used in trees.
 ### Decorator
 - *name* - (required) decorator type name 
 - *icon* - decorator icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - decorator description. It may contain placeholders for properties `{{PropertyName}}`
 - *properties* - list of decorator properties (see [property](#Property) definition)
 
 ### Service
 - *name* - (required) service type name 
 - *icon* - service icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - service description. It may contain placeholders for properties `{{PropertyName}}`
 - *properties* - list of service properties (see [property](#Property) definition)
 

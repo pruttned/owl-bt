@@ -68,13 +68,13 @@
         &.decorator {
           .content {
             color: $node-decorator-color;
-            border-left-color: $node-decorator-icon-background-color;
+            border-left-color: $node-decorator-background-color;
           }
         }
         &.service {
           .content {
             color: $node-service-color;
-            border-left-color: $node-service-icon-background-color;
+            border-left-color: $node-service-background-color;
           }
         }
         &.decorator.invalid {
@@ -94,7 +94,7 @@
         .node-desc {
           .content {
             background: $composite-node-background-color;
-            border-left-color: $composite-node-icon-background-color;
+            border-left-color: $composite-node-background-color;
           }
         }
       }
@@ -102,7 +102,7 @@
         .node-desc {
           .content {
             background: $action-node-background-color;
-            border-left-color: $action-node-icon-background-color;
+            border-left-color: $action-node-background-color;
           }
         }
       }
