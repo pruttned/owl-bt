@@ -27,7 +27,7 @@
       return this._TreeNodeItemProperty.isSet(this.nodeItem, this.name());
     }
     value(value) {
-      if (arguments.length) {
+      if (value !== undefined) { //value !== undefined - prevent setting of invalid value
         this._SetTreeNodeItemPropertyValueAction.exec({
           node: this.node,
           nodeItem: this.nodeItem,
