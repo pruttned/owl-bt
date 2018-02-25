@@ -15,11 +15,12 @@ angular.module('editorApp')
         scope.$watch('property', function(){
           if (scope.property) {
             let desc = scope.property.desc;
+            let inputElm = element.find('input');
             if (desc.min) {
-              element.attr('min', desc.min);
+              inputElm.attr('min', desc.min);
             }
             if (desc.max) {
-              element.attr('max', desc.max);
+              inputElm.attr('max', desc.max);
             }
           }
         });
