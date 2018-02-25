@@ -6,6 +6,7 @@ const bluebird = require('bluebird');
 const fs = bluebird.promisifyAll(require("fs"));
 
 const projectFileName = 'owl-bt.json';
+const pluginFileName = 'owl-bt.js';
 
 
 function getParentPath(absolutePath) {
@@ -19,10 +20,18 @@ function getParentPath(absolutePath) {
 function getProjectForDir(currentAbsolutePath) {
   let projectAbsolutePath = path.join(currentAbsolutePath, projectFileName);
   return fs.readFileAsync(projectAbsolutePath, 'utf8')
-    .then(prjContent => ({
-      path: projectAbsolutePath,
-      content: prjContent
-    }))
+    .then(prjContent => {
+      const prjPluginPath = path.join(path.dirname(projectAbsolutePath), pluginFileName);
+      let plugin;
+      if (fs.existsSync(prjPluginPath)) {
+        plugin = require(prjPluginPath);
+      }
+      return {
+        path: projectAbsolutePath,
+        content: prjContent,
+        plugin: plugin
+      }
+    })
     .catch(err => {
       if (err.code !== errors.ENOENT.code) {
         throw err;

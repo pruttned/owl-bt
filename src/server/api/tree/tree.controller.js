@@ -18,11 +18,11 @@ function checkTreePath(treePath, res) {
   return true;
 }
 
-function checkIsInProject(treePath, res) {
+function getProject(treePath, res) {
   return project.getProject(treePath)
     .then(prj => {
       if (prj) {
-        return true;
+        return prj;
       }
       res.status(403).send('Path must be in project');
     });
@@ -39,13 +39,21 @@ function handleError(err, res, next) {
 exports.index = function (req, res, next) {
   let treePath = req.query.path;
   if (checkTreePath(treePath, res)) {
-    checkIsInProject(treePath, res)
-      .then(isInProject => {
-        if (isInProject) {
+    getProject(treePath, res)
+      .then(project => {
+        if (project) {
           return fs.readFileAsync(treePath, 'utf8')
-            .then(treeContent => {
-              res.contentType('application/json').send(treeContent)
-            });
+            .then(treeStrContent => {
+              var treeContent = JSON.parse(treeStrContent);
+              return Promise.resolve(project.plugin && project.plugin.onTreeLoad && project.plugin.onTreeLoad({
+                tree: treeContent,
+                path: treePath,
+                project: JSON.parse(project.content),
+                projectPath: project.path
+              }))
+                .then(() => treeContent)
+            })
+            .then(treeContent => res.contentType('application/json').send(treeContent))
         }
       })
       .catch(err => handleError(err, res, next));
@@ -56,13 +64,22 @@ exports.save = function (req, res, next) {
   let treePath = req.query.path;
 
   if (checkTreePath(treePath, res)) {
-    checkIsInProject(treePath, res)
-      .then(isInProject => {
-        if (isInProject) {
-          return fs.writeFileAsync(treePath, JSON.stringify(req.body, null, '\t'), 'utf8')
-            .then(treeContent => {
-              res.status(200).send();
-            });
+    getProject(treePath, res)
+      .then(project => {
+        if (project) {
+
+          var treeContent = req.body;
+
+          return Promise.resolve(project.plugin && project.plugin.onTreeSave && project.plugin.onTreeSave({
+            tree: treeContent,
+            path: treePath,
+            project: JSON.parse(project.content),
+            projectPath: project.path,
+          }))
+            .then(() => fs.writeFileAsync(treePath, JSON.stringify(treeContent, null, '\t'), 'utf8')
+              .then(treeContent => {
+                res.status(200).send();
+              }));
         }
       })
       .catch(err => handleError(err, res, next));
