@@ -110,6 +110,7 @@ Project file (`owl-bt.json`) defines all nodes and node item types that can be u
 - *values*- (required for enum type) - list of possible enum values
 - *min*- (for number type) - min allowed value
 - *max*- (for number type) - max allowed value
+- *pattern*- (for number and string type) - regular expression for validation purposes
 
 Example:
 ```json
@@ -309,3 +310,4 @@ module.exports = {
 - Add support to remove items from MRU list
 - Add support to modify tree before save and after load through plugins
 - Prevent save of tree when current node item has validation errors in property editor
+- Add pattern validation to number and string item properties
