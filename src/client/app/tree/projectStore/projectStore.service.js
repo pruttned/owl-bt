@@ -104,15 +104,16 @@
     _current() {
       let _this = this;
 
-      this._currentPromise = this._projectResource.get({
-        treePath: this.treePath
-      }).$promise.then(prjData => {
-        _this._compileProject(prjData);
-        this.isLoaded = true;
+      if (!this._currentPromise) {
+        this._currentPromise = this._projectResource.get({
+          treePath: this.treePath
+        }).$promise.then(prjData => {
+          _this._compileProject(prjData);
+          this.isLoaded = true;
 
-        this._startPrjChangeWatch();
-      });
-
+          this._startPrjChangeWatch();
+        });
+      }
       return this._currentPromise;
     }
 
