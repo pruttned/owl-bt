@@ -19,6 +19,8 @@ $ctrl-background-color : #243342;
 $ctrl-hover-color : #3D566F;
 $ctrl-highlight-background-color : #C65C5C;
 $text-light-color: #777777;
+$ctrl-input-err-border-color: #C65C5C;
+$ctrl-input-err-background-color: #ffd2d2;
 //tree
 $node-selected-border-color : #C65C5C;
 $node-background-color : #ECECEC;
@@ -51,7 +53,6 @@ $top-menu-hover-background-color: $ctrl-hover-color;
  * App-wide Styles
  */
  $warn-color : #C65C5C;
-
 
 body{
   background: $main-background-color;
@@ -155,6 +156,11 @@ ul.selectable{
 .alert{
   margin-bottom: 0;
   border-radius: 0;
+}
+
+input.ng-invalid{
+  border-color:  $ctrl-input-err-border-color;
+  background: $ctrl-input-err-background-color;
 }
 
 // Component styles are injected through grunt

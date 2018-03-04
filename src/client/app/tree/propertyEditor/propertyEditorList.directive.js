@@ -17,8 +17,11 @@ angular.module('editorApp')
         childScope.properties = PropertyViewModelProvider.create(TreeSelection.selNode(), TreeSelection.selItem());
         for (let i = 0; i < childScope.properties.length; i++) {
           let propertyType = childScope.properties[i].desc.type;
-          let template = $compile(`<li class="property-editor"><div ${propertyType}-property-editor property="properties[${i}]"><label>{{properties[${i}].name()}}</label><div>Missing editor for <em>${propertyType}</em> property type</div></div></li>`);
-          element.append(template(childScope));
+
+          let template = angular.element(`<li class="property-editor"><div ${propertyType}-property-editor property="properties[${i}]"><label>{{properties[${i}].name()}}</label><div>Missing editor for <em>${propertyType}</em> property type</div></div></li>`)
+          element.append(template);
+          $compile(template)(childScope);
+          //compile after add - https://stackoverflow.com/questions/31727370/angularjs-dynamic-inputs-with-form-validation
         }
       }
     }

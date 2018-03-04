@@ -308,3 +308,4 @@ module.exports = {
 - Add support to override tree item type color
 - Add support to remove items from MRU list
 - Add support to modify tree before save and after load through plugins
+- Prevent save of tree when current node item has validation errors in property editor
