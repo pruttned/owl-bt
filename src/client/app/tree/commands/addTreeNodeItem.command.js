@@ -67,20 +67,23 @@
           name: 'svc:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'service'
+          itemType: 'service',
+          color: d.color || '#5cc690'
         }));
         this._.values(this._ProjectStore.getDecoratorDescs()).forEach(d => subItemDescsItems.push({
           name: 'dec:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'decorator'
+          itemType: 'decorator',
+          color: d.color || '#5c90c6'
         }));
 
         let nodeDescsItems = this._.values(this._ProjectStore.getNodeDescs()).map(d => ({
           name: 'node:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'node'
+          itemType: 'node', 
+          color: d.color || (d.isComposite ? '#d08038' : '#955cc6')
         }));
 
         this._descItemsForCompositeNode = nodeDescsItems.concat(subItemDescsItems);

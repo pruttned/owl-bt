@@ -40,6 +40,12 @@ angular.module('editorApp')
         bindItemEvents(liElm, items, index, onAccept);
         addItemIcon(liElm, item);
         liElm.append(document.createTextNode(item.name));
+
+        if(item.color){
+          liElm.addClass('color');
+          liElm.css('border-left-color', item.color);
+        }
+
         addItemAsideInf(liElm, item);
         ulElm.append(liElm);
       });

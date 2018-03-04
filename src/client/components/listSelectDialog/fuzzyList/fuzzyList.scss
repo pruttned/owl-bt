@@ -10,6 +10,12 @@
       .icon {
         margin-right: 5px;
       }
+      &.color{
+        border-left: solid 5px;
+      }
+      &:not(.color){
+        padding-left: 15px;
+      }
     }
   }
   em {

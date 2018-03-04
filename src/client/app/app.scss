@@ -112,7 +112,7 @@ ul.selectable{
     padding: 10px;
     background: $ctrl-background-color;
     color: $ctrl-color;
-    border-top: solid 1px $ctrl-border-color;
+    margin-top: 1px;
     &.selected{
       background: $ctrl-highlight-background-color;
     }

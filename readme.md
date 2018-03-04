@@ -311,3 +311,4 @@ module.exports = {
 - Add support to modify tree before save and after load through plugins
 - Prevent save of tree when current node item has validation errors in property editor
 - Add pattern validation to number and string item properties
+- Add item color to new item selection dialog
