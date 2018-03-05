@@ -4,11 +4,10 @@
 
   class AddTreeNodeItemCommand {
 
-    constructor(_, AddTreeNodeAction, AddTreeNodeSubItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider,
+    constructor(_, AddTreeNodeItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider,
       $rootScope) {
       this._ = _;
-      this._AddTreeNodeAction = AddTreeNodeAction;
-      this._AddTreeNodeSubItemAction = AddTreeNodeSubItemAction;
+      this._AddTreeNodeItemAction = AddTreeNodeItemAction;
       this._ListSelectDialog = ListSelectDialog;
       this._ProjectStore = ProjectStore;
       this._TreeStore = TreeStore;
@@ -43,19 +42,11 @@
               let nodeItem = _this._ItemProviders[descItem.itemType].create({
                 type: descItem.desc.name
               });
-
-              if (descItem.itemType === 'node') {
-                return _this._AddTreeNodeAction.exec({
-                  node: selNode,
-                  childNode: nodeItem
-                });
-              } else {
-                return _this._AddTreeNodeSubItemAction.exec({
-                  node: selNode,
-                  subItem: nodeItem,
-                  subItemType: descItem.itemType
-                });
-              }
+              return _this._AddTreeNodeItemAction.exec({
+                node: selNode,
+                item: nodeItem,
+                itemType: descItem.itemType
+              });
             }
           });
       }

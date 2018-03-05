@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('editorApp')
-    .directive('treeItemSideList', function (_, $compile, PropertyViewModelProvider, TreeSelection, ProjectStore, 
+    .directive('treeItemSideList', function (_, $compile, PropertyViewModelProvider, TreeSelection, ProjectStore,
       TreeNodeProvider, TreeDecoratorItemProvider, TreeServiceItemProvider,
-      AddTreeNodeAction, AddTreeNodeSubItemAction) {
+      AddTreeNodeItemAction) {
 
       let items = {};
       const itemProviders = {
@@ -16,29 +16,19 @@
       function renderItems(scope, items, ulElm) {
         items.forEach(function (item, index) {
           let liElm = angular.element('<li/>');
-          //            bindItemEvents(liElm, items, index, onAccept);
-          //          addItemIcon(liElm, item);
-
           liElm.on('click', () => {
             let itemDesc = item.desc;
             console.log(itemDesc);
             let selNode = TreeSelection.selNode();
+
             let nodeItem = itemProviders[item.itemType].create({
               type: itemDesc.name
             });
-
-            if (item.itemType === 'node') {
-              return AddTreeNodeAction.exec({
-                node: selNode,
-                childNode: nodeItem
-              });
-            } else {
-              return AddTreeNodeSubItemAction.exec({
-                node: selNode,
-                subItem: nodeItem,
-                subItemType: item.itemType
-              });
-            }
+            return AddTreeNodeItemAction.exec({
+              node: selNode,
+              item: nodeItem,
+              itemType: item.itemType
+            });
           });
 
           liElm.append(document.createTextNode(item.name));
