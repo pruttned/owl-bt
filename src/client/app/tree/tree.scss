@@ -9,6 +9,12 @@
   .tree-page-body{
     padding-top: 30px;
   }
+  .tree-item-side-list{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
 }
 .tree {
   position: fixed;

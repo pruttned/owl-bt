@@ -12,6 +12,10 @@
   </div>
   <tree-view root-node="tree.rootNode"></tree-view>
 
+  <section>
+    <tree-item-side-list></tree-item-side-list>
+  </section>
+
   <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
     <h1>Details - {{tree.TreeSelection.selItem().type}}</h1>
     <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
