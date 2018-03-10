@@ -13,6 +13,7 @@ $dlg-light-background-color : #507295;
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
 $ctrl-highlight-color : #C65C5C;
+$ctrl-highlight2-color : #b15454;
 $ctrl-input-color : #161b20;
 $ctrl-border-color : #2C3E50;
 $ctrl-background-color : #243342;
@@ -150,6 +151,7 @@ input.ng-invalid{
 @import 'tree/commandTopMenu/commandTopMenu.scss';
 @import 'tree/tree.scss';
 @import 'tree/treeItemPalette/treeItemPalette.scss';
+@import 'tree/treeItemPalette/treeItemPaletteGroup.scss';
 @import 'tree/treeItemPalette/treeItemPaletteItem.scss';
 @import 'tree/treeNodeItemDetails.scss';
 @import 'contextMenu/contextMenu.scss';

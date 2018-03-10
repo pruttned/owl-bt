@@ -9,4 +9,8 @@ $block: ".tree-item-palette";
         padding: 0;
         list-style: none;
     }
+    &_group{
+        padding: 10px;
+        background: $ctrl-highlight2-color;
+    }
 }

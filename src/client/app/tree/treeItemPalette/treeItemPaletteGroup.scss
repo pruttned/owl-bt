@@ -1,0 +1,11 @@
+$block: ".tree-item-palette-group";
+#{$block} {
+    &_title {
+        padding: 10px;
+        background: $ctrl-highlight2-color;
+        cursor: pointer;
+    }
+    &_state-icon {
+        float: right;
+    }
+}

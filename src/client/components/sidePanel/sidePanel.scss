@@ -3,10 +3,11 @@ $block: ".side-panel";
     display: flex;
     flex-direction: column;
     &_title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         margin: 0;
         padding: 10px;
         background: #C65C5C;
+        color: $ctrl-color;
     }
     &_body-wrap {
         position: relative;

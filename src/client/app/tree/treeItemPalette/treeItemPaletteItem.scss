@@ -1,10 +1,12 @@
 $block: ".tree-item-palette-item";
 #{$block} {
+    display: flex;
     padding: 5px 10px;
     cursor: pointer;
     color: $ctrl-color;
     margin-top: 1px;
     border-left: transparent solid 5px;
+    align-items: center;
     &.selected {
         background: $ctrl-highlight-background-color;
     }
@@ -13,5 +15,8 @@ $block: ".tree-item-palette-item";
     }
     &_icon {
         margin-right: 5px;
+    }
+    &_label {
+        flex: 1 1;
     }
 }
