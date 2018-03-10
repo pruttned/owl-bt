@@ -13,9 +13,20 @@
         service: TreeServiceItemProvider,
       }
 
+      function addItemIcon(liElm, item) {
+        if (item.icon) {
+          let iconElm = angular.element('<span class="fa fa-fw tree-item-palette-item_icon"></span>');
+          iconElm.addClass('fa-' + item.icon);
+          liElm.append(iconElm);
+        }
+      }
+      function setItemIcon(liElm, item) {
+        liElm.css('border-left-color', item.color);
+      }
+      
       function renderItems(scope, items, ulElm) {
         items.forEach(function (item, index) {
-          let liElm = angular.element('<li class="item"/>');
+          let liElm = angular.element('<li class="tree-item-palette-item"/>');
           liElm.on('click', () => {
             let itemDesc = item.desc;
             console.log(itemDesc);
@@ -31,12 +42,9 @@
             });
           });
 
+          addItemIcon(liElm, item);
           liElm.append(document.createTextNode(item.name));
-
-          if (item.color) {
-            liElm.addClass('color');
-            liElm.css('border-left-color', item.color);
-          }
+          setItemIcon(liElm, item);
 
           //addItemAsideInf(liElm, item);
           ulElm.append(liElm);
