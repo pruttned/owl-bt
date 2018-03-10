@@ -15,14 +15,9 @@
   </div>
   <div class="tree-page-main">
     <!-- TODO: directive -->
-    <div class="tree-page_side-panel side-panel side-panel--left">
-      <h2 class="side-panel_title">Item palette</h2>
-      <div class="side-panel_body-wrap">
-        <div ng-scrollbars class="side-panel_body">
-          <tree-item-palette></tree-item-palette>
-        </div>
-      </div>
-    </div>
+    <side-panel class="tree-page_side-panel" title="Item palette">
+      <tree-item-palette></tree-item-palette>
+    </side-panel>
     <div class="tree-page-tree">
       <tree-view root-node="tree.rootNode"></tree-view>
     </div>

@@ -148,7 +148,6 @@ input.ng-invalid{
 // injector
 @import 'main/main.scss';
 @import 'tree/commandTopMenu/commandTopMenu.scss';
-@import 'tree/side-panel.scss';
 @import 'tree/tree.scss';
 @import 'tree/treeItemPalette/treeItemPalette.scss';
 @import 'tree/treeNodeItemDetails.scss';
@@ -156,5 +155,6 @@ input.ng-invalid{
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'msgPanel/msgPanel.scss';
+@import 'sidePanel/sidePanel.scss';
 @import 'treeMruList/treeMruList.scss';
 // endinjector
