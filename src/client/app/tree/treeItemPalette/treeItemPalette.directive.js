@@ -25,6 +25,7 @@
       }
       
       function renderItems(scope, items, ulElm) {
+        ulElm.empty();
         items.forEach(function (item, index) {
           let liElm = angular.element('<li class="tree-item-palette-item"/>');
           liElm.on('click', () => {
