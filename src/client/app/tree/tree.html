@@ -1,40 +1,52 @@
 <div class="tree-page">
-
   <div class="tree-page-head">
-
-    <div ng-include="'app/tree/commandTopMenu/commandTopMenu.html'"></div>
-
-    <ol class="breadcrumb">
-      <li><a ng-href="/">Home</a></li>
-      <li class="active">{{tree.path}}</li>
-    </ol>
+    <div class="tree-page-top-menu">
+      <div ng-include="'app/tree/commandTopMenu/commandTopMenu.html'"></div>
+    </div>
+    <div class="tree-page-breadcrumb">
+      <ol class="breadcrumb">
+        <li>
+          <a ng-href="/">Home</a>
+        </li>
+        <li class="active">{{tree.path}}</li>
+      </ol>
+    </div>
     <alert-panel></alert-panel>
   </div>
-  <tree-view root-node="tree.rootNode"></tree-view>
-
-  <section>
-    <tree-item-side-list></tree-item-side-list>
-  </section>
-
-  <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
-    <h1>Details - {{tree.TreeSelection.selItem().type}}</h1>
-    <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
-      Error: Missing descriptor in project file
+  <div class="tree-page-main">
+    <!-- TODO: directive -->
+    <div class="tree-page_side-panel side-panel side-panel--left">
+      <h2 class="side-panel_title">Item palette</h2>
+      <div class="side-panel_body-wrap">
+        <div ng-scrollbars class="side-panel_body">
+          <tree-item-palette></tree-item-palette>
+        </div>
+      </div>
     </div>
-    <form name="tree.nodeItemPropertiesForm.form" novalidate>
-      <fieldset class="node-item-properties" ng-if="tree.selIsDecorator()">
-        <legend>Base properties</legend>
-        <div ng-include="'app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.html'"></div>
-      </fieldset>
-      <fieldset class="node-item-properties" ng-if="tree.selIsService()">
-        <legend>Base properties</legend>
-        <div ng-include="'app/tree/serviceBasePropertyEditor/serviceBasePropertyEditor.html'"></div>
-      </fieldset>    
-      <fieldset class="node-item-properties" ng-if="!tree.TreeSelection.selItem().$meta.desc.isInvalid">
-        <legend>Custom properties</legend>
-        <property-editor-list></property-editor-list>
-      </fieldset>
-    </form>
-  </section>
-
+    <div class="tree-page-tree">
+      <tree-view root-node="tree.rootNode"></tree-view>
+    </div>
+    <div ng-scrollbars class="tree-page-right-panel">
+      <div class="node-item-details tree-side-panel">
+        <h2>Details - {{tree.TreeSelection.selItem().type}}</h2>
+        <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
+          Error: Missing descriptor in project file
+        </div>
+        <form name="tree.nodeItemPropertiesForm.form" novalidate>
+          <fieldset class="node-item-properties" ng-if="tree.selIsDecorator()">
+            <legend>Base properties</legend>
+            <div ng-include="'app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.html'"></div>
+          </fieldset>
+          <fieldset class="node-item-properties" ng-if="tree.selIsService()">
+            <legend>Base properties</legend>
+            <div ng-include="'app/tree/serviceBasePropertyEditor/serviceBasePropertyEditor.html'"></div>
+          </fieldset>
+          <fieldset class="node-item-properties" ng-if="!tree.TreeSelection.selItem().$meta.desc.isInvalid">
+            <legend>Custom properties</legend>
+            <property-editor-list></property-editor-list>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
