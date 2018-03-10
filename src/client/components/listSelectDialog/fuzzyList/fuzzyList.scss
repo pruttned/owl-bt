@@ -23,6 +23,24 @@
     font-style: normal;
     font-weight: bold;
   }
+
+  .selectable{
+    padding: 0;
+    li{
+      cursor: pointer;
+      list-style: none;
+      padding: 10px;
+      background: $ctrl-background-color;
+      color: $ctrl-color;
+      margin-top: 1px;
+      &.selected{
+        background: $ctrl-highlight-background-color;
+      }
+      &:hover{
+        background: $ctrl-hover-color;
+      }
+    }
+  }
 }
 .fuzzy-list-aside-inf {
   float: right;

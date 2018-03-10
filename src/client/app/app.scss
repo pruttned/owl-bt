@@ -104,25 +104,6 @@ a{
   background: $dlg-background-color;
 }
 
-ul.selectable{
-  padding: 0;
-  li{
-    cursor: pointer;
-    list-style: none;
-    padding: 10px;
-    background: $ctrl-background-color;
-    color: $ctrl-color;
-    margin-top: 1px;
-    &.selected{
-      background: $ctrl-highlight-background-color;
-    }
-    &:hover{
-      background: $ctrl-hover-color;
-    }
-  }
-}
-
-
 .dropdown-menu {
   background: $dropdown-background-color;
   border: solid 1px $dropdown-border-color;
@@ -167,8 +148,9 @@ input.ng-invalid{
 // injector
 @import 'main/main.scss';
 @import 'tree/commandTopMenu/commandTopMenu.scss';
+@import 'tree/side-panel.scss';
 @import 'tree/tree.scss';
-@import 'tree/treeItemSideList/treeItemSideList.scss';
+@import 'tree/treeItemPalette/treeItemPalette.scss';
 @import 'tree/treeNodeItemDetails.scss';
 @import 'contextMenu/contextMenu.scss';
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
