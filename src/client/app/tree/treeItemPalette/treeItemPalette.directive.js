@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('editorApp')
-    .directive('treeItemSideList', function (_, $compile, PropertyViewModelProvider, TreeSelection, ProjectStore,
+    .directive('treeItemPalette', function (_, $compile, PropertyViewModelProvider, TreeSelection, ProjectStore,
       TreeNodeProvider, TreeDecoratorItemProvider, TreeServiceItemProvider,
       AddTreeNodeItemAction) {
 
@@ -15,7 +15,7 @@
 
       function renderItems(scope, items, ulElm) {
         items.forEach(function (item, index) {
-          let liElm = angular.element('<li/>');
+          let liElm = angular.element('<li class="item"/>');
           liElm.on('click', () => {
             let itemDesc = item.desc;
             console.log(itemDesc);
@@ -74,8 +74,8 @@
       }
 
       return {
-        templateUrl: 'app/tree/treeItemSideList/treeItemSideList.html',
-        restrict: 'EA',
+        templateUrl: 'app/tree/treeItemPalette/treeItemPalette.html',
+        restrict: 'E',
         replace: true,
         scope: {},
 
