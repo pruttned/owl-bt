@@ -8,13 +8,6 @@ angular.module('editorApp')
     this.path = $location.search().path;
     this.nodeItemPropertiesForm = NodeItemPropertiesForm;
 
-    this.selIsDecorator = function () {
-      return TreeSelection.selItemType() === 'decorator';
-    };
-    this.selIsService = function () {
-      return TreeSelection.selItemType() === 'service';
-    };
-
     //TODO: extract
     AlertList.clear();
     UndoRedoManager.clear();
