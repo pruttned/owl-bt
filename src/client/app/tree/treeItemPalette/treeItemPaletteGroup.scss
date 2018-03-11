@@ -4,6 +4,17 @@ $block: ".tree-item-palette-group";
         padding: 10px;
         background: $ctrl-highlight2-color;
         cursor: pointer;
+
+        &:visited,
+        &:focus {
+            color: $ctrl-color;
+            text-decoration: none;
+        }
+        &:active,
+        &:hover {
+            color: $ctrl-focus-color;
+            text-decoration: none;
+        }
     }
     &_state-icon {
         float: right;
