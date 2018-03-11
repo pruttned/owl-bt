@@ -25,6 +25,7 @@
       }
       this.treePath = treePath;
       this.isLoaded = false;
+      this._currentPromise = null;
 
       return this._current();
     }
