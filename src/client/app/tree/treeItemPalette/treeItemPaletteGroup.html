@@ -1,0 +1,8 @@
+<div>
+  <div class="tree-item-palette-group_title" ng-click="showItems = !showItems">{{title}}
+    <span class="fa tree-item-palette-group_state-icon" ng-class="{'fa-angle-up' : showItems, 'fa-angle-down' : !showItems}"></span>
+  </div>
+  <li ng-show="showItems">
+    <ul class="tree-item-palette-group_items"></ul>
+  </li>
+</div>

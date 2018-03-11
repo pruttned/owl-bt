@@ -1,0 +1,16 @@
+$block: ".tree-item-palette";
+#{$block} {
+    width: 100%;
+    word-break: break-word;
+    color: $ctrl-color;
+    overflow: hidden;
+    height: 100%;
+    &_groups {
+        padding: 0;
+        list-style: none;
+    }
+    &_no-sel {
+        padding-top: 10px;
+        text-align: center;
+    }
+}

@@ -69,24 +69,33 @@ In owl-bt, there are three types of items:
 
 ## Project file
 
-Project file defines all nodes and node item types that can be used in trees.
+Project file (`owl-bt.json`) defines all nodes and node item types that can be used in trees.
 
 ### Node
 - *name* - (required) node type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - node icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - node description. It may contain placeholders for properties `{{PropertyName}}`
 - *isComposite* - whether node may contain another child nodes
 - *properties* - list of node properties (see [property](#Property) definition)
 
 ### Decorator
 - *name* - (required) decorator type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - decorator icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - decorator description. It may contain placeholders for properties `{{PropertyName}}`
 - *properties* - list of decorator properties (see [property](#Property) definition)
 
 ### Service
 - *name* - (required) service type name 
+- *base* - item to inherit from
+- *isAbstract* - whether to allow creating items of this type - mainly for inheritance purposes
 - *icon* - service icon (name of the icon from [font-awesome](http://fontawesome.io/icons/) without `fa-` prefix)
+- *color* - custom color (css syntax - e.g. '#bada55' or 'green')
 - *description* - service description. It may contain placeholders for properties `{{PropertyName}}`
 - *properties* - list of service properties (see [property](#Property) definition)
 
@@ -98,14 +107,25 @@ Project file defines all nodes and node item types that can be used in trees.
   - *number*
   - *bool*
   - *enum*
+  - *custom type defined in project file*
 - *values*- (required for enum type) - list of possible enum values
 - *min*- (for number type) - min allowed value
 - *max*- (for number type) - max allowed value
 
+### Types
+Enables to define custom property types
+- *type* -  (required) base type for this custom type ['string' or 'number']
+- *pattern* - regular expression for validation purposes
 
 Example:
 ```json
 {
+  "types":{
+    "myString" : {
+      "type" : "string",
+      "pattern" : "v[0-9]"
+    }
+  },
   "nodes": [
     {
       "name": "SetAlertLevel",
@@ -186,3 +206,122 @@ Example:
 	]
 }
 ```
+
+### Inheritance
+It is possible to derive a node item type from another type using `base` setting. 
+
+E.q. we may create a base node:
+
+```json
+{
+      "name": "MyBaseNode",
+      "icon": "arrow-right",
+      "color": "red",
+      "isAbstract" : true,
+      "properties": [
+        {
+          "name": "prop-from-base1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "type": "number"
+        }
+      ]
+    },
+```
+
+And derived node:
+
+```json
+{
+      "name": "MyDerivedNode",
+      "color": "blue",
+      "base": "MyBaseNode",
+      "properties": [
+        {
+          "name": "prop1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "default" : "abc",          
+          "type": "string"
+        }
+      ]
+    },
+```
+
+Resulting node after applying inheritance is going to look like:
+
+```json
+{
+      "name": "MyDerivedNode",
+      "icon": "arrow-right",      
+      "color": "blue",
+      "base": "MyBaseNode",
+      "properties": [
+        {
+          "name": "prop-from-base1",
+          "type": "string"
+        },
+        {
+          "name": "prop-from-base2",
+          "default" : "abc",          
+          "type": "string"
+        },
+        {
+          "name": "prop1",
+          "type": "string"
+        }
+      ]
+    },
+```
+
+## Plugins
+`owl-bt.js` file in the same directory as project file `owl-bt.json` is considered plugin.
+Plugin js file exports object with plugin functions.
+
+```js
+module.exports = {
+	onTreeSave: ({ tree, path, project, projectPath }) => {
+	},
+	onTreeLoad: ({ tree, path, project, projectPath }) => {
+	}
+}
+```
+
+- `onTreeSave` - executed before the tree json file is saved to disk. Only modifications of `tree` object are allowed.
+  - `tree` - tree object (according to tree json file)
+  - `path` - tree file path
+  - `project` - project object (according to `owl-bt.json` file)
+  - `projectPath` - project file path
+- `onTreeLoad` - executed after loading tree json file from disk. Only modifications of `tree` object are allowed.
+  - `tree` - tree object (according to tree json file)
+  - `path` - tree file path
+  - `project` - project object (according to `owl-bt.json` file)
+  - `projectPath` - project file path
+
+It is possible for example to
+ create a custom tree file formats using `onTreeSave` and `onTreeLoad`.
+If we wanted to have project path stored in the tree file, we could create the following plugin:
+
+```js
+module.exports = {
+	onTreeSave: ({ tree, path, project, projectPath }) => {
+		tree.projectPath = projectPath;
+	}
+}
+```
+
+## Changelog
+### 1.1.0
+- Add support for tree item type inheritance - see `base` and `isAbstract` properties in project definition
+- Add support to override tree item type color
+- Add support to remove items from MRU list
+- Add support to modify tree before save and after load through plugins
+- Prevent save of tree when current node item has validation errors in property editor
+- Add support for custom property types
+- Add item color to new item selection dialog
+- Add item palette side panel
+- Make side panels collapsible

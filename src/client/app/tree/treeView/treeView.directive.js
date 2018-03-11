@@ -1,6 +1,6 @@
-'use strict';
+(function () {
+  'use strict';
 
-(function() {
   const separationX = 50;
   const separationY = 70;
   const baseWidth = 150; //should be somewhere between min and max width
@@ -28,7 +28,7 @@
   }
 
   function showContextMenu(CommandContextMenu, d3, TreeSelection, scope, viewNodeItem) {
-    scope.$apply(function() {
+    scope.$apply(function () {
       selectItem(TreeSelection, viewNodeItem);
       CommandContextMenu.show(scope, d3.event);
     });
@@ -40,7 +40,7 @@
       .on('click', item => {
         d3.event.stopPropagation();
         if (!hasPanned) {
-          scope.$apply(function() {
+          scope.$apply(function () {
             selectItem(TreeSelection, item);
           });
         }
@@ -58,7 +58,7 @@
     treeElm
       .on('click', () => {
         if (!hasPanned) {
-          scope.$apply(function() {
+          scope.$apply(function () {
             selectItem(TreeSelection, null);
           });
         }
@@ -68,15 +68,15 @@
         d3.event.stopPropagation();
         if (!hasPanned) {
           CommandContextMenu.hide();
-          scope.$apply(function() {
+          scope.$apply(function () {
             selectItem(TreeSelection, null);
           });
         }
       });
   }
 
-  function getNodeItemNamePrefix(nodeItem){
-    if(nodeItem.inverseCheckCondition){
+  function getNodeItemNamePrefix(nodeItem) {
+    if (nodeItem.inverseCheckCondition) {
       return '[not] ';
     }
     return '';
@@ -107,6 +107,13 @@
       nodeItemElm.classed('selected', true);
     }
 
+    if (desc.color) {
+      if (typeof (index) === 'undefined') { // not a item inside node
+        itemContentElm.style('background', desc.color);
+      }
+      itemContentElm.style('border-left-color', desc.color);
+    }
+
     bindMouseEvents(CommandContextMenu, d3, TreeSelection, scope, nodeItemElm, viewNodeItem);
   }
 
@@ -122,18 +129,18 @@
       .attr('class', viewNode => (viewNode.desc.isComposite ? 'composite' : 'action') + ' node')
       .attr('data-node-id', viewNode => viewNode.id)
       .attr('data-node-key', viewNode => getNodeKey(viewNode))
-      .each(function(viewNode) {
+      .each(function (viewNode) {
         let nodeElm = d3.select(this);
 
         addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNode, nodeElm, 'node-desc');
 
         if (viewNode.decorators) {
-          viewNode.decorators.forEach(function(viewNodeItem, index) {
+          viewNode.decorators.forEach(function (viewNodeItem, index) {
             addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'decorator', index);
           });
         }
         if (viewNode.services) {
-          viewNode.services.forEach(function(viewNodeItem, index) {
+          viewNode.services.forEach(function (viewNodeItem, index) {
             addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, 'service', index);
           });
         }
@@ -254,7 +261,7 @@
     let nodeElms = treeContentElm.selectAll('.node');
 
     //http://stackoverflow.com/questions/30890212/data-join-with-custom-key-does-not-work-as-expected
-    let nodeElmsData = nodeElms.data(viewNodes, function(viewNode) {
+    let nodeElmsData = nodeElms.data(viewNodes, function (viewNode) {
       return Array.isArray(this) ? getNodeKey(viewNode) : d3.select(this).attr('data-node-key');
     });
 
@@ -272,7 +279,7 @@
 
     //update node width and height from content
     nodeElmsData
-      .each(function(viewNode) { //width and height from content
+      .each(function (viewNode) { //width and height from content
         viewNode.width = this.offsetWidth;
         viewNode.height = this.offsetHeight;
       });
@@ -290,7 +297,7 @@
     let offsetX = -treeBounds.minX;
     let offsetY = -treeBounds.minY;
     nodeElmsData
-      .each(function(viewNode) {
+      .each(function (viewNode) {
         viewNode.x += offsetX - viewNode.width * 0.5;
         viewNode.y = yPosPerLevel[viewNode.depth] + offsetY;
       })
@@ -309,7 +316,7 @@
 
   function createZoomHandler(d3, treeContentElm) {
     let zoom;
-    let handleZoom = function() {
+    let handleZoom = function () {
       let translate = zoom.translate();
       treeContentElm.style('transform', `translate(${translate[0]}px,${translate[1]}px) scale(${zoom.scale()})`);
     };
@@ -373,12 +380,12 @@
       if (nodeElmRaw) {
         let scale = zoomHandler.zoom.scale();
         let destTranslate = [scale * (-nodeElmRaw.offsetLeft - nodeElmRaw.offsetWidth * 0.5) + treeElmRaw.offsetWidth * 0.5,
-          scale * (-nodeElmRaw.offsetTop) + scrollToNodeTopOffset
+        scale * (-nodeElmRaw.offsetTop) + scrollToNodeTopOffset
         ];
         if (duration) {
-          d3.transition().duration(duration).tween('scrollToNode', function() {
+          d3.transition().duration(duration).tween('scrollToNode', function () {
             let iTranslate = d3.interpolate(zoomHandler.zoom.translate(), destTranslate);
-            return function(t) {
+            return function (t) {
               zoomHandler.zoom.translate(iTranslate(t));
               zoomHandler.handleZoom();
             };
@@ -397,7 +404,7 @@
       restrict: 'EA',
       replace: true,
       scope: {},
-      link: function(scope, element) {
+      link: function (scope, element) {
         // note: don't use replaceWith because of jquery problems with svg
         // note: don't use foreignObject because of webkit scale bugs
         // note: d3 node building instead of angular template is used to get the real width and height before exiting the link function and also for perf reasons
@@ -409,7 +416,7 @@
 
         let zoomHandler = createZoomHandler(d3, treeContentElm);
 
-        TreeFocus.subscribe(scope, function(node){
+        TreeFocus.subscribe(scope, function (node) {
           scrollToNode(d3, zoomHandler, treeElmRaw, node, focusMoveDuration);
         });
 
@@ -421,7 +428,7 @@
 
             let firstRender = true;
             scope.$watch(() => TreeStore.version,
-              function() {
+              function () {
                 refreshTree(CommandContextMenu, TreeViewModelProvider, TreeNodeItem, d3, TreeSelection, scope, rootNode, treeElm, treeContentElm, svgElm);
 
                 if (firstRender) {
@@ -429,7 +436,7 @@
                     .on('mousedown', () => { //must be called before call(zoomHandler.zoom) because of stopImmediatePropagation
                       hasPanned = false;
 
-                      if(d3.event.button !== 2){
+                      if (d3.event.button !== 2) {
                         d3.event.stopImmediatePropagation();
                       }
                     })
@@ -442,7 +449,7 @@
                 }
               });
 
-            scope.$watch(() => TreeSelection.selItem(), function() {
+            scope.$watch(() => TreeSelection.selItem(), function () {
               onSelectionChanged(TreeNode, TreeSelection, treeContentElm);
             });
           });

@@ -4,11 +4,10 @@
 
   class AddTreeNodeItemCommand {
 
-    constructor(_, AddTreeNodeAction, AddTreeNodeSubItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider,
+    constructor(_, AddTreeNodeItemAction, ListSelectDialog, ProjectStore, TreeStore, TreeSelection, TreeNodeProvider, TreeServiceItemProvider, TreeDecoratorItemProvider,
       $rootScope) {
       this._ = _;
-      this._AddTreeNodeAction = AddTreeNodeAction;
-      this._AddTreeNodeSubItemAction = AddTreeNodeSubItemAction;
+      this._AddTreeNodeItemAction = AddTreeNodeItemAction;
       this._ListSelectDialog = ListSelectDialog;
       this._ProjectStore = ProjectStore;
       this._TreeStore = TreeStore;
@@ -43,19 +42,11 @@
               let nodeItem = _this._ItemProviders[descItem.itemType].create({
                 type: descItem.desc.name
               });
-
-              if (descItem.itemType === 'node') {
-                return _this._AddTreeNodeAction.exec({
-                  node: selNode,
-                  childNode: nodeItem
-                });
-              } else {
-                return _this._AddTreeNodeSubItemAction.exec({
-                  node: selNode,
-                  subItem: nodeItem,
-                  subItemType: descItem.itemType
-                });
-              }
+              return _this._AddTreeNodeItemAction.exec({
+                node: selNode,
+                item: nodeItem,
+                itemType: descItem.itemType
+              });
             }
           });
       }
@@ -67,20 +58,23 @@
           name: 'svc:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'service'
+          itemType: 'service',
+          color: d.color || '#5cc690'
         }));
         this._.values(this._ProjectStore.getDecoratorDescs()).forEach(d => subItemDescsItems.push({
           name: 'dec:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'decorator'
+          itemType: 'decorator',
+          color: d.color || '#5c90c6'
         }));
 
         let nodeDescsItems = this._.values(this._ProjectStore.getNodeDescs()).map(d => ({
           name: 'node:' + d.name,
           icon: d.icon,
           desc: d,
-          itemType: 'node'
+          itemType: 'node', 
+          color: d.color || (d.isComposite ? '#d08038' : '#955cc6')
         }));
 
         this._descItemsForCompositeNode = nodeDescsItems.concat(subItemDescsItems);

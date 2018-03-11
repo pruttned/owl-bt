@@ -16,8 +16,6 @@ module.exports = function(app) {
   var env = app.get('env');
 
   app.set('views', path.join(config.root, 'src/server/views'));
-  app.engine('html', require('ejs').renderFile);
-  app.set('view engine', 'html');
   app.use(bodyParser.json());
 
   app.use('/api/', function(req, res, next) { //media type check

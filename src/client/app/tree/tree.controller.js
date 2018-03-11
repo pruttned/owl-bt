@@ -2,18 +2,12 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function ($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeMruList, TreeStore, TreeSelection, TreeNode, UndoRedoManager, AlertList) {
+    TreeMruList, TreeStore, TreeSelection, TreeNode, UndoRedoManager, AlertList, NodeItemPropertiesForm) {
 
     this.TreeSelection = TreeSelection;
     this.path = $location.search().path;
+    this.nodeItemPropertiesForm = NodeItemPropertiesForm;
 
-    this.selIsDecorator = function () {
-      return TreeSelection.selItemType() === 'decorator';
-    };
-    this.selIsService = function () {
-      return TreeSelection.selItemType() === 'service';
-    };
-    
     //TODO: extract
     AlertList.clear();
     UndoRedoManager.clear();

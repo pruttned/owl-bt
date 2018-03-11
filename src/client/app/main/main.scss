@@ -7,6 +7,7 @@
         padding: 20px 10px;
         background: $top-menu-background-color;
         border-bottom: solid 1px $top-menu-border-color;
+        z-index: 1;
     }
     .main-page-body {
         padding-top: 100px;

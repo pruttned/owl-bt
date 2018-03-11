@@ -1,34 +1,27 @@
 <div class="tree-page">
-
   <div class="tree-page-head">
-
-    <div ng-include="'app/tree/commandTopMenu/commandTopMenu.html'"></div>
-
-    <ol class="breadcrumb">
-      <li><a ng-href="/">Home</a></li>
-      <li class="active">{{tree.path}}</li>
-    </ol>
+    <div class="tree-page-top-menu">
+      <div ng-include="'app/tree/commandTopMenu/commandTopMenu.html'"></div>
+    </div>
+    <div class="tree-page-breadcrumb">
+      <ol class="breadcrumb">
+        <li>
+          <a ng-href="/">Home</a>
+        </li>
+        <li class="active">{{tree.path}}</li>
+      </ol>
+    </div>
     <alert-panel></alert-panel>
   </div>
-  <tree-view root-node="tree.rootNode"></tree-view>
-
-  <section class="node-item-details" ng-if="tree.TreeSelection.selItem()">
-    <h1>Details - {{tree.TreeSelection.selItem().type}}</h1>
-    <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
-      Error: Missing descriptor in project file
+  <div class="tree-page-main">
+    <side-panel title="Item palette" name="item-palette" position="left">
+      <tree-item-palette></tree-item-palette>
+    </side-panel>
+    <div class="tree-page-tree">
+      <tree-view root-node="tree.rootNode"></tree-view>
     </div>
-    <fieldset class="node-item-properties" ng-if="tree.selIsDecorator()">
-      <legend>Base properties</legend>
-      <div ng-include="'app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.html'"></div>
-    </fieldset>
-    <fieldset class="node-item-properties" ng-if="tree.selIsService()">
-      <legend>Base properties</legend>
-      <div ng-include="'app/tree/serviceBasePropertyEditor/serviceBasePropertyEditor.html'"></div>
-    </fieldset>    
-    <fieldset class="node-item-properties" ng-if="!tree.TreeSelection.selItem().$meta.desc.isInvalid">
-      <legend>Custom properties</legend>
-      <property-editor-list></property-editor-list>
-    </fieldset>
-  </section>
-
+    <side-panel title="Item Details" name="item-details" position="right">
+      <tree-item-details></tree-item-details>
+    </side-panel>
+  </div>
 </div>

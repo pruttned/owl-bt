@@ -1,13 +1,12 @@
-'use strict';
-
-
-
-(function() {
+(function () {
+  'use strict';
 
   class TreeSelection {
-    constructor(_, TreeNode) {
+    constructor(_, TreeNode, NodeItemPropertiesForm, AlertList) {
       this._ = _;
       this._TreeNode = TreeNode;
+      this._NodeItemPropertiesForm = NodeItemPropertiesForm;
+      this._AlertList = AlertList;
 
       this._selNode = null;
       this._selItem = null;
@@ -18,7 +17,7 @@
      * whether is something selected
      * @return {Boolean}
      */
-    hasSelected(){
+    hasSelected() {
       return !this._.isNil(this._selNode) && !this._.isNil(this._selItem);
     }
 
@@ -26,7 +25,7 @@
      * whether is specified item selected
      * @return {Boolean}
      */
-    isSelected(item){
+    isSelected(item) {
       return this._selItem === item;
     }
 
@@ -52,17 +51,21 @@
      * @param  {node} node - node that contains the specified sub item or the same node as in item in case of selected node
      */
     select(node, item) {
-      this._selNode = node;
-      this._selItem = item;
+      if (this._NodeItemPropertiesForm.isValid()) {
+        this._selNode = node;
+        this._selItem = item;
 
-      if (item) {
-        if (item === node) {
-          this._selItemType = 'node';
+        if (item) {
+          if (item === node) {
+            this._selItemType = 'node';
+          } else {
+            this._selItemType = this._TreeNode.getSubItemType(node, item);
+          }
         } else {
-          this._selItemType = this._TreeNode.getSubItemType(node, item);
+          this._selItemType = null;
         }
       } else {
-        this._selItemType = null;
+        this._AlertList.addErr('Properties of selected node item are not valid');
       }
     }
   }

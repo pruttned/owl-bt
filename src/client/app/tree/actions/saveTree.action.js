@@ -1,19 +1,25 @@
-'use strict';
+(function () {
+  'use strict';
 
-(function() {
   class SaveTreeAction {
-    constructor(ActionExecutor, TreeStore) {
+    constructor(ActionExecutor, TreeStore, NodeItemPropertiesForm, AlertList) {
       this._ActionExecutor = ActionExecutor;
       this._TreeStore = TreeStore;
+      this._NodeItemPropertiesForm = NodeItemPropertiesForm;
+      this._AlertList = AlertList;
     }
 
     exec() {
       let _this = this;
-      this._ActionExecutor.exec({
-        exec: () => {
-          return _this._TreeStore.save();
-        }
-      });
+      if (this._NodeItemPropertiesForm.isValid()) {
+        this._ActionExecutor.exec({
+          exec: () => {
+            return _this._TreeStore.save();
+          }
+        });
+      } else {
+        _this._AlertList.addErr('Properties of selected node item are not valid');
+      }
     }
   }
 

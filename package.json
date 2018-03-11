@@ -1,6 +1,6 @@
 {
   "name": "owl-bt",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "owl-bt is editor for Behavior trees. It has been inspired by Unreal engine behavior trees in a way, that it supports special node items like decorators and services. This makes trees smaller and much more readable.",
   "keywords": [
     "game",
@@ -27,7 +27,6 @@
     "babel-polyfill": "^6.0.14",
     "bluebird": "^3.3.1",
     "body-parser": "^1.5.2",
-    "ejs": "~0.8.4",
     "errno-codes": "^1.0.2",
     "errorhandler": "~1.0.0",
     "express": "~4.9.0",
@@ -55,7 +54,6 @@
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-cssmin": "~0.9.0",
     "grunt-contrib-htmlmin": "~0.2.0",
-    "grunt-contrib-imagemin": "^1.0.1",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-sass": "^0.7.3",
     "grunt-contrib-uglify": "~0.4.0",
@@ -68,11 +66,8 @@
     "grunt-mocha-test": "~0.10.2",
     "grunt-newer": "~0.7.0",
     "grunt-ng-annotate": "^3.0.0",
-    "grunt-node-inspector": "^0.4.1",
-    "grunt-nodemon": "~0.2.0",
     "grunt-open": "~0.2.3",
     "grunt-rev": "~0.1.0",
-    "grunt-svgmin": "~0.4.0",
     "grunt-usemin": "~2.1.1",
     "grunt-wiredep": "~1.8.0",
     "jasmine-core": "^2.3.4",
@@ -100,7 +95,7 @@
   },
   "scripts": {
     "start": "node src/server/app.js",
-    "test": "grunt test",
+    "test": "grunt test:client",
     "build": "grunt build",
     "serve": "grunt serve",
     "prepublish": "npm run build"

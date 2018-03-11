@@ -37,8 +37,7 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: 'src/server/app.js',
-          debug: true
+          script: 'src/server/app.js'
         }
       },
       prod: {
@@ -195,41 +194,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-
-    // Debugging with node inspector
-    'node-inspector': {
-      custom: {
-        options: {
-          'web-host': 'localhost'
-        }
-      }
-    },
-
-    // Use nodemon to run server in debug mode with an initial breakpoint
-    nodemon: {
-      debug: {
-        script: 'src/server/app.js',
-        options: {
-          nodeArgs: ['--debug-brk'],
-          env: {
-            PORT: process.env.PORT || 9000
-          },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
-              console.log(event.colour);
-            });
-
-            // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
-                require('open')('http://localhost:8080/debug?port=5858');
-              }, 500);
-            });
-          }
-        }
-      }
-    },
-
     // Automatically inject Bower components into the app
     wiredep: {
       target: {
@@ -281,30 +245,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    // The following *-min tasks produce minified files in the dist folder
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/assets/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/public/assets/images'
-        }]
-      }
-    },
-
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/assets/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/public/assets/images'
-        }]
-      }
-    },
-
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
     ngAnnotate: {
@@ -409,20 +349,9 @@ module.exports = function (grunt) {
         'babel',
         'sass',
       ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
       dist: [
         'babel',
-        'sass',
-        'imagemin',
-        'svgmin'
+        'sass'
       ]
     },
 
@@ -584,19 +513,6 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
-    }
-
-    if (target === 'debug') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'injector:sass',
-        'concurrent:server',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
     }
 
     grunt.task.run([

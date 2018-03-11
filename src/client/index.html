@@ -12,6 +12,7 @@
   <!-- build:css(client) app/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.css" />
+  <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp,client}) app/app.css -->
@@ -41,6 +42,10 @@
   <script src="bower_components/d3/d3.js"></script>
   <script src="bower_components/undo-manager/lib/undomanager.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/toposort/build/toposort.js"></script>
+  <script src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+  <script src="bower_components/ng-scrollbars/dist/scrollbars.min.js"></script>
   <!-- endbower -->
   <script src="babel-polyfill/polyfill.js"></script>
   <script src="string_score/string_score.js"></script>
@@ -54,8 +59,7 @@
   <script src="app/main/main.controller.js"></script>
   <script src="app/main/main.js"></script>
   <script src="app/tree/actions/SetTreeNodeItemBasePropertyValueAction.action.js"></script>
-  <script src="app/tree/actions/addTreeNode.action.js"></script>
-  <script src="app/tree/actions/addTreeNodeSubItem.action.js"></script>
+  <script src="app/tree/actions/addTreeNodeItemAction.action.js"></script>
   <script src="app/tree/actions/copyTreeNodeItem.action.js"></script>
   <script src="app/tree/actions/moveTreeNode.action.js"></script>
   <script src="app/tree/actions/moveTreeNodeSubItem.action.js"></script>
@@ -90,8 +94,10 @@
   <script src="app/tree/missingNodeItemDescValidation/missingNodeItemDescValidation.service.js"></script>
   <script src="app/tree/projectStore/projectStore.service.js"></script>
   <script src="app/tree/propertyEditor/boolParamEditor.directive.js"></script>
+  <script src="app/tree/propertyEditor/customPropertyEditor.directive.js"></script>
   <script src="app/tree/propertyEditor/enumParamEditor.directive.js"></script>
   <script src="app/tree/propertyEditor/formGroupParamEditor.directive.js"></script>
+  <script src="app/tree/propertyEditor/nodeItemPropertiesForm.service.js"></script>
   <script src="app/tree/propertyEditor/numberParamEditor.directive.js"></script>
   <script src="app/tree/propertyEditor/propertyEditorList.directive.js"></script>
   <script src="app/tree/propertyEditor/propertyReset.directive.js"></script>
@@ -100,6 +106,9 @@
   <script src="app/tree/serviceBasePropertyEditor/serviceBasePropertyEditor.controller.js"></script>
   <script src="app/tree/tree.controller.js"></script>
   <script src="app/tree/tree.js"></script>
+  <script src="app/tree/treeItemDetails/treeItemDetails.directive.js"></script>
+  <script src="app/tree/treeItemPalette/treeItemPalette.directive.js"></script>
+  <script src="app/tree/treeItemPalette/treeItemPaletteGroup.directive.js"></script>
   <script src="app/tree/treeModel/tree.service.js"></script>
   <script src="app/tree/treeModel/treeDecoratorItemProvider.service.js"></script>
   <script src="app/tree/treeModel/treeFocus.service.js"></script>
@@ -130,6 +139,7 @@
   <script src="components/msgPanel/alertList.service.js"></script>
   <script src="components/msgPanel/alertPanel.directive.js"></script>
   <script src="components/navbar/navbar.controller.js"></script>
+  <script src="components/sidePanel/sidePanel.directive.js"></script>
   <script src="components/treeMruList/treeMruList.directive.js"></script>
   <script src="components/treeMruList/treeMruList.service.js"></script>
   <script src="components/undoRedoManager/undoRedoManager.service.js"></script>

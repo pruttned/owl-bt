@@ -22,11 +22,22 @@
             //     items: '='
             // },
             controller: function ($httpParamSerializer, TreeMruList) {
-                this.items = TreeMruList.getList().map(item => ({
-                    url: '/tree?' + $httpParamSerializer({ path: item.path }),
-                    path: item.path,
-                    name: getPathLastSegment(item.path)
-                }));
+                let _this = this;
+                function refreshItems() {
+                    _this.items = TreeMruList.getList().map(item => ({
+                        url: '/tree?' + $httpParamSerializer({ path: item.path }),
+                        path: item.path,
+                        name: getPathLastSegment(item.path)
+                    }));
+                }
+
+                this.removeItem = (e, item) => {
+                    e.preventDefault();
+                    TreeMruList.remove(item.path);
+                    refreshItems();
+                };
+
+                refreshItems();
             },
             controllerAs: 'treeMruList'
         };

@@ -1,72 +1,53 @@
-.node-item-details{
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 250px;
-  z-index: 200;
-  background: $dlg-background-color;
-  color: $ctrl-color;
-  overflow: auto;
-  border-left: solid 1px #1C2732;
-  padding: 0 10px;
-  word-break: break-word;
-
-  ul{
-    padding: 0;
-    li{
-      list-style: none;
-      margin-bottom: 6px;
-    }
-  }
-
-  h1{
-    font-size: 1.5rem;
-    margin:0;
-    padding: 10px 0;
-    background: #C65C5C;
-    padding: 10px 10px;
-    margin: 0 -10px;
-  }
-
-  legend{
-    color: $ctrl-color;
-    border:none;
-    margin-bottom: 5px;
-  }
-
-  input, select{
-    display:block;
+.node-item-details {
     width: 100%;
-  }
-  input[type="checkbox"]{
-    width: auto;
-  }
-  label{
-    font-weight: normal;
-    font-size: 1.5rem;
-  }
-  .icon-button{
-    margin-left: 12px;
-  }
-
-  fieldset {
-      position: relative;
-      margin: 5px 0 20px 0;
-      &:before {
-          position: absolute;
-          top: -5px;
-          left: 0;
-          right: 0;
-          content: "";
-          display: block;
-          padding: 2px 0;
-          border-top: 1px solid #1c2732;
-      }
-      &:first-of-type {
-          &:before{
-            display: none;
-          }
-      }
-  }
+    color: $ctrl-color;
+    overflow: auto;
+    padding: 0 10px;
+    word-break: break-word;
+    ul {
+        padding: 0;
+        li {
+            list-style: none;
+            margin-bottom: 6px;
+        }
+    }
+    legend {
+        color: $ctrl-color;
+        border: none;
+        margin-bottom: 5px;
+    }
+    input,
+    select {
+        display: block;
+        width: 100%;
+    }
+    input[type="checkbox"] {
+        width: auto;
+    }
+    label {
+        font-weight: normal;
+        font-size: 1.5rem;
+    }
+    .icon-button {
+        margin-left: 12px;
+    }
+    fieldset {
+        position: relative;
+        margin: 5px 0 20px 0;
+        &:before {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            right: 0;
+            content: "";
+            display: block;
+            padding: 2px 0;
+            border-top: 1px solid #1c2732;
+        }
+        &:first-of-type {
+            &:before {
+                display: none;
+            }
+        }
+    }
 }

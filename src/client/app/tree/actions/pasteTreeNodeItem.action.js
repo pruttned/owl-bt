@@ -3,13 +3,12 @@
 (function () {
   class PasteTreeNodeItemAction {
     constructor(ActionExecutor, TreeStore, TreeNode, TreeNodeProvider, TreeDecoratorItemProvider, TreeServiceItemProvider, Clipboard,
-      AddTreeNodeAction, AddTreeNodeSubItemAction) {
+      AddTreeNodeItemAction) {
       this._ActionExecutor = ActionExecutor;
       this._TreeStore = TreeStore;
       this._TreeNode = TreeNode;
       this._Clipboard = Clipboard;
-      this._AddTreeNodeAction = AddTreeNodeAction;
-      this._AddTreeNodeSubItemAction = AddTreeNodeSubItemAction;
+      this._AddTreeNodeItemAction = AddTreeNodeItemAction;
 
       this._itemProviders = {
         node: TreeNodeProvider,
@@ -26,22 +25,13 @@
       let treeClipboardItem = this._Clipboard.get('tree');
       if (treeClipboardItem && treeClipboardItem.item && treeClipboardItem.itemType) {
 
-        let nodeItem = this._itemProviders[treeClipboardItem.itemType].create(treeClipboardItem.item);
-
-        if (treeClipboardItem.itemType === 'node') {
-          this._AddTreeNodeAction.exec({
-            node: params.node,
-            childNode: nodeItem,
-            index : params.index
-          })
-        } else {
-          this._AddTreeNodeSubItemAction.exec({
-            node: params.node,
-            subItemType: treeClipboardItem.itemType,
-            subItem: nodeItem,
-            index : params.index
-          });
-        }
+        let item = this._itemProviders[treeClipboardItem.itemType].create(treeClipboardItem.item);
+        this._AddTreeNodeItemAction.exec({
+          node: params.node,
+          item: item,
+          index : params.index,
+          itemType: treeClipboardItem.itemType,
+        })
       }
     }
   }

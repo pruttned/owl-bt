@@ -39,7 +39,15 @@ angular.module('editorApp')
 
         bindItemEvents(liElm, items, index, onAccept);
         addItemIcon(liElm, item);
-        liElm.append(document.createTextNode(item.name));
+        let labelElm = angular.element('<span/>');
+        labelElm.append(document.createTextNode(item.name));
+        liElm.append(labelElm);
+
+        if(item.color){
+          liElm.addClass('color');
+          liElm.css('border-left-color', item.color);
+        }
+
         addItemAsideInf(liElm, item);
         ulElm.append(liElm);
       });
@@ -52,15 +60,23 @@ angular.module('editorApp')
         bindItemEvents(liElm, filteredItems, index, onAccept);
         addItemIcon(liElm, splittedMatch.item);
 
+        let labelElm = angular.element('<span/>');
+        liElm.append(labelElm);
+
         splittedMatch.matchParts.forEach(function(part) {
           if (part.isMatch) {
             let highlightElm = angular.element('<em></em>');
             highlightElm.text(part.text);
-            liElm.append(highlightElm);
+            labelElm.append(highlightElm);
           } else {
-            liElm.append(document.createTextNode(part.text));
+            labelElm.append(document.createTextNode(part.text));
           }
         });
+
+        if(splittedMatch.item.color){
+          liElm.addClass('color');
+          liElm.css('border-left-color', splittedMatch.item.color);
+        }
 
         addItemAsideInf(liElm, splittedMatch.item);
 

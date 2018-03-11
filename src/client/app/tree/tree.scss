@@ -1,135 +1,146 @@
 .tree-page {
-  .tree-page-head{
+    display: flex;
+    flex-direction: column;
     position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    &-head {
+        z-index: 100;
+    }
+    &-main {
+        display: flex;
+        flex-direction: row;
+        flex: 1 1;
+    }
+    &-tree {
+        position: relative;
+        flex: 1 1;
+    }
+}
+
+.tree {
+    position: absolute;
     left: 0;
     right: 0;
     top: 0;
-    z-index: 100;
-  }
-  .tree-page-body{
-    padding-top: 30px;
-  }
-}
-.tree {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  overflow: hidden;
-  background-color: $ctrl-background-color;
-  .tree-content {
-    position: relative;
-    transform-origin: 0 0;
-    .node {
-      background-color: $node-background-color;
-      display: inline-block;
-      max-width: 250px;
-      min-width: 100px;
-      position: absolute;
-      z-index: 20;
-      cursor: pointer;
-      /*default position necessary for correct width and height computation*/
-      left: 0;
-      top: 0;
-      .item {
+    bottom: 0;
+    overflow: hidden;
+    background-color: $ctrl-background-color;
+    box-shadow: inset 0 0 8px 1px darken($color: $main-background-color, $amount: 5%);
+    .tree-content {
         position: relative;
-        &:hover::after,
-        &.selected::after {
-          position: absolute;
-          display: block;
-          content: '';
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          outline: solid 5px $node-selected-border-color;
-          z-index: 21;
+        transform-origin: 0 0;
+        .node {
+            background-color: $node-background-color;
+            display: inline-block;
+            max-width: 250px;
+            min-width: 100px;
+            position: absolute;
+            z-index: 20;
+            cursor: pointer;
+            /*default position necessary for correct width and height computation*/
+            left: 0;
+            top: 0;
+            .item {
+                position: relative;
+                &:hover::after,
+                &.selected::after {
+                    position: absolute;
+                    display: block;
+                    content: '';
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    outline: solid 5px $node-selected-border-color;
+                    z-index: 21;
+                }
+                .icon {
+                    position: absolute;
+                    font-size: 1.5em;
+                    left: 10px;
+                    top: 10px;
+                    color: $node-icon-color;
+                }
+                .content {
+                    color: $node-color;
+                    padding: 2px 4px;
+                    overflow: hidden;
+                    border-left: 45px solid white;
+                    min-height: 35px;
+                    word-wrap: break-word;
+                    padding: 4px 8px 4px 4px;
+                    .name {
+                        font-weight: bold;
+                    }
+                }
+                &.decorator {
+                    .content {
+                        color: $node-decorator-color;
+                        border-left-color: $node-decorator-background-color;
+                    }
+                }
+                &.service {
+                    .content {
+                        color: $node-service-color;
+                        border-left-color: $node-service-background-color;
+                    }
+                }
+                &.decorator.invalid {
+                    .content {
+                        color: $node-color;
+                        background: $invalid-node-item-background-color;
+                    }
+                }
+                &.service.invalid {
+                    .content {
+                        color: $node-color;
+                        background: $invalid-node-item-background-color;
+                    }
+                }
+            }
+            &.composite {
+                .node-desc {
+                    .content {
+                        background: $composite-node-background-color;
+                        border-left-color: $composite-node-background-color;
+                    }
+                }
+            }
+            &.action {
+                .node-desc {
+                    .content {
+                        background: $action-node-background-color;
+                        border-left-color: $action-node-background-color;
+                    }
+                }
+            }
+            .node-desc.invalid {
+                .content {
+                    background: $invalid-node-item-background-color;
+                    border-left-color: $invalid-node-item-background-color;
+                }
+            }
+            &.decorator.invalid {
+                .content {
+                    color: $node-decorator-color;
+                    background: $invalid-node-item-background-color;
+                }
+            }
+            &.service.invalid {
+                .content {
+                    color: $node-service-color;
+                    background: $invalid-node-item-background-color;
+                }
+            }
         }
-        .icon {
-          position: absolute;
-          font-size: 1.5em;
-          left: 10px;
-          top: 10px;
-          color: $node-icon-color;
+        .link,
+        .link-start {
+            stroke: $line-color;
+            fill: none;
+            stroke-width: 3px;
         }
-        .content {
-          color: $node-color;
-          padding: 2px 4px;
-          overflow: hidden;
-          border-left: 45px solid white;
-          min-height: 35px;
-          word-wrap: break-word;
-          padding: 4px 8px 4px 4px;
-          .name {
-            font-weight: bold;
-          }
-        }
-        &.decorator {
-          .content {
-            color: $node-decorator-color;
-            border-left-color: $node-decorator-icon-background-color;
-          }
-        }
-        &.service {
-          .content {
-            color: $node-service-color;
-            border-left-color: $node-service-icon-background-color;
-          }
-        }
-        &.decorator.invalid {
-          .content {
-            color: $node-color;
-            background: $invalid-node-item-background-color;
-          }
-        }
-        &.service.invalid {
-          .content {
-            color:  $node-color;
-            background: $invalid-node-item-background-color;
-          }
-        }
-      }
-      &.composite {
-        .node-desc {
-          .content {
-            background: $composite-node-background-color;
-            border-left-color: $composite-node-icon-background-color;
-          }
-        }
-      }
-      &.action {
-        .node-desc {
-          .content {
-            background: $action-node-background-color;
-            border-left-color: $action-node-icon-background-color;
-          }
-        }
-      }
-      .node-desc.invalid {
-        .content {
-          background: $invalid-node-item-background-color;
-          border-left-color: $invalid-node-item-background-color;
-        }
-      }
-      &.decorator.invalid {
-        .content {
-          color: $node-decorator-color;
-          background: $invalid-node-item-background-color;
-        }
-      }
-      &.service.invalid {
-        .content {
-          color: $node-service-color;
-          background: $invalid-node-item-background-color;
-        }
-      }
     }
-    .link,
-    .link-start {
-      stroke: $line-color;
-      fill: none;
-      stroke-width: 3px;
-    }
-  }
 }

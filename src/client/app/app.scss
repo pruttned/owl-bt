@@ -12,24 +12,24 @@ $main-background-color: #243342;
 $dlg-light-background-color : #507295;
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
-$ctrl-highlight-color : #C65C5C;
+$ctrl-focus-color: #e4e4e4;
 $ctrl-input-color : #161b20;
 $ctrl-border-color : #2C3E50;
 $ctrl-background-color : #243342;
 $ctrl-hover-color : #3D566F;
 $ctrl-highlight-background-color : #C65C5C;
 $text-light-color: #777777;
+$ctrl-input-err-border-color: #C65C5C;
+$ctrl-input-err-background-color: #ffd2d2;
 //tree
 $node-selected-border-color : #C65C5C;
 $node-background-color : #ECECEC;
 $line-color : #ECECEC;
 $node-icon-color: white;
 $composite-node-background-color: #d08038;
-$composite-node-icon-background-color: #d08038;
 $action-node-background-color: #955cc6;
-$action-node-icon-background-color: #955cc6;
-$node-decorator-icon-background-color: #5c90c6;
-$node-service-icon-background-color: #5cc690;
+$node-decorator-background-color: #5c90c6;
+$node-service-background-color: #5cc690;
 $node-color: white;
 $node-service-color: #333333;
 $node-decorator-color: #333333;
@@ -49,10 +49,6 @@ $top-menu-border-color: #1C2732;
 $top-menu-background-color: #2C3E50;
 $top-menu-color:#cccccc;
 $top-menu-hover-background-color: $ctrl-hover-color;
-/**
- * App-wide Styles
- */
-
 
 body{
   background: $main-background-color;
@@ -75,7 +71,6 @@ a{
     margin: 0;
     border-radius: 0;
     background: $main-background-color;
-    border-bottom: solid 1px $top-menu-border-color;
     &>li+li:before {
         content: '>';
     }
@@ -94,7 +89,7 @@ a{
   cursor: pointer;
   margin: 0 3px;
   &:hover{
-    color: $ctrl-highlight-color;
+    color: $ctrl-focus-color;
   }
 }
 
@@ -103,25 +98,6 @@ a{
   border-radius: 0;
   background: $dlg-background-color;
 }
-
-ul.selectable{
-  padding: 0;
-  li{
-    cursor: pointer;
-    list-style: none;
-    padding: 10px;
-    background: $ctrl-background-color;
-    color: $ctrl-color;
-    border-top: solid 1px $ctrl-border-color;
-    &.selected{
-      background: $ctrl-highlight-background-color;
-    }
-    &:hover{
-      background: $ctrl-hover-color;
-    }
-  }
-}
-
 
 .dropdown-menu {
   background: $dropdown-background-color;
@@ -158,15 +134,25 @@ ul.selectable{
   border-radius: 0;
 }
 
+input.ng-invalid{
+  border-color:  $ctrl-input-err-border-color;
+  background: $ctrl-input-err-background-color;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'main/main.scss';
 @import 'tree/commandTopMenu/commandTopMenu.scss';
 @import 'tree/tree.scss';
+@import 'tree/treeItemDetails/treeItemDetails.scss';
+@import 'tree/treeItemPalette/treeItemPalette.scss';
+@import 'tree/treeItemPalette/treeItemPaletteGroup.scss';
+@import 'tree/treeItemPalette/treeItemPaletteItem.scss';
 @import 'tree/treeNodeItemDetails.scss';
 @import 'contextMenu/contextMenu.scss';
 @import 'listSelectDialog/fuzzyList/fuzzyList.scss';
 @import 'listSelectDialog/listSelectDialog.scss';
 @import 'msgPanel/msgPanel.scss';
+@import 'sidePanel/sidePanel.scss';
 @import 'treeMruList/treeMruList.scss';
 // endinjector
