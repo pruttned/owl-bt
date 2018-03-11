@@ -1,52 +1,52 @@
 .fuzzy-list {
-  input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  ul {
-    max-height: 300px;
-    overflow: auto;
-    li {
-      .icon {
-        margin-right: 5px;
-      }
-      &.color{
-        border-left: solid 5px;
-      }
-      &:not(.color){
-        padding-left: 15px;
-      }
+    input {
+        width: 100%;
+        margin-bottom: 10px;
     }
-  }
-  em {
-    color: white;
-    font-style: normal;
-    font-weight: bold;
-  }
-
-  .selectable{
-    padding: 0;
-    li{
-      cursor: pointer;
-      list-style: none;
-      padding: 10px;
-      background: $ctrl-background-color;
-      color: $ctrl-color;
-      margin-top: 1px;
-      &.selected{
-        background: $ctrl-highlight-background-color;
-      }
-      &:hover{
-        background: $ctrl-hover-color;
-      }
+    &_items {
+        max-height: 300px;
     }
-  }
+    ul {
+        padding: 0;
+        li {
+            cursor: pointer;
+            display: flex;
+            list-style: none;
+            padding: 10px;
+            background: $ctrl-background-color;
+            color: $ctrl-color;
+            margin-top: 1px;
+            word-break: break-all;
+            align-items: center;
+            &.selected {
+                background: $ctrl-highlight-background-color;
+            }
+            &:hover {
+                background: $ctrl-hover-color;
+            }
+            .icon {
+                margin-right: 5px;
+            }
+            &.color {
+                border-left: solid 5px;
+            }
+            &:not(.color) {
+                padding-left: 15px;
+            }
+        }
+    }
+    em {
+        color: white;
+        font-style: normal;
+        font-weight: bold;
+    }
 }
+
 .fuzzy-list-aside-inf {
-  float: right;
-  color: $ctrl-color;
-  background: rgba(#46627d, 0.3);
-  border: solid 1px $ctrl-color;
-  border-radius: 3px;
-  padding: 0 3px;
+    margin-left: auto; //https://hackernoon.com/flexbox-s-best-kept-secret-bd3d892826b6
+    color: $ctrl-color;
+    background: rgba(#46627d, 0.3);
+    border: solid 1px $ctrl-color;
+    border-radius: 3px;
+    padding: 0 3px;
 }

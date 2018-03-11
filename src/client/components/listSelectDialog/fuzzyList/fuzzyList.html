@@ -1,12 +1,14 @@
-<div class="fuzzy-list" >
+<div class="fuzzy-list">
   <!-- render-done="{{$isRendered}}" -->
   <!-- <input type="text" ng-model="filter" /> -->
-  <input type="text" autofocus  />
-  <ul class="selectable">
-    <!-- <li ng-repeat="match in matches"> poor performance
+  <input type="text" autofocus />
+  <div class="fuzzy-list_items" ng-scrollbars>
+    <ul>
+      <!-- <li ng-repeat="match in matches"> poor performance
       <span ng-repeat="part in ::match.parts" ng-class="{highlight: part.isMatch}">
         {{::part.text}}
       </span>
     </li> -->
-  </ul>
+    </ul>
+  </div>
 </div>
