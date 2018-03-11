@@ -38,17 +38,6 @@ $block: ".side-panel";
         bottom: 0;
         left: 0;
     }
-    &--right,
-    &--left {
-        overflow: hidden;
-        background: $dlg-background-color;
-    }
-    &--right {
-        border-left: solid 1px #1C2732;
-    }
-    &--left {
-        border-right: solid 1px #1C2732;
-    }
     &--collapsed {
         flex-direction: row;
         flex-basis: 50px;

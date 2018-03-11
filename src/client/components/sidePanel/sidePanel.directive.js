@@ -9,7 +9,8 @@
         transclude: true,
         scope: {
           title: '@',
-          name: '@'
+          name: '@',
+          position: '@',
         },
         link: (scope) => {
           const expandStorageKey = `panel-expand-${scope.name}`;
@@ -19,6 +20,9 @@
           } else {
             scope.isExpanded = scope.isExpanded === 'true';
           }
+
+          scope.isLeft = scope.position === 'left';
+
           scope.expand = expand => {
             scope.isExpanded = expand;
             localStorage.setItem(expandStorageKey, scope.isExpanded);
