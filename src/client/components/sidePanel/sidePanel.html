@@ -1,8 +1,13 @@
-<div class="side-panel">
-  <h2 class="side-panel_title">{{title}}</h2>
+<div class="side-panel" ng-class="{'side-panel--collapsed' : !isExpanded}">
+  <div class="side-panel_expand" ng-click="expand(true)">
+    <span class="side-panel_expand-icon fa fa-angle-right"></span>
+  </div>
+  <h2 class="side-panel_title">{{title}}
+    <span class="side-panel_close fa fa-times" ng-click="expand(false)"></span>
+  </h2>
   <div class="side-panel_body-wrap">
     <div ng-scrollbars class="side-panel_body">
-        <ng-transclude></ng-transclude>
+      <ng-transclude></ng-transclude>
     </div>
   </div>
 </div>

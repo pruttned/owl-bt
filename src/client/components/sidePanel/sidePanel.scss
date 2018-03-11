@@ -2,12 +2,30 @@ $block: ".side-panel";
 #{$block} {
     display: flex;
     flex-direction: column;
+    flex: 0 0 250px;
     &_title {
         font-size: 1.6rem;
         margin: 0;
         padding: 10px;
         background: #C65C5C;
         color: $ctrl-color;
+    }
+    &_close {
+        float: right;
+        cursor: pointer;
+        &:visited,
+        &:focus {
+            color: $ctrl-color;
+            text-decoration: none;
+        }
+        &:active,
+        &:hover {
+            color: $ctrl-focus-color;
+            text-decoration: none;
+        }
+    }
+    &_expand {
+        display: none;
     }
     &_body-wrap {
         position: relative;
@@ -30,5 +48,37 @@ $block: ".side-panel";
     }
     &--left {
         border-right: solid 1px #1C2732;
+    }
+    &--collapsed {
+        flex-direction: row;
+        flex-basis: 50px;
+        background: #C65C5C;
+        align-items: stretch;
+        #{$block}_title,
+        #{$block}_body-wrap {
+            display: none;
+        }
+        #{$block}_expand-icon {
+            flex: 1 1;
+            text-align: center;
+            font-size: 3.5rem;
+        }
+        #{$block}_expand {
+            display: flex;
+            flex: 1 1;
+            align-items: center;
+            color: $ctrl-color;
+            cursor: pointer;
+            &:visited,
+            &:focus {
+                color: $ctrl-color;
+                text-decoration: none;
+            }
+            &:active,
+            &:hover {
+                color: $ctrl-focus-color;
+                text-decoration: none;
+            }
+        }
     }
 }
