@@ -14,7 +14,7 @@
         link: (scope) => {
           const expandStorageKey = `panel-expand-${scope.name}`;
           scope.isExpanded = localStorage.getItem(expandStorageKey);
-          if (_.isUndefined(scope.isExpanded)) {
+          if (_.isNil(scope.isExpanded)) {
             scope.isExpanded = true;
           } else {
             scope.isExpanded = scope.isExpanded === 'true';
