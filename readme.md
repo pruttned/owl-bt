@@ -312,3 +312,5 @@ module.exports = {
 - Prevent save of tree when current node item has validation errors in property editor
 - Add pattern validation to number and string item properties
 - Add item color to new item selection dialog
+- Add item palette side panel
+- Make side panels collapsible
