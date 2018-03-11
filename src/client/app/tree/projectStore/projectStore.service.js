@@ -146,6 +146,8 @@
       this._compileDescriptions(this.nodeTypeDescs);
       this._compileDescriptions(this.serviceTypeDescs);
       this._compileDescriptions(this.decoratorTypeDescs);
+
+      this.customTypes = prjData.types || {};
     }
 
     _compileInheritances(typeDescs) {

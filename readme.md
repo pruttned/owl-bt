@@ -107,14 +107,25 @@ Project file (`owl-bt.json`) defines all nodes and node item types that can be u
   - *number*
   - *bool*
   - *enum*
+  - *custom type defined in project file*
 - *values*- (required for enum type) - list of possible enum values
 - *min*- (for number type) - min allowed value
 - *max*- (for number type) - max allowed value
-- *pattern*- (for number and string type) - regular expression for validation purposes
+
+### Types
+Enables to define custom property types
+- *type* -  (required) base type for this custom type ['string' or 'number']
+- *pattern* - regular expression for validation purposes
 
 Example:
 ```json
 {
+  "types":{
+    "myString" : {
+      "type" : "string",
+      "pattern" : "v[0-9]"
+    }
+  },
   "nodes": [
     {
       "name": "SetAlertLevel",
@@ -310,7 +321,7 @@ module.exports = {
 - Add support to remove items from MRU list
 - Add support to modify tree before save and after load through plugins
 - Prevent save of tree when current node item has validation errors in property editor
-- Add pattern validation to number and string item properties
+- Add support for custom property types
 - Add item color to new item selection dialog
 - Add item palette side panel
 - Make side panels collapsible

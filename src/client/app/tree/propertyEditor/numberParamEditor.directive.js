@@ -20,9 +20,6 @@ angular.module('editorApp')
           if (desc.max) {
             inputElm.attr('max', desc.max);
           }
-          if(desc.pattern){
-            inputElm.attr('pattern', desc.pattern);
-          }
         }
         element.append(editorElm);
         $compile(editorElm)(scope);
