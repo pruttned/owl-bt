@@ -73,6 +73,11 @@ angular.module('editorApp')
           }
         });
 
+        if(splittedMatch.item.color){
+          liElm.addClass('color');
+          liElm.css('border-left-color', splittedMatch.item.color);
+        }
+
         addItemAsideInf(liElm, splittedMatch.item);
 
         ulElm.append(liElm);
