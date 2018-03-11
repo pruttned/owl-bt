@@ -17,7 +17,7 @@
         }
         &:active,
         &:hover {
-            color: $warn-color;
+            color: $ctrl-focus-color;
             text-decoration: none
         }
     }
@@ -35,7 +35,7 @@
         }
         &:active,
         &:hover {
-            border-left-color: $ctrl-highlight-color;
+            border-left-color: $ctrl-highlight-background-color;
             text-decoration: none
         }
     }

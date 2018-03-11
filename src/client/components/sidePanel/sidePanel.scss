@@ -6,8 +6,8 @@ $block: ".side-panel";
     &_title {
         font-size: 1.6rem;
         margin: 0;
-        padding: 10px;
-        background: #C65C5C;
+        padding: 10px 15px;
+        background: $dlg-background-color;
         color: $ctrl-color;
         cursor: pointer;
         &:visited,
@@ -19,6 +19,7 @@ $block: ".side-panel";
         &:hover {
             color: $ctrl-focus-color;
             text-decoration: none;
+            background: lighten($color: $dlg-background-color, $amount: 10%);
         }
     }
     &_hide {
@@ -41,7 +42,7 @@ $block: ".side-panel";
     &--collapsed {
         flex-direction: row;
         flex-basis: 50px;
-        background: #C65C5C;
+        background: $dlg-background-color;
         align-items: stretch;
         #{$block}_title,
         #{$block}_body-wrap {

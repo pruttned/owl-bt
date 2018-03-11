@@ -13,8 +13,6 @@ $dlg-light-background-color : #507295;
 $dlg-background-color : #2C3E50;
 $ctrl-color : #cccccc;
 $ctrl-focus-color: #e4e4e4;
-$ctrl-highlight-color : #C65C5C;
-$ctrl-highlight2-color : #b15454;
 $ctrl-input-color : #161b20;
 $ctrl-border-color : #2C3E50;
 $ctrl-background-color : #243342;
@@ -51,10 +49,6 @@ $top-menu-border-color: #1C2732;
 $top-menu-background-color: #2C3E50;
 $top-menu-color:#cccccc;
 $top-menu-hover-background-color: $ctrl-hover-color;
-/**
- * App-wide Styles
- */
- $warn-color : #C65C5C;
 
 body{
   background: $main-background-color;
@@ -77,7 +71,6 @@ a{
     margin: 0;
     border-radius: 0;
     background: $main-background-color;
-    border-bottom: solid 1px $top-menu-border-color;
     &>li+li:before {
         content: '>';
     }
@@ -96,7 +89,7 @@ a{
   cursor: pointer;
   margin: 0 3px;
   &:hover{
-    color: $ctrl-highlight-color;
+    color: $ctrl-focus-color;
   }
 }
 

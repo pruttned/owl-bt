@@ -1,10 +1,9 @@
 $block: ".tree-item-palette-group";
 #{$block} {
     &_title {
-        padding: 10px;
-        background: $ctrl-highlight2-color;
+        padding: 10px 15px;
+        background: lighten($color: $dlg-background-color, $amount: 5%);
         cursor: pointer;
-
         &:visited,
         &:focus {
             color: $ctrl-color;
@@ -14,12 +13,13 @@ $block: ".tree-item-palette-group";
         &:hover {
             color: $ctrl-focus-color;
             text-decoration: none;
+            background: lighten($color: $dlg-background-color, $amount: 10%);
         }
     }
     &_state-icon {
         float: right;
     }
-    &_items{
+    &_items {
         padding: 0;
         list-style: none;
     }
