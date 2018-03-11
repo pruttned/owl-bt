@@ -19,4 +19,8 @@ $block: ".tree-item-palette-group";
     &_state-icon {
         float: right;
     }
+    &_items{
+        padding: 0;
+        list-style: none;
+    }
 }

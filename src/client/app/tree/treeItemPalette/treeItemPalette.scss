@@ -5,7 +5,7 @@ $block: ".tree-item-palette";
     color: $ctrl-color;
     overflow: hidden;
     height: 100%;
-    ul {
+    &_groups {
         padding: 0;
         list-style: none;
     }
