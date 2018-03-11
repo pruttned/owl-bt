@@ -14,16 +14,14 @@
     <alert-panel></alert-panel>
   </div>
   <div class="tree-page-main">
-    <!-- TODO: directive -->
-    <side-panel title="Item palette" name="item-palette">
+    <side-panel title="Item palette" name="item-palette" position="left">
       <tree-item-palette></tree-item-palette>
     </side-panel>
     <div class="tree-page-tree">
       <tree-view root-node="tree.rootNode"></tree-view>
     </div>
-    <div ng-scrollbars class="tree-page-right-panel">
-      <div class="node-item-details tree-side-panel">
-        <h2>Details - {{tree.TreeSelection.selItem().type}}</h2>
+    <side-panel title="Item Details" name="item-details" position="right">
+      <div class="node-item-details">
         <div ng-if="tree.TreeSelection.selItem().$meta.desc.isInvalid">
           Error: Missing descriptor in project file
         </div>
@@ -42,6 +40,6 @@
           </fieldset>
         </form>
       </div>
-    </div>
+    </side-panel>
   </div>
 </div>
