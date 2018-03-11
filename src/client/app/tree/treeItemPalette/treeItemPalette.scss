@@ -9,8 +9,12 @@ $block: ".tree-item-palette";
         padding: 0;
         list-style: none;
     }
-    &_group{
+    &_group {
         padding: 10px;
         background: $ctrl-highlight2-color;
+    }
+    &_no-sel {
+        padding-top: 10px;
+        text-align: center;
     }
 }
