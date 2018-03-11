@@ -2,8 +2,8 @@
   <div class="side-panel_expand" ng-click="expand(true)">
     <span class="side-panel_expand-icon fa" ng-class="{'fa-angle-right' : isLeft, 'fa-angle-left' : !isLeft}"></span>
   </div>
-  <h2 class="side-panel_title">{{title}}
-    <span class="side-panel_hide fa" ng-class="{'fa-angle-left' : isLeft, 'fa-angle-right' : !isLeft}" ng-click="expand(false)"></span>
+  <h2 class="side-panel_title" ng-click="expand(false)">{{title}}
+    <span class="side-panel_hide fa" ng-class="{'fa-angle-left' : isLeft, 'fa-angle-right' : !isLeft}"></span>
   </h2>
   <div class="side-panel_body-wrap">
     <div ng-scrollbars class="side-panel_body">

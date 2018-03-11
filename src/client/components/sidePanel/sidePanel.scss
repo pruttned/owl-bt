@@ -9,9 +9,6 @@ $block: ".side-panel";
         padding: 10px;
         background: #C65C5C;
         color: $ctrl-color;
-    }
-    &_hide {
-        float: right;
         cursor: pointer;
         &:visited,
         &:focus {
@@ -23,6 +20,9 @@ $block: ".side-panel";
             color: $ctrl-focus-color;
             text-decoration: none;
         }
+    }
+    &_hide {
+        float: right;
     }
     &_expand {
         display: none;
