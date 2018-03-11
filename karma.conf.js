@@ -25,6 +25,8 @@ module.exports = function(config) {
       'src/client/bower_components/toposort/build/toposort.js',
       'node_modules/babel-polyfill/dist/polyfill.js',
       'node_modules/string_score/string_score.js',
+      'src/client/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js',
+      'src/client/bower_components/ng-scrollbars/dist/scrollbars.min.js',
       'src/client/app/app.js',
       'src/client/app/**/*.js',
       'src/client/components/**/*.js',
