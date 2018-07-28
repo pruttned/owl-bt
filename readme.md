@@ -208,7 +208,9 @@ Example:
 ```
 
 ### Inheritance
-It is possible to derive a node item type from another type using `base` setting. 
+It is possible to derive a node item type from another type using `base` setting.
+
+It is possible to use `string` or `array of strings` for `base` setting. In case of array, base item types are applied in a specified order. That means, that the later item type overrides item specified before it.
 
 E.q. we may create a base node:
 
@@ -325,3 +327,6 @@ module.exports = {
 - Add item color to new item selection dialog
 - Add item palette side panel
 - Make side panels collapsible
+
+### 1.2.0
+- Add support for multiple base types. Thanks to [dauryg](https://github.com/dauryg)
