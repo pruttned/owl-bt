@@ -63,7 +63,7 @@
       let resource = new this._treeResource(dto);
       return resource.$save({
         treePath: this.treePath
-      }).$promise;
+      });
     }
 
     updateVersion() {
