@@ -154,36 +154,46 @@
     _compileInheritances(typeDescs) {
       let toposort = new this.Toposort();
       this._.forEach(typeDescs, desc => {
-        toposort.add(desc.name, (desc.base && [desc.base]) || []);
+        toposort.add(desc.name, (desc.base && (Array.isArray(desc.base) ? desc.base : [desc.base])) || []);
       });
       for (const typeDescName of toposort.sort().reverse()) {
         let typeDesc = typeDescs[typeDescName];
         if (typeDesc) {
           if (typeDesc.base) {
-            const baseTypeDesc = typeDescs[typeDesc.base];
-            if (!baseTypeDesc) {
-              throw new Error(`Missing base type '${typeDesc.base}' for '${typeDesc.name}'`)
-            }
+            let bases = Array.isArray(typeDesc.base) ? typeDesc.base : [typeDesc.base];
+            var newTypeDesc = {};
+            var props = [];
 
-            let newTypeDesc = Object.assign({}, baseTypeDesc, typeDesc, { isAbstract: typeDesc.isAbstract });
-
-            if (baseTypeDesc.properties && baseTypeDesc.properties.length) {
-              let properties = baseTypeDesc.properties.slice(0);
-
-              if (typeDesc.properties && typeDesc.properties.length) {
-                for (const property of typeDesc.properties) {
-                  const existingPropertyIndex = this._.findIndex(properties, p => p.name === property.name);
-                  if (existingPropertyIndex >= 0) {
-                    properties[existingPropertyIndex] = property;
-                  } else {
-                    properties.push(property);
-                  }
-                }
+            bases.forEach(base => {
+              const baseTypeDesc = typeDescs[base];
+              if (!baseTypeDesc) {
+                throw new Error(`Missing base type '${base}' for '${typeDesc.name}'`)
               }
 
-              newTypeDesc.properties = properties;
+              newTypeDesc = Object.assign(newTypeDesc, baseTypeDesc, typeDesc, { isAbstract: typeDesc.isAbstract });
+
+              if (baseTypeDesc.properties && baseTypeDesc.properties.length) {
+                props = props.concat(baseTypeDesc.properties);
+              }
+            });
+
+            if (typeDesc.properties && typeDesc.properties.length) {
+              props = props.concat(typeDesc.properties);
             }
 
+            var newTypeDescProps = [];
+            props.forEach( cur => {
+
+              var index = this._.findIndex(newTypeDescProps, e => e.name === cur.name);
+
+              if(index >= 0) {
+                newTypeDescProps.splice(index, 1, Object.assign({}, newTypeDescProps[index], cur));
+              }else{
+                newTypeDescProps.push(cur);
+              }
+            });
+
+            newTypeDesc.properties = newTypeDescProps;
             typeDescs[typeDescName] = newTypeDesc;
           }
         }
