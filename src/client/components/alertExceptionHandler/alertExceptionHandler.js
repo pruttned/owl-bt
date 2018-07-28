@@ -2,10 +2,12 @@
 
 (function() {
 
-  function alertExceptionHandler($delegate, AlertList) {
-    return function(exception, cause) {
-      AlertList.addErr(exception.stack || exception.message || exception);
+  function alertExceptionHandler($delegate, $injector) {
+    let alertList;
 
+    return function(exception, cause) {
+      alertList = alertList || $injector.get('AlertList');
+      alertList.addErr(exception.stack || exception.message || exception);
       $delegate(exception, cause);
     };
   }

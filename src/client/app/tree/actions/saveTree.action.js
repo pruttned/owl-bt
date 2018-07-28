@@ -14,7 +14,8 @@
       if (this._NodeItemPropertiesForm.isValid()) {
         this._ActionExecutor.exec({
           exec: () => {
-            return _this._TreeStore.save();
+            return _this._TreeStore.save()
+              .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
           }
         });
       } else {

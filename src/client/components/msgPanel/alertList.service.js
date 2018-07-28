@@ -1,35 +1,46 @@
 'use strict';
 
-(function() {
+(function () {
 
   class AlertList {
 
-    constructor() {
+    constructor(_, $timeout) {
       this.alerts = [];
+      this._ = _;
+      this._$timeout = $timeout;
     }
 
-    addErr(msg) {
-      this.alerts.push({
-        level: 'danger',
-        message: msg
-      });
+    addErr(msg, options) {
+      this._add(msg, 'danger', options);
     }
-    addInfo(msg) {
-      this.alerts.push({
-        level: 'info',
-        message: msg
-      });
+    addInfo(msg, options) {
+      this._add(msg, 'info', options);
     }
-    addWarn(msg) {
-      this.alerts.push({
-        level: 'warning',
-        message: msg
-      });
+    addWarn(msg, options) {
+      this._add(msg, 'warning', options);
     }
+
+    _add(msg, level, { autoHide = false } = {}) {
+      let alert = {
+        level: level,
+        message: msg
+      };
+      this.alerts.push(alert);
+      if (autoHide) {
+        this._$timeout(() => {
+          let alertIndex = this.alerts.indexOf(alert);
+          if (alertIndex >= 0) {
+            this.remove(alertIndex);
+          }
+        }, 1000)
+      }
+    }
+
     remove(index) {
       this.alerts.splice(index, 1);
     }
-    clear(){
+
+    clear() {
       this.alerts = [];
     }
   }
