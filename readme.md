@@ -32,7 +32,7 @@ owlbt c <tree-path>
 
 - Open an existing tree
 ```sh
-owlbt c path
+owlbt o path
 ```
 
 ## Configuration
