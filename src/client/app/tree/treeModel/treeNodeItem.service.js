@@ -1,11 +1,14 @@
 'use strict';
 
-(function() {
+(function () {
 
   /**
    * Common node item functions
    */
   class TreeNodeItem {
+    constructor(TreeNodeItemProperty, ) {
+      this._TreeNodeItemProperty = TreeNodeItemProperty;
+    }
 
     /**
      * returns plain object with all properties (including default values) - usable for templates
@@ -26,11 +29,16 @@
       return properties;
     }
 
-    getDescription(nodeItem){
+    getDescription(nodeItem) {
       let desc = nodeItem.$meta.desc;
-      if(desc.description){
+      if (desc.description) {
         return desc.description(this.resolvedPropertyObj(nodeItem));
       }
+    }
+
+    propertiesAreValid(nodeItem) {
+      let desc = nodeItem.$meta.desc;
+      return !(desc.properties && desc.properties.find(property => !this._TreeNodeItemProperty.isValid(nodeItem, property.name)));
     }
   }
 

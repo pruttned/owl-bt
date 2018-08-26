@@ -34,6 +34,10 @@
       return this._current();
     }
 
+    getCustomType(typeName) {
+      return this.customTypes[typeName] || { type: 'string' };
+    }
+
     getNodeTypeDesc(name) {
       this._checkLoaded();
       let desc = this.nodeTypeDescs[name];
@@ -182,13 +186,13 @@
             }
 
             var newTypeDescProps = [];
-            props.forEach( cur => {
+            props.forEach(cur => {
 
               var index = this._.findIndex(newTypeDescProps, e => e.name === cur.name);
 
-              if(index >= 0) {
+              if (index >= 0) {
                 newTypeDescProps.splice(index, 1, Object.assign({}, newTypeDescProps[index], cur));
-              }else{
+              } else {
                 newTypeDescProps.push(cur);
               }
             });

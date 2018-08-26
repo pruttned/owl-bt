@@ -85,8 +85,11 @@
   function addNodeItemElm(CommandContextMenu, d3, TreeNodeItem, TreeSelection, scope, viewNodeItem, nodeElm, cssClass, index) {
     let desc = viewNodeItem.desc;
     let nodeItemElm = nodeElm.append('div');
+
+    let propertiesAreValid = TreeNodeItem.propertiesAreValid(viewNodeItem.nodeItem);
+
     nodeItemElm
-      .attr('class', 'item ' + cssClass + (desc.isInvalid ? ' invalid' : ''))
+      .attr('class', 'item ' + cssClass + (desc.isInvalid || !propertiesAreValid ? ' invalid' : ''))
       .attr('data-index', index)
       .append('span')
       .attr('class', `icon fa fa-${desc.icon}`);

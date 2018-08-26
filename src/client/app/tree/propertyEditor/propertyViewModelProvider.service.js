@@ -1,10 +1,10 @@
 'use strict';
 
-(function() {
+(function () {
 
   class PropertyViewModel {
     /**
-     *  @param  {Object} node - node that contains the specified nodeItem or whose
+     * @param  {Object} node - node that contains the specified nodeItem or whose
      * @param  {desc} desc - property descriptor
      * @param  {String} desc.name  - property name
      * @param  {String} desc.default  - (optional) property default value
@@ -45,25 +45,28 @@
         property: this.name()
       });
     }
+    isValid() {
+      this._TreeNodeItemProperty.isValid(nodeItem, this.name());
+    }
   }
 
   class PropertyViewModelProvider {
     constructor(TreeNodeItemProperty, SetTreeNodeItemPropertyValueAction, ResetTreeNodeItemPropertyValueAction) {
-        this._TreeNodeItemProperty = TreeNodeItemProperty;
-        this._SetTreeNodeItemPropertyValueAction = SetTreeNodeItemPropertyValueAction;
-        this._ResetTreeNodeItemPropertyValueAction = ResetTreeNodeItemPropertyValueAction;
-      }
-      /**
-       * Returns view models for all properties of a specified node item
-       *  @param  {Object} node - node that contains the specified nodeItem or whose. Null - returns empty array
-       * @param  {Object} nodeItem - (optional) node item that owns the property. Null or node for node property
-       * @return {PropertyViewModel array} - array of property accessors
-       */
+      this._TreeNodeItemProperty = TreeNodeItemProperty;
+      this._SetTreeNodeItemPropertyValueAction = SetTreeNodeItemPropertyValueAction;
+      this._ResetTreeNodeItemPropertyValueAction = ResetTreeNodeItemPropertyValueAction;
+    }
+    /**
+     * Returns view models for all properties of a specified node item
+     * @param  {Object} node - node that contains the specified nodeItem or whose. Null - returns empty array
+     * @param  {Object} nodeItem - (optional) node item that owns the property. Null or node for node property
+     * @return {PropertyViewModel array} - array of property accessors
+     */
     create(node, nodeItem) {
       if (node) {
         let typeDescProperties = nodeItem.$meta.desc.properties;
         if (typeDescProperties) {
-          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property, 
+          return typeDescProperties.map(property => new PropertyViewModel(node, nodeItem, property,
             this._TreeNodeItemProperty, this._SetTreeNodeItemPropertyValueAction, this._ResetTreeNodeItemPropertyValueAction));
         }
       }
