@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Service: TreeNodeItemProperty', function() {
+describe('Service: TreeNodeItemProperty', function () {
 
   // load the service's module
   beforeEach(module('editorApp'));
 
   // instantiate service
   let TreeNodeItemProperty;
-  beforeEach(inject(function(_TreeNodeItemProperty_) {
+  beforeEach(inject(function (_TreeNodeItemProperty_) {
     TreeNodeItemProperty = _TreeNodeItemProperty_;
   }));
 
-  it('isSet should return true if properties object contains the specified property', function() {
+  it('isSet should return true if properties object contains the specified property', function () {
     let item = {
       properties: {
         prop1: 'value1'
@@ -21,7 +21,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(res).toBe(true);
   });
 
-  it('isSet should return false if properties object contains the specified property', function() {
+  it('isSet should return false if properties object contains the specified property', function () {
     let item = {
       properties: {
         prop1: 'value1'
@@ -31,7 +31,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(res).toBe(false);
   });
 
-  it('value should return default value for unset property', function() {
+  it('value should return default value for unset property', function () {
     let item = {
       properties: {
         propXX: 'value1'
@@ -49,7 +49,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(res).toBe('def1');
   });
 
-  it('value should return value for set property', function() {
+  it('value should return value for set property', function () {
     let item = {
       properties: {
         prop1: 'value1'
@@ -67,23 +67,43 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(res).toBe('value1');
   });
 
-  it('value should set value for unset property', function() {
-    let item = {};
-    TreeNodeItemProperty.value(item, 'prop1', 'newValue1');
-    expect(item.properties.prop1).toBe('newValue1');
-  });
-
-  it('value should set value for set property', function() {
+  it('value should set value for unset property', function () {
     let item = {
-      properties: {
-        prop1: 'value1'
+      $meta: {
+        desc: {
+          properties: [{
+            name: 'prop1',
+            default: 'def1',
+            type: 'string'
+          }]
+        }
       }
     };
     TreeNodeItemProperty.value(item, 'prop1', 'newValue1');
     expect(item.properties.prop1).toBe('newValue1');
   });
 
-  it('reset should remove property and also remove properties obj if empty', function() {
+  it('value should set value for set property', function () {
+    let item = {
+      properties: {
+        prop1: 'value1'
+      },
+      $meta: {
+        desc: {
+          properties: [
+            {
+              name: 'prop1',
+              type: 'string'
+            }
+          ]
+        }
+      }
+    };
+    TreeNodeItemProperty.value(item, 'prop1', 'newValue1');
+    expect(item.properties.prop1).toBe('newValue1');
+  });
+
+  it('reset should remove property and also remove properties obj if empty', function () {
     let item = {
       properties: {
         prop1: 'value1'
@@ -93,7 +113,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(item.properties).not.toBeDefined();
   });
 
-  it('reset should remove property and not remove properties obj if not empty', function() {
+  it('reset should remove property and not remove properties obj if not empty', function () {
     let item = {
       properties: {
         prop1: 'value1',
@@ -105,7 +125,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(item.properties.prop1).not.toBeDefined();
   });
 
-  it('desc should return desc obj', function() {
+  it('desc should return desc obj', function () {
     let item = {
       properties: {
         prop1: 'value1'
@@ -123,7 +143,7 @@ describe('Service: TreeNodeItemProperty', function() {
     expect(res).toBe(item.$meta.desc.properties[0]);
   });
 
-  it('default should return default property value', function() {
+  it('default should return default property value', function () {
     let item = {
       properties: {
         prop1: 'value1'

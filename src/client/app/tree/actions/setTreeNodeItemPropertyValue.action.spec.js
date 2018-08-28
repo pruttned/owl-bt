@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: SetTreeNodeItemPropertyValueAction', function() {
+describe('Service: SetTreeNodeItemPropertyValueAction', function () {
 
   // load the service's module
   beforeEach(module('editorApp'));
@@ -11,18 +11,28 @@ describe('Service: SetTreeNodeItemPropertyValueAction', function() {
   let TreeStore;
   let SetTreeNodeItemPropertyValueAction;
   let UndoRedoManager;
-  beforeEach(inject(function(_TreeStore_, _SetTreeNodeItemPropertyValueAction_, _UndoRedoManager_) {
+  beforeEach(inject(function (_TreeStore_, _SetTreeNodeItemPropertyValueAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
     SetTreeNodeItemPropertyValueAction = _SetTreeNodeItemPropertyValueAction_;
     UndoRedoManager = _UndoRedoManager_;
   }));
 
-  it('exec should set node item property and update versions', function() {
+  it('exec should set node item property and update versions', function () {
     let node = {
       $meta: {
         version: 1
       },
       services: [{
+        $meta: {
+          desc: {
+            properties: [
+              {
+                name: 'prop1',
+                type: 'string'
+              }
+            ]
+          }
+        },
         properties: {
           prop1: 'oldValue'
         }
@@ -41,12 +51,22 @@ describe('Service: SetTreeNodeItemPropertyValueAction', function() {
     expect(node.services[0].properties.prop1).toBe('newValue');
   });
 
-  it('undo should set node property to its previous value if it was set and update versions', function() {
+  it('undo should set node property to its previous value if it was set and update versions', function () {
     let node = {
       $meta: {
         version: 1
       },
       services: [{
+        $meta: {
+          desc: {
+            properties: [
+              {
+                name: 'prop1',
+                type: 'string'
+              }
+            ]
+          }
+        },
         properties: {
           prop1: 'oldValue'
         }
@@ -66,12 +86,22 @@ describe('Service: SetTreeNodeItemPropertyValueAction', function() {
     expect(node.services[0].properties.prop1).toBe('oldValue');
   });
 
-  it('undo should reset node property if it was not set and update versions', function() {
+  it('undo should reset node property if it was not set and update versions', function () {
     let node = {
       $meta: {
         version: 1
       },
       services: [{
+        $meta: {
+          desc: {
+            properties: [
+              {
+                name: 'prop1',
+                type: 'string'
+              }
+            ]
+          }
+        },
         properties: {
           prop2: '1' //to keep properties obj alive during reset
         }
