@@ -4,6 +4,7 @@ const path = require('path');
 const errors = require('errno-codes');
 const bluebird = require('bluebird');
 const fs = bluebird.promisifyAll(require("fs"));
+const reload = require('require-reload')(require);
 
 const projectFileName = 'owl-bt.json';
 const pluginFileName = 'owl-bt.js';
@@ -24,7 +25,7 @@ function getProjectForDir(currentAbsolutePath) {
       const prjPluginPath = path.join(path.dirname(projectAbsolutePath), pluginFileName);
       let plugin;
       if (fs.existsSync(prjPluginPath)) {
-        plugin = require(prjPluginPath);
+        plugin = reload(prjPluginPath);
       }
       return {
         path: projectAbsolutePath,

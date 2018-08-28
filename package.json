@@ -34,6 +34,7 @@
     "morgan": "~1.0.0",
     "opn": "^4.0.2",
     "rc": "^1.2.1",
+    "require-reload": "^0.2.2",
     "serve-favicon": "~2.0.1",
     "socket.io": "~1.7.3",
     "string_score": "^0.1.22",
