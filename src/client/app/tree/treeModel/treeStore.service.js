@@ -1,12 +1,10 @@
 'use strict';
 
-
-
-(function() {
+(function () {
 
   class TreeStore {
-    constructor($q, $resource,  TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode, MissingNodeItemDescValidation) {
-     // this.treePath = $location.search().path;
+    constructor($q, $resource, TreeNodeProvider, ProjectStore, TreeNodeDtoConverter, $rootScope, Tree, TreeNode, MissingNodeItemDescValidation, TreeNodeItem) {
+      // this.treePath = $location.search().path;
       this.version = 1;
 
       this.isLoaded = false;
@@ -22,13 +20,14 @@
       this._TreeNode = TreeNode;
       this._$rootScope = $rootScope;
       this._MissingNodeItemDescValidation = MissingNodeItemDescValidation;
+      this._TreeNodeItem = TreeNodeItem;
 
       $rootScope.$watch(() => ProjectStore.version, () => this._handlePrjReload());
     }
 
     load(treePath) {
       let _this = this;
-      
+
       this.treePath = treePath;
       this.isLoaded = false;
       this.rootNode = null;
@@ -50,7 +49,7 @@
       return this._loadPromise;
     }
 
-    ensureLoad(){
+    ensureLoad() {
       return this._loadPromise;
     }
 
@@ -80,15 +79,18 @@
         this._Tree.forEachNode(this.rootNode, node => {
           node.$meta.desc = _this._ProjectStore.getNodeTypeDesc(node.type);
           _this._TreeNode.updateVersion(node);
+          _this._TreeNodeItem.resetPropertiesIsValid(node);
 
-          if(node.decorators){
+          if (node.decorators) {
             for (let dec of node.decorators) {
               dec.$meta.desc = _this._ProjectStore.getDecoratorTypeDesc(dec.type);
+              _this._TreeNodeItem.resetPropertiesIsValid(dec);
             }
           }
-          if(node.services){
+          if (node.services) {
             for (let svc of node.services) {
               svc.$meta.desc = _this._ProjectStore.getServiceTypeDesc(svc.type);
+              _this._TreeNodeItem.resetPropertiesIsValid(svc);
             }
           }
         });

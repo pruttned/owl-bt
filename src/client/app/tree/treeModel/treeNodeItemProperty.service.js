@@ -72,6 +72,12 @@
       return nodeItem.$meta.propertyStates[property].isValid;
     }
 
+    resetIsValid(nodeItem, property) {
+      if (nodeItem.$meta.propertyStates && nodeItem.$meta.propertyStates[property]) {
+        delete nodeItem.$meta.propertyStates[property].isValid;
+      }
+    }
+
     _updateIsValid(nodeItem, property) {
       if (!nodeItem.$meta.propertyStates) {
         nodeItem.$meta.propertyStates = {};

@@ -6,7 +6,7 @@
    * Common node item functions
    */
   class TreeNodeItem {
-    constructor(TreeNodeItemProperty, ) {
+    constructor(TreeNodeItemProperty) {
       this._TreeNodeItemProperty = TreeNodeItemProperty;
     }
 
@@ -39,6 +39,11 @@
     propertiesAreValid(nodeItem) {
       let desc = nodeItem.$meta.desc;
       return !(desc.properties && desc.properties.find(property => !this._TreeNodeItemProperty.isValid(nodeItem, property.name)));
+    }
+
+    resetPropertiesIsValid(nodeItem) {
+      let desc = nodeItem.$meta.desc;
+      desc.properties && desc.properties.forEach(property => !this._TreeNodeItemProperty.resetIsValid(nodeItem, property.name));
     }
   }
 
