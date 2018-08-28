@@ -14,7 +14,15 @@
         exec: () => {
           if (_this._TreeStore.allItemPropertiesAreValid() || confirm('Tree contains items with invalid properties (check red items). Do you really want to save it?')) {
             return _this._TreeStore.save()
-              .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
+              .then(() => _this._AlertList.addInfo('Done', { autoHide: true }))
+              .catch(err => {
+                if (err.data) {
+                  return Promise.reject(err.data)
+                }
+                else {
+                  return Promise.reject(err)
+                }
+              });
           }
         }
       });
