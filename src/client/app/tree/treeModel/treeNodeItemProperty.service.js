@@ -49,9 +49,9 @@
     }
 
     desc(nodeItem, property) {
-      let propDesc = nodeItem.$meta.desc;
-      if (propDesc.properties) {
-        return this._.find(propDesc.properties, {
+      let desc = nodeItem.$meta.desc;
+      if (desc.properties) {
+        return this._.find(desc.properties, {
           name: property
         });
       }
