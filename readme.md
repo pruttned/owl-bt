@@ -298,6 +298,7 @@ module.exports = {
   - `path` - tree file path
   - `project` - project object (according to `owl-bt.json` file)
   - `projectPath` - project file path
+  - `return` - when the return value is `false` or a string, then the save is prevented and error is returned to client
 - `onTreeLoad` - executed after loading tree json file from disk. Only modifications of `tree` object are allowed.
   - `tree` - tree object (according to tree json file)
   - `path` - tree file path
@@ -331,3 +332,10 @@ module.exports = {
 ### 1.2.0
 - Add support for multiple base types. Thanks to [dauryg](https://github.com/dauryg)
 - Add save success notification message
+
+### 1.3.0
+- Add support to prevent save of a tree in plugin
+- Add reloading of plugins
+- Prevent losing values of invalid properties in property editor form
+- Add highlighting of all tree items with invalid properties
+- Add save confirmation before saving a tree with invalid properties
