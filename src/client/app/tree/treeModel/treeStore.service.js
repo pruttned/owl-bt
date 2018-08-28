@@ -65,6 +65,20 @@
       });
     }
 
+    allItemPropertiesAreValid() {
+      if (!this.isLoaded) {
+        throw new Error('Tree is not loaded');
+      }
+
+      let isValid = true;
+      this._Tree.forEachNode(this.rootNode, node => {
+        if (!this._TreeNode.propertiesAreValid(node)) {
+          isValid = false;
+        }
+      });
+      return isValid;
+    }
+
     updateVersion() {
       if (this.version === Number.MAX_SAFE_INTEGER) {
         this.version = 1;

@@ -12,8 +12,10 @@
       let _this = this;
       this._ActionExecutor.exec({
         exec: () => {
-          return _this._TreeStore.save()
-            .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
+          if (_this._TreeStore.allItemPropertiesAreValid() || confirm('Tree contains items with invalid properties (check red items). Do you really want to save it?')) {
+            return _this._TreeStore.save()
+              .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
+          }
         }
       });
     }

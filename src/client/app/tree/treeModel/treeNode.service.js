@@ -1,16 +1,17 @@
 'use strict';
 
-(function() {
+(function () {
 
   /**
    * Common node functions
    */
   class TreeNode {
 
-    constructor(_, ArrayHelper, TreeNodeByIdStore) {
+    constructor(_, ArrayHelper, TreeNodeByIdStore, TreeNodeItem) {
       this._ = _;
       this._ArrayHelper = ArrayHelper;
       this._TreeNodeByIdStore = TreeNodeByIdStore;
+      this._TreeNodeItem = TreeNodeItem;
     }
 
     updateVersion(node) {
@@ -302,6 +303,12 @@
       if (this.indexOfDecorator(node, subItem) >= 0) {
         return 'decorator';
       }
+    }
+
+    propertiesAreValid(node) {
+      return this._TreeNodeItem.propertiesAreValid(node)
+        && (!node.services || !node.services.find(s => !this._TreeNodeItem.propertiesAreValid(s)))
+        && (!node.decorators || !node.decorators.find(d => !this._TreeNodeItem.propertiesAreValid(d)));
     }
 
     _getSubItemArrayName(node, subItem) {
