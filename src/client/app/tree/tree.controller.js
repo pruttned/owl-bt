@@ -2,11 +2,10 @@
 
 angular.module('editorApp')
   .controller('TreeCtrl', function ($scope, $interpolate, $location, hotkeys, ListSelectDialog,
-    TreeMruList, TreeStore, TreeSelection, TreeNode, UndoRedoManager, AlertList, NodeItemPropertiesForm) {
+    TreeMruList, TreeStore, TreeSelection, TreeNode, UndoRedoManager, AlertList) {
 
     this.TreeSelection = TreeSelection;
     this.path = $location.search().path;
-    this.nodeItemPropertiesForm = NodeItemPropertiesForm;
 
     //TODO: extract
     AlertList.clear();

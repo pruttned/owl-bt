@@ -2,10 +2,9 @@
   'use strict';
 
   class TreeSelection {
-    constructor(_, TreeNode, NodeItemPropertiesForm, AlertList) {
+    constructor(_, TreeNode, AlertList) {
       this._ = _;
       this._TreeNode = TreeNode;
-      this._NodeItemPropertiesForm = NodeItemPropertiesForm;
       this._AlertList = AlertList;
 
       this._selNode = null;
@@ -51,21 +50,17 @@
      * @param  {node} node - node that contains the specified sub item or the same node as in item in case of selected node
      */
     select(node, item) {
-      if (this._NodeItemPropertiesForm.isValid()) {
-        this._selNode = node;
-        this._selItem = item;
+      this._selNode = node;
+      this._selItem = item;
 
-        if (item) {
-          if (item === node) {
-            this._selItemType = 'node';
-          } else {
-            this._selItemType = this._TreeNode.getSubItemType(node, item);
-          }
+      if (item) {
+        if (item === node) {
+          this._selItemType = 'node';
         } else {
-          this._selItemType = null;
+          this._selItemType = this._TreeNode.getSubItemType(node, item);
         }
       } else {
-        this._AlertList.addErr('Properties of selected node item are not valid');
+        this._selItemType = null;
       }
     }
   }

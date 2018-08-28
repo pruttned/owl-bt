@@ -11,7 +11,7 @@
 
         link: function (scope, element) {
           scope.TreeSelection = TreeSelection;
-
+          
           scope.hasSelectedItem = () => {
             return TreeSelection.selItem();
           };

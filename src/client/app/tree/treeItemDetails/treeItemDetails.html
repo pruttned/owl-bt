@@ -3,7 +3,7 @@
     <div ng-if="isInvalidDesc()">
       Error: Missing descriptor in project file
     </div>
-    <form name="tree.nodeItemPropertiesForm.form" novalidate>
+    <form name="form" novalidate>
       <fieldset ng-if="selIsDecorator()">
         <legend>Base properties</legend>
         <div ng-include="'app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.html'"></div>

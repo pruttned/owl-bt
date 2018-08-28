@@ -2,25 +2,20 @@
   'use strict';
 
   class SaveTreeAction {
-    constructor(ActionExecutor, TreeStore, NodeItemPropertiesForm, AlertList) {
+    constructor(ActionExecutor, TreeStore, AlertList) {
       this._ActionExecutor = ActionExecutor;
       this._TreeStore = TreeStore;
-      this._NodeItemPropertiesForm = NodeItemPropertiesForm;
       this._AlertList = AlertList;
     }
 
     exec() {
       let _this = this;
-      if (this._NodeItemPropertiesForm.isValid()) {
-        this._ActionExecutor.exec({
-          exec: () => {
-            return _this._TreeStore.save()
-              .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
-          }
-        });
-      } else {
-        _this._AlertList.addErr('Properties of selected node item are not valid');
-      }
+      this._ActionExecutor.exec({
+        exec: () => {
+          return _this._TreeStore.save()
+            .then(() => _this._AlertList.addInfo('Done', { autoHide: true }));
+        }
+      });
     }
   }
 
