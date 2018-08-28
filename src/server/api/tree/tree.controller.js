@@ -76,10 +76,16 @@ exports.save = function (req, res, next) {
             project: JSON.parse(project.content),
             projectPath: project.path,
           }))
-            .then(() => fs.writeFileAsync(treePath, JSON.stringify(treeContent, null, '\t'), 'utf8')
-              .then(treeContent => {
-                res.status(200).send();
-              }));
+            .then((pluginRes) => {
+              if (pluginRes === false || typeof pluginRes === 'string') {
+                res.status(409).send(typeof pluginRes === 'string' ? pluginRes : 'Save was forbidden by tree project plugin');
+              } else {
+                return fs.writeFileAsync(treePath, JSON.stringify(treeContent, null, '\t'), 'utf8')
+                  .then(() => {
+                    res.status(200).send();
+                  })
+              }
+            });
         }
       })
       .catch(err => handleError(err, res, next));
