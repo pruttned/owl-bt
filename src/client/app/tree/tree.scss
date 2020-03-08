@@ -58,20 +58,24 @@
                     z-index: 21;
                 }
                 .icon {
-                    position: absolute;
                     font-size: 1.5em;
-                    left: 10px;
-                    top: 10px;
                     color: $node-icon-color;
+                    margin: 0;
+                    position: absolute;
+                    left: 10px;
+                    top: 50%;
+                    -ms-transform: translateY(-50%);
+                    transform: translateY(-50%);
                 }
                 .content {
                     color: $node-color;
-                    padding: 2px 4px;
                     overflow: hidden;
                     border-left: 45px solid white;
-                    min-height: 35px;
                     word-wrap: break-word;
                     padding: 4px 8px 4px 4px;
+                    min-height: 1.8em;
+                    margin: 0;
+
                     .name {
                         font-weight: bold;
                     }
