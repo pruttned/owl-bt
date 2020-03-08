@@ -1,5 +1,6 @@
 // Generated on 2015-10-31 using generator-angular-fullstack 2.1.1
 'use strict';
+const sass = require('node-sass');
 
 module.exports = function (grunt) {
   var localConfig;
@@ -412,13 +413,13 @@ module.exports = function (grunt) {
     sass: {
       server: {
         options: {
-          loadPath: [
+          includePaths: [
             '<%= yeoman.client %>/bower_components',
             '<%= yeoman.client %>/app',
             '<%= yeoman.client %>/components'
           ],
-          compass: false,
-          precision: 10
+          precision: 10,
+          implementation: sass
         },
         files: {
           '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.scss'
