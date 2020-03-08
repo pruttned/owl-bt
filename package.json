@@ -86,7 +86,7 @@
     "karma-script-launcher": "^0.1.0",
     "mock-fs": "^3.7.0",
     "node-sass": "^4.13.1",
-    "open": "~0.0.4",
+    "open": "~6.0.0",
     "phantomjs": "^1.9.18",
     "rewire": "^2.5.1",
     "should": "~3.3.1",
