@@ -1,8 +1,8 @@
-$icon-font-path: "/bower_components/bootstrap-sass/assets/fonts/bootstrap/";
-$fa-font-path: "/bower_components/font-awesome/fonts";
+$icon-font-path: "/bootstrap-sass/assets/fonts/bootstrap/";
+$fa-font-path: "/font-awesome/fonts";
 
-@import 'bootstrap-sass/assets/stylesheets/bootstrap';
-@import 'font-awesome/scss/font-awesome';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+@import 'node_modules/font-awesome/scss/font-awesome';
 
 
 /**

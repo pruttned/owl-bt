@@ -28,7 +28,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
-      client: require('./bower.json').appPath || 'src/client',
+      client: 'src/client',
       common: 'src/common',
       dist: 'dist'
     },
@@ -195,14 +195,7 @@ module.exports = function (grunt) {
         }]
       }
     },
-    // Automatically inject Bower components into the app
-    wiredep: {
-      target: {
-        src: '<%= yeoman.client %>/index.html',
-        ignorePath: '<%= yeoman.client %>/',
-        exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css/ ]
-      }
-    },
+
 
     // Renames files for browser caching purposes
     rev: {
@@ -414,7 +407,7 @@ module.exports = function (grunt) {
       server: {
         options: {
           includePaths: [
-            '<%= yeoman.client %>/bower_components',
+            './node_modules',
             '<%= yeoman.client %>/app',
             '<%= yeoman.client %>/components'
           ],
@@ -522,7 +515,6 @@ module.exports = function (grunt) {
       'injector:sass',
       'concurrent:server',
       'injector',
-      'wiredep',
       'autoprefixer',
       'express:dev',
       'wait',
@@ -568,7 +560,6 @@ module.exports = function (grunt) {
     'injector:sass',
     'concurrent:dist',
     'injector',
-    'wiredep',
     'useminPrepare',
     'autoprefixer',
     'ngtemplates',
