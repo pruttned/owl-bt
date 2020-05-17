@@ -1,10 +1,12 @@
 'use strict';
 
+import UndoManager from 'undo-manager';
+
 angular.module('editorApp')
   .service('UndoRedoManager',
     class UndoRedoManager {
-      constructor(undoStackSize){
-        this._undoManager = new window.UndoManager();
+      constructor(undoStackSize) {
+        this._undoManager = new UndoManager();
         this._undoManager.setLimit(undoStackSize);
       }
 
@@ -14,30 +16,30 @@ angular.module('editorApp')
        * @param {function} undoRedoCommand.undo - function to undo change
        * @param {function} undoRedoCommand.exec - function to redo change
        */
-      add(undoRedoCommand){
+      add(undoRedoCommand) {
         this._undoManager.add({
           undo: undoRedoCommand.undo,
           redo: undoRedoCommand.exec
         });
       }
 
-      undo(){
+      undo() {
         this._undoManager.undo();
       }
 
-      redo(){
+      redo() {
         this._undoManager.redo();
       }
 
-      clear(){
+      clear() {
         this._undoManager.clear();
       }
 
-      hasUndo(){
+      hasUndo() {
         return this._undoManager.hasUndo();
       }
-      
-      hasRedo(){
+
+      hasRedo() {
         return this._undoManager.hasRedo();
       }
     });

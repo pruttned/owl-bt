@@ -8,18 +8,7 @@
   <title>owl-bt</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <!-- build:css(src/client) app/vendor.css -->
-  <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.css" />
-  <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
-  <!-- endbower -->
-  <!-- endbuild -->
-  <!-- build:css({.tmp,client}) app/app.css -->
-  <link rel="stylesheet" href="app/app.css">
-  <!-- injector:css -->
-  <!-- endinjector -->
-  <!-- endbuild -->
+
 </head>
 
 <body ng-app="editorApp">
@@ -28,122 +17,6 @@
     <![endif]-->
 
   <div ng-view=""></div>
-
-  <!-- build:js({src/client,node_modules}) app/vendor.js -->
-  <script src="jquery/jquery.js"></script>
-  <script src="angular/angular.js"></script>
-  <!-- <script src="angular-bootstrap/ui-bootstrap-tpls.js"></script> -->
-  <script src="angular-cookies/angular-cookies.js"></script>
-  <script src="angular-resource/angular-resource.js"></script>
-  <script src="angular-sanitize/angular-sanitize.js"></script>
-  <script src="angular-route/angular-route.js"></script>
-  <script src="angular-hotkeys/build/hotkeys.js"></script>
-  <script src="angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="d3/d3.js"></script>
-  <script src="undo-manager/lib/undomanager.js"></script>
-  <script src="lodash/lodash.js"></script>
-  <script src="toposort/toposort.js"></script>
-  <script src="jquery-mousewheel/jquery.mousewheel.js"></script>
-  <script src="malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
-  <script src="ng-scrollbars/scrollbars.min.js"></script>
-  <script src="babel-polyfill/polyfill.js"></script>
-  <script src="string_score/string_score.js"></script>
-  <!-- endbuild -->
-  <script src="/socket.io/socket.io.js"></script>
-
-  <!-- build:js(.tmp) app/app.js -->
-
-  <script src="app/app.js"></script>
-  <!-- injector:js -->
-  <script src="app/main/main.controller.js"></script>
-  <script src="app/main/main.js"></script>
-  <script src="app/tree/actions/SetTreeNodeItemBasePropertyValueAction.action.js"></script>
-  <script src="app/tree/actions/addTreeNodeItemAction.action.js"></script>
-  <script src="app/tree/actions/copyTreeNodeItem.action.js"></script>
-  <script src="app/tree/actions/moveTreeNode.action.js"></script>
-  <script src="app/tree/actions/moveTreeNodeSubItem.action.js"></script>
-  <script src="app/tree/actions/pasteTreeNodeItem.action.js"></script>
-  <script src="app/tree/actions/redoAction.action.js"></script>
-  <script src="app/tree/actions/removeTreeNode.action.js"></script>
-  <script src="app/tree/actions/removeTreeNodeSubItem.action.js"></script>
-  <script src="app/tree/actions/resetTreeNodeItemPropertyValue.action.js"></script>
-  <script src="app/tree/actions/saveTree.action.js"></script>
-  <script src="app/tree/actions/setTreeNodeItemPropertyValue.action.js"></script>
-  <script src="app/tree/actions/undoAction.action.js"></script>
-  <script src="app/tree/commandContextMenu/commandContextMenu.service.js"></script>
-  <script src="app/tree/commandContextMenu/commandContextMenuCfg.provider.js"></script>
-  <script src="app/tree/commandPalette/commandPalette.service.js"></script>
-  <script src="app/tree/commandPalette/commandPaletteCfg.provider.js"></script>
-  <script src="app/tree/commandTopMenu/commandTopMenu.controller.js"></script>
-  <script src="app/tree/commandTopMenu/commandTopMenuCfg.provider.js"></script>
-  <script src="app/tree/commands/addTreeNodeItem.command.js"></script>
-  <script src="app/tree/commands/copyTreeNodeItem.command.js"></script>
-  <script src="app/tree/commands/focusSelNode.command.js"></script>
-  <script src="app/tree/commands/moveTreeNode.command.js"></script>
-  <script src="app/tree/commands/moveTreeNodeSubItem.command.js"></script>
-  <script src="app/tree/commands/pasteTreeNodeItem.command.js"></script>
-  <script src="app/tree/commands/redo.command.js"></script>
-  <script src="app/tree/commands/removeTreeNodeItem.command.js"></script>
-  <script src="app/tree/commands/saveTree.command.js"></script>
-  <script src="app/tree/commands/selectItemAbove.command.js"></script>
-  <script src="app/tree/commands/selectItemBelow.command.js"></script>
-  <script src="app/tree/commands/selectSiblingNode.command.js"></script>
-  <script src="app/tree/commands/undo.command.js"></script>
-  <script src="app/tree/decoratorBasePropertyEditor/decoratorBasePropertyEditor.controller.js"></script>
-  <script src="app/tree/missingNodeItemDescValidation/missingNodeItemDescValidation.service.js"></script>
-  <script src="app/tree/projectStore/projectStore.service.js"></script>
-  <script src="app/tree/propertyEditor/boolParamEditor.directive.js"></script>
-  <script src="app/tree/propertyEditor/customPropertyEditor.directive.js"></script>
-  <script src="app/tree/propertyEditor/enumParamEditor.directive.js"></script>
-  <script src="app/tree/propertyEditor/formGroupParamEditor.directive.js"></script>
-  <script src="app/tree/propertyEditor/numberParamEditor.directive.js"></script>
-  <script src="app/tree/propertyEditor/propertyEditorList.directive.js"></script>
-  <script src="app/tree/propertyEditor/propertyReset.directive.js"></script>
-  <script src="app/tree/propertyEditor/propertyViewModelProvider.service.js"></script>
-  <script src="app/tree/propertyEditor/stringParamEditor.directive.js"></script>
-  <script src="app/tree/serviceBasePropertyEditor/serviceBasePropertyEditor.controller.js"></script>
-  <script src="app/tree/tree.controller.js"></script>
-  <script src="app/tree/tree.js"></script>
-  <script src="app/tree/treeItemDetails/treeItemDetails.directive.js"></script>
-  <script src="app/tree/treeItemPalette/treeItemPalette.directive.js"></script>
-  <script src="app/tree/treeItemPalette/treeItemPaletteGroup.directive.js"></script>
-  <script src="app/tree/treeModel/tree.service.js"></script>
-  <script src="app/tree/treeModel/treeDecoratorItemProvider.service.js"></script>
-  <script src="app/tree/treeModel/treeFocus.service.js"></script>
-  <script src="app/tree/treeModel/treeItemPropertyDtoConverter.service.js"></script>
-  <script src="app/tree/treeModel/treeNode.service.js"></script>
-  <script src="app/tree/treeModel/treeNodeByIdStore.service.js"></script>
-  <script src="app/tree/treeModel/treeNodeDtoConverter.service.js"></script>
-  <script src="app/tree/treeModel/treeNodeItem.service.js"></script>
-  <script src="app/tree/treeModel/treeNodeItemProperty.service.js"></script>
-  <script src="app/tree/treeModel/treeNodeProvider.service.js"></script>
-  <script src="app/tree/treeModel/treeSelection.service.js"></script>
-  <script src="app/tree/treeModel/treeServiceItemProvider.service.js"></script>
-  <script src="app/tree/treeModel/treeStore.service.js"></script>
-  <script src="app/tree/treeView/TreeViewModelProvider.service.js"></script>
-  <script src="app/tree/treeView/treeView.directive.js"></script>
-  <script src="app/tree/validators/propertyValidator.service.js"></script>
-  <script src="components/actionExecutor/actionExecutor.service.js"></script>
-  <script src="components/alertExceptionHandler/alertExceptionHandler.js"></script>
-  <script src="components/arrayHelper/arrayHelper.service.js"></script>
-  <script src="components/clipboard/clipboard.service.js"></script>
-  <script src="components/contextMenu/contextMenu.service.js"></script>
-  <script src="components/encodeURIComponent/encodeURIComponent.filter.js"></script>
-  <script src="components/fuzzyFilter/fuzzyFilter.service.js"></script>
-  <script src="components/idProvider/idProvider.service.js"></script>
-  <script src="components/listSelectDialog/fuzzyList/fuzzyList.directive.js"></script>
-  <script src="components/listSelectDialog/listSelectDialog.controller.js"></script>
-  <script src="components/listSelectDialog/listSelectDialog.service.js"></script>
-  <script src="components/matchHighlighter/matchHighlighter.service.js"></script>
-  <script src="components/msgPanel/alertList.service.js"></script>
-  <script src="components/msgPanel/alertPanel.directive.js"></script>
-  <script src="components/navbar/navbar.controller.js"></script>
-  <script src="components/sidePanel/sidePanel.directive.js"></script>
-  <script src="components/treeMruList/treeMruList.directive.js"></script>
-  <script src="components/treeMruList/treeMruList.service.js"></script>
-  <script src="components/undoRedoManager/undoRedoManager.service.js"></script>
-  <!-- endinjector -->
-  <!-- endbuild -->
 </body>
 
 </html>
