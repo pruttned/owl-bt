@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Toposort from 'toposort-class';
 import d3 from 'd3';
 import io from 'socket.io-client';
+import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 import './app.scss'
 
 'use strict';
