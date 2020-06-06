@@ -1,8 +1,5 @@
-import $ from "jquery"
-
-// for angularJs
-window.$ = $;
-window.jQuery = $;
+require("jquery-mousewheel");
+require('malihu-custom-scrollbar-plugin');
 
 require('angular');
 require('angular-ui-bootstrap');

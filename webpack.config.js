@@ -41,6 +41,11 @@ const config = {
     ]
   },
   plugins: [
+    new webpack.ProvidePlugin({ // https://webpack.js.org/plugins/provide-plugin/#usage-jquery-with-angular-1
+      'window.jQuery': 'jquery',
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       filename: 'index.html'
