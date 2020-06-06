@@ -8,7 +8,6 @@ require('angular-resource');
 require('angular-sanitize');
 require('angular-route');
 require('angular-hotkeys');
-require('angular-ui-bootstrap');
 require('ng-scrollbars');
 require('string_score');
 
