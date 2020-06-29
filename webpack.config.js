@@ -28,7 +28,7 @@ const config = {
               url: (url) => !url.includes('mCSB_buttons.png')// ignore for malihu-custom-scrollbar-plugin
             }
           },
-          'postcss-loader'
+          // 'postcss-loader' - nop css are only third party
         ]
       },
       {
@@ -36,6 +36,7 @@ const config = {
         use: [
           'style-loader',
           'css-loader',
+          'postcss-loader',
           'sass-loader'
         ]
       }
