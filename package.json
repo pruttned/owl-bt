@@ -132,7 +132,7 @@
   "scripts": {
     "start": "node src/server/app.js",
     "test": "grunt test:client",
-    "build": "webpack -p --mode production",
+    "build": "webpack --mode production",
     "serve": "grunt serve",
     "prepublish": "npm run build"
   },
