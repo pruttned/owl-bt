@@ -64,6 +64,7 @@
     "angular-scenario": "1.5.0",
     "autoprefixer": "^9.7.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-angularjs-annotate": "^0.10.0",
     "babel-preset-es2015": "^6.0.14",
     "connect-livereload": "~0.4.0",
     "css-loader": "^3.5.3",
