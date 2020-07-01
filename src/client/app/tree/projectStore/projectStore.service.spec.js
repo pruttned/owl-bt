@@ -3,11 +3,11 @@
 describe('Service: ProjectStore', () => {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let ProjectStore;
-  beforeEach(inject(_ProjectStore_ => {
+  beforeEach(() => inject(_ProjectStore_ => {
     ProjectStore = _ProjectStore_;
   }));
 

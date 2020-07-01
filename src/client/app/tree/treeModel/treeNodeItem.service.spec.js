@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Service: TreeNodeItem', function() {
+describe('Service: TreeNodeItem', function () {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let TreeNodeItem;
-  beforeEach(inject(function(_TreeNodeItem_) {
+  beforeEach(() => inject(function (_TreeNodeItem_) {
     TreeNodeItem = _TreeNodeItem_;
   }));
 
-  it('resolvedPropertyObj should return plain object with all properties', function() {
+  it('resolvedPropertyObj should return plain object with all properties', function () {
     let item = {
       properties: {
         prop1: 'value1'

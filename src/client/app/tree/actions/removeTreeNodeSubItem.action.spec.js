@@ -3,14 +3,14 @@
 describe('Service: RemoveTreeNodeSubItemAction', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let TreeStore;
   let RemoveTreeNodeSubItemAction;
   let UndoRedoManager;
   let node;
-  beforeEach(inject(function(_TreeStore_, _RemoveTreeNodeSubItemAction_, _UndoRedoManager_) {
+  beforeEach(() => inject(function(_TreeStore_, _RemoveTreeNodeSubItemAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
     RemoveTreeNodeSubItemAction = _RemoveTreeNodeSubItemAction_;
     UndoRedoManager = _UndoRedoManager_;

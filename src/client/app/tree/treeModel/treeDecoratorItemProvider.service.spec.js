@@ -3,13 +3,13 @@
 describe('Service: TreeDecoratorItemProvider', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
-  beforeEach(module('mocks.ProjectStore'));
+  beforeEach(() => angular.mock.module('mocks.ProjectStore'));
 
   // instantiate service
   let TreeDecoratorItemProvider;
-  beforeEach(inject(function(_TreeDecoratorItemProvider_) {
+  beforeEach(() => inject(function(_TreeDecoratorItemProvider_) {
     TreeDecoratorItemProvider = _TreeDecoratorItemProvider_;
   }));
 

@@ -6,7 +6,7 @@ describe('Service: ActionExecutor', function() {
   let log;
   let testAction;
   let testAsyncAction;
-  beforeEach(module('editorApp', function() {
+  beforeEach(() => angular.mock.module('editorApp', function() {
 
     log = [];
 
@@ -32,7 +32,7 @@ describe('Service: ActionExecutor', function() {
   let ActionExecutor;
   let UndoRedoManager;
   let $scope;
-  beforeEach(inject(function($rootScope, _ActionExecutor_, _UndoRedoManager_) {
+  beforeEach(() => inject(function($rootScope, _ActionExecutor_, _UndoRedoManager_) {
     ActionExecutor = _ActionExecutor_;
     UndoRedoManager = _UndoRedoManager_;
     $scope = $rootScope.$new();

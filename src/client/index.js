@@ -1,7 +1,8 @@
 require("jquery-mousewheel");
-require('malihu-custom-scrollbar-plugin');
+require('malihu-custom-scrollbar-plugin')($);
 
 require('angular');
+
 require('angular-ui-bootstrap');
 require('angular-cookies');
 require('angular-resource');

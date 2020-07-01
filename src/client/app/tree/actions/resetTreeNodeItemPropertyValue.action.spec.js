@@ -3,15 +3,15 @@
 describe('Service: ResetTreeNodeItemPropertyValueAction', function () {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
-  beforeEach(module('mocks.TreeStore'));
+  beforeEach(() => angular.mock.module('mocks.TreeStore'));
 
   // instantiate service
   let TreeStore;
   let ResetTreeNodeItemPropertyValueAction;
   let UndoRedoManager;
-  beforeEach(inject(function (_TreeStore_, _ResetTreeNodeItemPropertyValueAction_, _UndoRedoManager_) {
+  beforeEach(() => inject(function (_TreeStore_, _ResetTreeNodeItemPropertyValueAction_, _UndoRedoManager_) {
     TreeStore = _TreeStore_;
     ResetTreeNodeItemPropertyValueAction = _ResetTreeNodeItemPropertyValueAction_;
     UndoRedoManager = _UndoRedoManager_;

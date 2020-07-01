@@ -6,12 +6,11 @@ describe('Directive: fuzzyList', function() {
 
 
   // load the directive's module and view
-  beforeEach(module('editorApp'));
-  beforeEach(module('components/listSelectDialog/fuzzyList/fuzzyList.html'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   var element, scope;
 
-  beforeEach(inject(function($rootScope) {
+  beforeEach(() => inject(function($rootScope) {
     scope = $rootScope.$new();
     scope.items = [{
       name: 'item1',

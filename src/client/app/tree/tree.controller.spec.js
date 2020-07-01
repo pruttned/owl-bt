@@ -3,12 +3,12 @@
 describe('Controller: TreeCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   var TreeCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(() => inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
     TreeCtrl = $controller('TreeCtrl', {
       $scope: scope

@@ -3,11 +3,11 @@
 describe('Service: FuzzyFilter', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let FuzzyFilter;
-  beforeEach(inject(function(_FuzzyFilter_) {
+  beforeEach(() => inject(function(_FuzzyFilter_) {
     FuzzyFilter = _FuzzyFilter_;
   }));
 

@@ -3,11 +3,11 @@
 describe('Service: MatchHighlighter', function () {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let MatchHighlighter;
-  beforeEach(inject(function (_MatchHighlighter_) {
+  beforeEach(() => inject(function (_MatchHighlighter_) {
     MatchHighlighter = _MatchHighlighter_;
   }));
 

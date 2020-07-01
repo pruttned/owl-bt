@@ -3,11 +3,11 @@
 describe('Service: TreeItemPropertyDtoConverter', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let TreeItemPropertyDtoConverter;
-  beforeEach(inject(function(_TreeItemPropertyDtoConverter_) {
+  beforeEach(() => inject(function(_TreeItemPropertyDtoConverter_) {
     TreeItemPropertyDtoConverter = _TreeItemPropertyDtoConverter_;
   }));
 

@@ -3,11 +3,11 @@
 describe('Service: ArrayHelper', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let ArrayHelper;
-  beforeEach(inject(function(_ArrayHelper_) {
+  beforeEach(() => inject(function(_ArrayHelper_) {
     ArrayHelper = _ArrayHelper_;
   }));
 

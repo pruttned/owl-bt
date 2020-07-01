@@ -3,11 +3,11 @@
 describe('Service: IdProvider', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let IdProvider;
-  beforeEach(inject(function(_IdProvider_) {
+  beforeEach(() => inject(function(_IdProvider_) {
     IdProvider = _IdProvider_;
   }));
 

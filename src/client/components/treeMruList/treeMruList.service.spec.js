@@ -3,7 +3,7 @@
 describe('Service: TreeMruList', function () {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   //local storage mock  - http://stackoverflow.com/a/14381941
   beforeEach(function () {
@@ -29,7 +29,7 @@ describe('Service: TreeMruList', function () {
 
   // instantiate service
   let TreeMruList;
-  beforeEach(inject(function (_TreeMruList_) {
+  beforeEach(() => inject(function (_TreeMruList_) {
     TreeMruList = _TreeMruList_;
   }));
 

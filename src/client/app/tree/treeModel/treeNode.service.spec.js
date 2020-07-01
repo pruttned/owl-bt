@@ -3,11 +3,11 @@
 describe('Service: Node', function() {
 
   // load the service's module
-  beforeEach(module('editorApp'));
+  beforeEach(() => angular.mock.module('editorApp'));
 
   // instantiate service
   let TreeNode;
-  beforeEach(inject(function(_TreeNode_) {
+  beforeEach(() => inject(function(_TreeNode_) {
     TreeNode = _TreeNode_;
   }));
 
