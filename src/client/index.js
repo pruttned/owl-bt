@@ -1,5 +1,5 @@
 require("jquery-mousewheel");
-require('malihu-custom-scrollbar-plugin')($);
+require('malihu-custom-scrollbar-plugin')($);// toto ($) robi problem pri start :( ale treba to pri teste)
 
 require('angular');
 

@@ -39,8 +39,10 @@ const config = {
           'postcss-loader',
           'sass-loader'
         ]
-      }
-    ]
+      },
+      { test: require.resolve('jquery-mousewheel'), loader: "imports-loader?define=>false&this=>window" },
+      { test: require.resolve('malihu-custom-scrollbar-plugin'), loader: "imports-loader?define=>false&this=>window" }
+    ],
   },
   plugins: [
     new webpack.ProvidePlugin({ // https://webpack.js.org/plugins/provide-plugin/#usage-jquery-with-angular-1
