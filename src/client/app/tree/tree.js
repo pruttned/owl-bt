@@ -4,7 +4,7 @@ angular.module('editorApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/tree', {
-        templateUrl: 'app/tree/tree.html',
+        template: require('./tree.html'),
         controller: 'TreeCtrl',
         controllerAs: 'tree'
       });

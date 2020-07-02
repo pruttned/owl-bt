@@ -111,7 +111,7 @@ angular.module('editorApp')
     }
 
     return {
-      templateUrl: 'components/listSelectDialog/fuzzyList/fuzzyList.html',
+      template: require('./fuzzyList.html'),
       restrict: 'EA',
       replace: true,
       scope: {

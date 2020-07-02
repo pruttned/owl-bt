@@ -40,6 +40,12 @@ const config = {
           'sass-loader'
         ]
       },
+      {
+        test: /\.html$/i,
+        use: [
+          'html-loader',
+        ]
+      },
       { test: require.resolve('jquery-mousewheel'), loader: "imports-loader?define=>false&this=>window" },
       { test: require.resolve('malihu-custom-scrollbar-plugin'), loader: "imports-loader?define=>false&this=>window" }
     ],

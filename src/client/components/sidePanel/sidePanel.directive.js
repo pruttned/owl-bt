@@ -3,7 +3,7 @@
   angular.module('editorApp')
     .directive('sidePanel', function (_) {
       return {
-        templateUrl: 'components/sidePanel/sidePanel.html',
+        template: require('.//sidePanel.html'),
         restrict: 'E',
         replace: true,
         transclude: true,

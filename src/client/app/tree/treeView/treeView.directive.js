@@ -403,7 +403,7 @@
 
   function treeView(TreeStore, TreeSelection, TreeViewModelProvider, TreeNodeItem, TreeNode, d3, CommandContextMenu, TreeFocus) {
     return {
-      templateUrl: 'app/tree/treeView/treeView.html',
+      template: require('./treeView.html'),
       restrict: 'EA',
       replace: true,
       scope: {},

@@ -77,7 +77,7 @@
       }
 
       return {
-        templateUrl: 'app/tree/treeItemPalette/treeItemPaletteGroup.html',
+        template: require('./treeItemPaletteGroup.html'),
         restrict: 'E',
         replace: true,
         transclude: true,

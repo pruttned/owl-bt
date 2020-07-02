@@ -4,7 +4,7 @@ angular.module('editorApp')
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'app/main/main.html',
+        template: require('./main.html'),
         controller: 'MainCtrl',
         controllerAs: 'main'
       });

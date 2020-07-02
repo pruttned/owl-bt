@@ -15,7 +15,7 @@ angular.module('editorApp')
     this.open = function(items) {
       return $uibModal.open({
         animation: false,
-        templateUrl: 'components/listSelectDialog/listSelectDialog.html',
+        template: require('./listSelectDialog.html'),
         controller: 'ListSelectDialogCtrl',
         windowClass: 'list-select-dialog',
         // size: size,

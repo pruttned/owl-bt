@@ -4,7 +4,7 @@
 
   function alertPanel() {
     return {
-      templateUrl: 'components/msgPanel/msgPanel.html',
+      template: require('./msgPanel.html'),
       restrict: 'EA',
       replace: true,
       controller : function(AlertList){

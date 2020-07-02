@@ -4,7 +4,7 @@
   angular.module('editorApp')
     .directive('treeItemPalette', function (TreeSelection) {
       return {
-        templateUrl: 'app/tree/treeItemPalette/treeItemPalette.html',
+        template: require('./treeItemPalette.html'),
         restrict: 'E',
         replace: true,
         scope: {},

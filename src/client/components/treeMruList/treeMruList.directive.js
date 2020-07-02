@@ -14,7 +14,7 @@
 
     function treeMruList() {
         return {
-            templateUrl: 'components/treeMruList/treeMruList.html',
+            template: require('./treeMruList.html'),
             restrict: 'EA',
             replace: true,
             scope: {},
