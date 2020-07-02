@@ -1,8 +1,6 @@
 'use strict';
 
-const should = require('should');
 const rewire = require('rewire');
-const path = require('path');
 const _ = require('lodash');
 
 var fileWatcher = rewire('./index');
@@ -40,7 +38,7 @@ describe('fileWatcher', function() {
     let watcher = fileWatcher.create('path');
     watcher.addListener('1', () => {});
     watcher.addListener('2', () => {});
-    should(fsMock.fsWatchers.length).be.exactly(1);
+    expect(fsMock.fsWatchers.length).toBe(1);
   });
 
   it('removing all listeners should close real fs watcher', function() {
@@ -48,9 +46,9 @@ describe('fileWatcher', function() {
     watcher.addListener('1', () => {});
     watcher.addListener('2', () => {});
     watcher.removeListener('1');
-    should(fsMock.fsWatchers.length).be.exactly(1);
+    expect(fsMock.fsWatchers.length).toBe(1);
     watcher.removeListener('2');
-    should(fsMock.fsWatchers.length).be.exactly(0);
+    expect(fsMock.fsWatchers.length).toBe(0);
   });
 
   it('adding listener after close should reopen real fs watcher', function() {
@@ -60,7 +58,7 @@ describe('fileWatcher', function() {
     watcher.removeListener('1');
     watcher.removeListener('2');
     watcher.addListener('1', () => {});
-    should(fsMock.fsWatchers.length).be.exactly(1);
+    expect(fsMock.fsWatchers.length).toBe(1);
   });
 
   it('changing watched file should call listeners with file content', function(done) {
@@ -71,9 +69,9 @@ describe('fileWatcher', function() {
     });
     watcher.addListener('2', (content) => {
       listenerCallLog.push(content);
-      should(listenerCallLog.length).be.exactly(2);
-      should(listenerCallLog[0]).be.exactly('file content');
-      should(listenerCallLog[1]).be.exactly('file content');
+      expect(listenerCallLog.length).toBe(2);
+      expect(listenerCallLog[0]).toBe('file content');
+      expect(listenerCallLog[1]).toBe('file content');
       done();
     });
 
