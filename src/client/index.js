@@ -1,3 +1,8 @@
+require('@fortawesome/fontawesome-free/js/fontawesome');
+require('@fortawesome/fontawesome-free/js/solid');
+require('@fortawesome/fontawesome-free/js/regular');
+require('@fortawesome/fontawesome-free/js/brands');
+
 require("jquery-mousewheel");
 require('malihu-custom-scrollbar-plugin')($);// toto ($) robi problem pri start :( ale treba to pri teste)
 
