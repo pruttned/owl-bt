@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
   mode: 'development',
   entry: [
+    'webpack-hot-middleware/client?reload=true',
     './src/client/index.js'
   ],
   output: {
@@ -60,7 +61,8 @@ const config = {
     new HtmlWebpackPlugin({
       template: './src/client/index.html',
       filename: 'index.html'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     contentBase: './dist'

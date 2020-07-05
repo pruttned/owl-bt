@@ -35,12 +35,12 @@ module.exports = function (app) {
     app.use(express.static(path.join(config.root, 'dist/public')));
     app.set('appPath', path.join(config.root, 'dist/public'));
   } else {
-    // app.use(express.static(path.join(config.root, 'dist')));
-    // app.set('appPath', path.join(config.root, 'dist'));
     const config = require('../../webpack.config.js');
     const compiler = require('webpack')(config);
     const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
+    const webpackHotMiddleware = require('webpack-hot-middleware')(compiler);
     app.use(webpackDevMiddleware);
+    app.use(webpackHotMiddleware);
     app.use('*', function (_, res, next) {
       var filename = path.join(compiler.outputPath, 'index.html');
       webpackDevMiddleware.waitUntilValid(() => {
