@@ -5,7 +5,6 @@
 'use strict';
 
 const express = require('express');
-const favicon = require('serve-favicon');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
@@ -17,7 +16,7 @@ module.exports = function (app) {
 
   app.use(bodyParser.json());
 
-  
+
   app.use('/api/', function (req, res, next) { //media type check
     if (req.method === 'POST' || req.method === 'PUT') {
       let contentType = req.headers['content-type'];
@@ -30,12 +29,19 @@ module.exports = function (app) {
 
   require('./apiRoutes')(app);
 
+  app.use(express.static(path.join(__dirname, '../../public')));
   if ('production' === env) {
-    app.use(favicon(path.join(config.root, 'dist/public', 'favicon.ico')));
-    app.use(express.static(path.join(config.root, 'dist/public')));
-    app.set('appPath', path.join(config.root, 'dist/public'));
+    console.log(path.join(__dirname, '../dist'));
+    app.use(express.static(path.join(__dirname, '../../dist')));
+    app.route('/*')
+      .get(function (req, res) {
+        res.sendFile(path.resolve('dist/index.html'));
+      });
+
   } else {
-    const config = require('../../webpack.config.js');
+    const config = require('../../webpack.config.js')(null, {
+      mode: env
+    });
     const compiler = require('webpack')(config);
     const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
     const webpackHotMiddleware = require('webpack-hot-middleware')(compiler);

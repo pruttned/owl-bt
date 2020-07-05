@@ -37,6 +37,7 @@
     "body-parser": "^1.5.2",
     "bootstrap": "~3.3.5",
     "bootstrap-sass": "~3.3.5",
+    "cross-env": "^7.0.2",
     "d3": "~3.5.12",
     "errno-codes": "^1.0.2",
     "errorhandler": "~1.0.0",
@@ -50,7 +51,6 @@
     "opn": "^4.0.2",
     "rc": "^1.2.1",
     "require-reload": "^0.2.2",
-    "serve-favicon": "^2.5.0",
     "socket.io": "~1.7.3",
     "string_score": "^0.1.22",
     "toposort-class": "^1.0.1",
@@ -66,6 +66,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-angularjs-annotate": "^0.10.0",
     "babel-preset-es2015": "^6.0.14",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
     "cssnano": "^4.1.10",
     "html-loader": "^1.1.0",
@@ -88,10 +89,10 @@
     "node": ">=6.10.2"
   },
   "scripts": {
-    "start": "node src/server/app.js",
+    "start": "cross-env NODE_ENV=production node src/server/app.js",
+    "dev": "cross-env NODE_ENV=development node src/server/app.js",
     "test": "jest",
-    "build": "webpack --mode development",
-    "serve": "grunt serve",
+    "build": "webpack -p",
     "prepublish": "npm run build"
   },
   "bin": {
