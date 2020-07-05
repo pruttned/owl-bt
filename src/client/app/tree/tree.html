@@ -1,7 +1,17 @@
 <div class="tree-page">
   <div class="tree-page-head">
     <div class="tree-page-top-menu">
-      <div ng-include="'app/tree/commandTopMenu/commandTopMenu.html'"></div>
+      <ul class="top-menu" ng-controller="CommandTopMenuCtrl as menu">
+        <li class="btn-group dropdown" uib-dropdown ng-repeat="section in ::menu.sections">
+          <a uib-dropdown-toggle href="#" class="dropdown-toggle">{{section.name}}</a>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="item in ::section.items">
+              <a href="#" ng-click="item.action()">{{item.title}}<span ng-if="item.hotkey"
+                  class="hotkey">{{item.hotkey}}</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div class="tree-page-breadcrumb">
       <ol class="breadcrumb">
