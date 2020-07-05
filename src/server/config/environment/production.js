@@ -10,7 +10,6 @@ const rcCfg = rc('owlbt', {
 // =================================
 module.exports = {
   // Server port
-  port:     process.env.OPENSHIFT_NODEJS_PORT ||
-            process.env.PORT ||
+  port:    process.env.PORT ||
             rcCfg.port,
 };

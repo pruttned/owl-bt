@@ -22,8 +22,7 @@ function run({ success } = {}) {
   var server = http.createServer(app);
   var io = socektIo(server);
 
-  require('./config/express')(app);
-  require('./routes')(app);
+  require('./express')(app);
 
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
