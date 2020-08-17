@@ -339,3 +339,7 @@ module.exports = {
 - Prevent losing values of invalid properties in property editor form
 - Add highlighting of all tree items with invalid properties
 - Add save confirmation before saving a tree with invalid properties
+
+### 2.0.0
+- (chore): Convert from Grunt+Bower+Karma to Webpack+Jest
+- (breaking change): Fontawesome upgraded to 5.*
