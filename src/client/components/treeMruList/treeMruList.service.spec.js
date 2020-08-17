@@ -7,7 +7,6 @@ describe('Service: TreeMruList', function () {
 
   //local storage mock  - http://stackoverflow.com/a/14381941
   beforeEach(() => {
-    console.log('ASDADASDASDA');
     let store = {
       'TreeMruList.items': JSON.stringify([{
         path: 'url1'
