@@ -9,7 +9,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
 const path = require('path');
-const config = require('./config/environment');
 
 module.exports = function (app) {
   var env = app.get('env');
