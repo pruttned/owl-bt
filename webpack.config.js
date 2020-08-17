@@ -71,8 +71,12 @@ module.exports = (env, options) => {
   if (isDev) {
     config.entry.push('webpack-hot-middleware/client?reload=true'); // reload=true -> we are not supporting real HMR, but auto reload is nice also :)
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    config.devtool = 'inline-source-map';
   } else {
     config.plugins.push(new CleanWebpackPlugin());
+    config.plugins.push(new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+    }));
   }
 
   return config;
