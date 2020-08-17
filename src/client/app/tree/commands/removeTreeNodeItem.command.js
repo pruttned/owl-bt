@@ -48,7 +48,7 @@
       CommandPaletteCfgProvider.addCommand({
         service: 'RemoveTreeNodeItemCommand',
         name: 'core:Remove',
-        icon: 'remove',
+        icon: 'times',
         hotkey: 'del'
       });
 
