@@ -22,6 +22,7 @@ require('./app/app.js')
 require('./app/main/main.controller.js');
 require('./app/main/main.js');
 require('./app/tree/actions/SetTreeNodeItemBasePropertyValueAction.action.js');
+require('./app/tree/actions/setTreeNodeTypeAction.action.js');
 require('./app/tree/actions/addTreeNodeItemAction.action.js');
 require('./app/tree/actions/copyTreeNodeItem.action.js');
 require('./app/tree/actions/moveTreeNode.action.js');
@@ -53,6 +54,7 @@ require('./app/tree/commands/selectItemAbove.command.js');
 require('./app/tree/commands/selectItemBelow.command.js');
 require('./app/tree/commands/selectSiblingNode.command.js');
 require('./app/tree/commands/undo.command.js');
+require('./app/tree/commands/setTreeNodeType.command.js');
 require('./app/tree/treeItemDetails/decoratorBasePropertyEditor.controller.js');
 require('./app/tree/missingNodeItemDescValidation/missingNodeItemDescValidation.service.js');
 require('./app/tree/projectStore/projectStore.service.js');

@@ -40,6 +40,9 @@ angular.module('editorApp')
         scope.$watch(() => TreeSelection.selItem(), function() {
           updateEditors(scope, element);
         });
+        scope.$watch(() => TreeSelection.selItem() && TreeSelection.selItem().properties, function() {
+          updateEditors(scope, element);
+        });
       }
     };
   });
