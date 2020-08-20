@@ -75,5 +75,11 @@
         name: 'core:Set Node Type',
         icon: 'arrows-alt-h',
       });
+
+      CommandContextMenuCfgProvider.addMenuItem({
+        title: 'Set Node Type',
+        command: 'core:Set Node Type',
+        order: 300
+      });
     });
 })();
