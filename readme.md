@@ -341,5 +341,6 @@ module.exports = {
 - Add save confirmation before saving a tree with invalid properties
 
 ### 2.0.0
-- (chore): Convert from Grunt+Bower+Karma to Webpack+Jest
+- Add option to change type of an existing node. (`ctrl+shift+p`->`'core:Set Node Type'` or `rmb`->`'Set Node Type'`) 
 - (breaking change): Fontawesome upgraded to 5.*
+- (chore): Convert from Grunt+Bower+Karma to Webpack+Jest
