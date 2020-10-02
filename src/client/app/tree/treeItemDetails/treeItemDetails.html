@@ -26,6 +26,13 @@
           </div>
         </div>
       </fieldset>
+      <fieldset>
+        <div ng-controller="ItemBasePropertyEditorCtrl as svc">
+          <legend>Comment</legend>
+          <textarea class="form-control" ng-model="svc.comment"
+            ng-model-options="{ getterSetter: true, updateOn: 'blur' }"></textarea>
+        </div>
+      </fieldset>
       <fieldset ng-if="!isInvalidDesc()">
         <legend>Custom properties</legend>
         <property-editor-list></property-editor-list>

@@ -56,6 +56,7 @@ require('./app/tree/commands/selectSiblingNode.command.js');
 require('./app/tree/commands/undo.command.js');
 require('./app/tree/commands/setTreeNodeType.command.js');
 require('./app/tree/treeItemDetails/decoratorBasePropertyEditor.controller.js');
+require('./app/tree/treeItemDetails/itemBasePropertyEditor.controller.js');
 require('./app/tree/missingNodeItemDescValidation/missingNodeItemDescValidation.service.js');
 require('./app/tree/projectStore/projectStore.service.js');
 require('./app/tree/propertyEditor/boolParamEditor.directive.js');
