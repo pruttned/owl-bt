@@ -95,10 +95,20 @@
       .attr('class', `icon fa fa-${desc.icon}`);
     let itemContentElm = nodeItemElm.append('div')
       .attr('class', 'content');
-    itemContentElm
+
+    const defaultName = getNodeItemNamePrefix(viewNodeItem.nodeItem) + desc.name;
+    const nameElm = itemContentElm
       .append('div')
-      .attr('class', 'name')
-      .text(getNodeItemNamePrefix(viewNodeItem.nodeItem) + desc.name);
+      .attr('class', 'name');
+    if (viewNodeItem.nodeItem.label && viewNodeItem.nodeItem.label.length) {
+      nameElm.append('span')
+        .attr('class', 'name-sub')
+        .text(`(${defaultName})`);
+      nameElm.append('span')
+        .text(viewNodeItem.nodeItem.label);
+    } else {
+      nameElm.text(defaultName);
+    }
 
     if (desc.description) {
       itemContentElm

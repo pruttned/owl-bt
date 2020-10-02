@@ -22,8 +22,8 @@
     this.comment = function (value) {
       return propertyAccessor('comment', arguments.length, value);
     };
-    this.comment = function (value) {
-      return propertyAccessor('comment', arguments.length, value);
+    this.label = function (value) {
+      return propertyAccessor('label', arguments.length, value);
     };
   }
 
