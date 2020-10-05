@@ -344,3 +344,7 @@ module.exports = {
 - Add option to change type of an existing node. (`ctrl+shift+p`->`'core:Set Node Type'` or `rmb`->`'Set Node Type'`) 
 - (breaking change): Fontawesome upgraded to 5.*
 - (chore): Convert from Grunt+Bower+Karma to Webpack+Jest
+
+### 2.1.0
+- Add custom label to node items
+- Add comment to node items
