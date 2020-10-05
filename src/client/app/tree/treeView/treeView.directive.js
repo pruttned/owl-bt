@@ -110,6 +110,17 @@
       nameElm.text(defaultName);
     }
 
+    if (viewNodeItem.nodeItem.comment) {
+      itemContentElm.classed('content-with-comment', true);
+
+      itemContentElm  
+        .append('span')
+        .attr('class', 'comment-icon fa fa-info-circle');
+      itemContentElm.append('div')
+        .attr('class', 'comment-content')
+        .text(viewNodeItem.nodeItem.comment);
+    }
+
     if (desc.description) {
       itemContentElm
         .append('div')
