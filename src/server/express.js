@@ -30,11 +30,11 @@ module.exports = function (app) {
 
   app.use(express.static(path.join(__dirname, '../../public')));
   if ('production' === env) {
-    console.log(path.join(__dirname, '../dist'));
-    app.use(express.static(path.join(__dirname, '../../dist')));
+    const distDir = path.join(__dirname, '../../dist');
+    app.use(express.static(distDir));
     app.route('/*')
-      .get(function (req, res) {
-        res.sendFile(path.resolve('dist/index.html'));
+      .get(function (_, res) {
+        res.sendFile(path.join(distDir, 'index.html'));
       });
 
   } else {
