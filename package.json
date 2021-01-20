@@ -51,7 +51,7 @@
     "opn": "^4.0.2",
     "rc": "^1.2.1",
     "require-reload": "^0.2.2",
-    "socket.io": "~1.7.3",
+    "socket.io": "~2.4.0",
     "string_score": "^0.1.22",
     "toposort-class": "^1.0.1",
     "undo-manager": "~1.0.5",
